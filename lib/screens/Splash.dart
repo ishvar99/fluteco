@@ -1,10 +1,30 @@
-import '../resources/size_config.dart';
-import '../widgets/BoardingImage.dart';
+import "package:flutter/material.dart";
+import "../resources/size_config.dart";
+import "../widgets/BoardingImage.dart";
+import "../resources/constants.dart";
 
-import '../resources/constants.dart';
-import 'package:flutter/material.dart';
+class Splash extends StatefulWidget {
+  @override
+  _SplashState createState() => _SplashState();
+}
 
-class Splash extends StatelessWidget {
+class _SplashState extends State<Splash> {
+  int currentPage = 0;
+  List<Map<String, String>> data = [
+    {
+      "text": "Welcome to Fluteco, Let's shop!",
+      "image": "assets/images/splash_1.png"
+    },
+    {
+      "text": "Wide variety, fast delivery and easy returns!",
+      "image": "assets/images/splash_2.png"
+    },
+    {
+      "text": "Just stay at home, safe and sound!",
+      "image": "assets/images/splash_3.png"
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -26,16 +46,24 @@ class Splash extends StatelessWidget {
                       )),
                   Expanded(
                     child: PageView.builder(
+                      onPageChanged: (val) => {
+                        setState(() {
+                          currentPage = val;
+                        })
+                      },
+                      itemCount: data.length,
                       itemBuilder: (ctx, index) => BoardingImage(
-                          text: 'Welcome to Fluteco! Let\'s shop!',
-                          image: 'assets/images/splash_1.png'),
+                        text: data[index]["text"],
+                        image: data[index]["image"],
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(data.length, buildDots),
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -59,6 +87,18 @@ class Splash extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  AnimatedContainer buildDots(index) {
+    return AnimatedContainer(
+      duration: kAnimationDuration,
+      margin: EdgeInsets.only(left: 5),
+      height: 6,
+      width: currentPage == index ? 20 : 6,
+      decoration: BoxDecoration(
+          color: currentPage == index ? kPrimaryColor : Color(0xFFD8D8D8),
+          borderRadius: BorderRadius.circular(5)),
     );
   }
 }

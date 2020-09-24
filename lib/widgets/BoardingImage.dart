@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class BoardingImage extends StatelessWidget {
   final String text;
   final String image;
-  BoardingImage({this.text, this.image});
+  BoardingImage({@required this.text, @required this.image});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(text),
+        Center(child: Text(text)),
         SizedBox(
           height: 60,
         ),
