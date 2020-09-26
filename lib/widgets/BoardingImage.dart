@@ -15,6 +15,7 @@ class BoardingImage extends StatelessWidget {
         ),
         Container(
           width: getProportionateScreenWidth(300),
+          height: getProportionateScreenHeight(300),
           child: Image.asset(image),
         ),
       ],
