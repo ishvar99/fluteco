@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './resources/constants.dart';
-import './screens/Splash.dart';
-import './resources/size_config.dart';
+import './resources/routes.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(Main());
 }
 
@@ -12,9 +14,10 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      routes: routes,
       title: "Fluteco",
       theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
           scaffoldBackgroundColor: Colors.white,
           fontFamily: "Muli",
           textTheme: TextTheme(bodyText1: TextStyle(color: kTextColor)),

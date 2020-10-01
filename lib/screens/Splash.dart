@@ -2,8 +2,10 @@ import "package:flutter/material.dart";
 import "../resources/size_config.dart";
 import "../widgets/BoardingImage.dart";
 import "../resources/constants.dart";
+import "./home.dart";
 
 class Splash extends StatefulWidget {
+  static const routeName = '/';
   @override
   _SplashState createState() => _SplashState();
 }
@@ -72,7 +74,9 @@ class _SplashState extends State<Splash> {
               height: 50,
               child: RaisedButton(
                 color: kPrimaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Home.routeName);
+                },
                 child: Text(
                   'Continue',
                   style: TextStyle(
