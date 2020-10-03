@@ -22,22 +22,28 @@ class OfferBanner extends StatelessWidget {
             padding: EdgeInsets.all(getProportionateScreenWidth(15)),
             child: Container(
               width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Mega Offer',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: getProportionateScreenWidth(15))),
-                  Text(
-                    'Flat 25% Cashback',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: getProportionateScreenWidth(25),
-                        fontWeight: FontWeight.w900),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('BUMPER OFFER',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: getProportionateScreenWidth(15))),
+                      Text(
+                        'FLAT 25% OFF*',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionateScreenWidth(25),
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ],
                   ),
+                  Image.asset("assets/icons/sale.png"),
                 ],
               ),
             ),
