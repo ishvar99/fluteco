@@ -19,7 +19,7 @@ class OfferBanner extends StatelessWidget {
           height: getProportionateScreenHeight(120),
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
             child: Container(
               width: double.infinity,
               child: Column(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/home/header.dart';
-import '../resources/size_config.dart';
-import '../widgets/OfferBanner.dart';
+// import '../resources/size_config.dart';
+import '../components/home/body.dart';
 
 class Home extends StatelessWidget {
   static const routeName = '/home';
@@ -9,15 +9,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context),
-      body: Column(children: [
-        OfferBanner(),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: [],
-        )
-      ]),
+      body: Body(),
     );
   }
 }
