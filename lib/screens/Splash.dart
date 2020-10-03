@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "../resources/size_config.dart";
 import "../widgets/BoardingImage.dart";
 import "../resources/constants.dart";
-import "./home.dart";
+import '../screens/Home.dart';
 
 class Splash extends StatefulWidget {
   static const routeName = '/';
