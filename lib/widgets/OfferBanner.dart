@@ -10,44 +10,49 @@ class OfferBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        vertical: getProportionateScreenWidth(20),
+        // horizontal: getProportionateScreenWidth(10),
+      ),
       child: Container(
-          decoration: BoxDecoration(
-            color: kOfferBannerColor,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          height: getProportionateScreenHeight(120),
+        decoration: BoxDecoration(
+          color: kOfferBannerColor,
+          // borderRadius: BorderRadius.circular(20.0),
+        ),
+        width: double.infinity,
+        child: Container(
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-            child: Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('BUMPER OFFER',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: getProportionateScreenWidth(15))),
-                      Text(
-                        'FLAT 25% OFF*',
+            padding:
+                EdgeInsets.symmetric(vertical: getProportionateScreenWidth(30)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('BUMPER OFFER',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: getProportionateScreenWidth(25),
-                            fontWeight: FontWeight.w900),
-                      ),
-                    ],
-                  ),
-                  Image.asset("assets/icons/sale.png"),
-                ],
-              ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: getProportionateScreenWidth(15))),
+                    Text(
+                      'FLAT 25% OFF*',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: getProportionateScreenWidth(25),
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ],
+                ),
+                Image.asset("assets/icons/sale.png"),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

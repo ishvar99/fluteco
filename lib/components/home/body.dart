@@ -1,7 +1,7 @@
-import 'package:fluteco/resources/constants.dart';
-import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/OfferBanner.dart';
+import '../../resources/constants.dart';
+import '../../resources/size_config.dart';
+import '../../widgets/BannerCarousel.dart';
 import '../../widgets/Category.dart';
 import '../../widgets/SpecialCard.dart';
 
@@ -10,9 +10,10 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        OfferBanner(),
+        BannerCarousel(),
         Padding(
-          padding: EdgeInsets.all(getProportionateScreenWidth(5)),
+          padding:
+              EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Container(
@@ -88,9 +89,23 @@ class Body extends StatelessWidget {
           child: Row(
             children: [
               SpecialCard(
+                category: "Smartphones",
+                numOfCount: 18,
                 image: "assets/images/Image Banner 2.png",
               ),
               SpecialCard(
+                category: "Fashion",
+                numOfCount: 30,
+                image: "assets/images/Image Banner 3.png",
+              ),
+              SpecialCard(
+                category: "Smartphones",
+                numOfCount: 18,
+                image: "assets/images/Image Banner 2.png",
+              ),
+              SpecialCard(
+                category: "Fashion",
+                numOfCount: 30,
                 image: "assets/images/Image Banner 3.png",
               )
             ],
