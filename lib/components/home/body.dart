@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../widgets/PartitionHeader.dart';
 import '../../widgets/BannerCarousel.dart';
-import './categories.dart';
-import '../../widgets/SpecialCard.dart';
+import '../../resources/size_config.dart';
+import './display.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -10,40 +10,19 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         BannerCarousel(),
-        displayCategories(),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
+          child: display(type: "category"),
+        ),
         PartitionHeader(
           type: "Recommended for you",
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialCard(
-                category: "Smartphones",
-                numOfCount: 18,
-                image: "assets/images/Image Banner 2.png",
-              ),
-              SpecialCard(
-                category: "Fashion",
-                numOfCount: 30,
-                image: "assets/images/Image Banner 3.png",
-              ),
-              SpecialCard(
-                category: "Smartphones",
-                numOfCount: 18,
-                image: "assets/images/Image Banner 2.png",
-              ),
-              SpecialCard(
-                category: "Fashion",
-                numOfCount: 30,
-                image: "assets/images/Image Banner 3.png",
-              )
-            ],
-          ),
-        ),
+        display(type: "recommended"),
         PartitionHeader(
           type: "Fluteco's Special",
-        )
+        ),
+        display(type: "special")
       ],
     );
   }

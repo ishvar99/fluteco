@@ -14,7 +14,8 @@ class OfferBanner extends StatelessWidget {
         vertical: getProportionateScreenWidth(20),
         // horizontal: getProportionateScreenWidth(10),
       ),
-      child: Container(
+      child: AnimatedContainer(
+        duration: kAnimationDuration,
         decoration: BoxDecoration(
           color: kOfferBannerColor,
           // borderRadius: BorderRadius.circular(20.0),
