@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../components/home/header.dart';
-// import '../resources/size_config.dart';
 import '../components/home/body.dart';
 
 class Home extends StatelessWidget {
@@ -9,7 +8,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context),
-      body: Body(),
+      body: SingleChildScrollView(child: Body()),
     );
   }
 }

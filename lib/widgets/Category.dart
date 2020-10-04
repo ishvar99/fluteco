@@ -2,7 +2,7 @@ import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
-  final Image icon;
+  final String icon;
   final String text;
   Category({@required this.icon, @required this.text});
   @override
@@ -25,7 +25,7 @@ class Category extends StatelessWidget {
                     // color: Colors.deepOrange[50],
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: icon,
+                  child: Image.asset(icon),
                 ),
               ),
               Text(
