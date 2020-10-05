@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
         Padding(
           padding:
               EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
-          child: display(type: "category"),
+          child: display(type: "category", context: context),
         ),
         PartitionHeader(
           type: "Recommended for you",

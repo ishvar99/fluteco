@@ -7,7 +7,7 @@ import '../../data/categories.dart';
 import '../../data/special.dart';
 import '../../widgets/Category.dart';
 
-SingleChildScrollView display({String type}) {
+SingleChildScrollView display({String type, BuildContext context}) {
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
     child: Row(
@@ -27,6 +27,12 @@ SingleChildScrollView display({String type}) {
                 ? Category(
                     icon: categories[index]['icon'],
                     text: categories[index]['text'],
+                    tapped: () => Navigator.of(context).pushNamed(
+                      '/${categories[index]['text'].toLowerCase()}',
+                      arguments: {
+                        'type': categories[index]['text'],
+                      },
+                    ),
                   )
                 : type == "special"
                     ? SpecialCard(

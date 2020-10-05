@@ -15,6 +15,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: routes,
+      onGenerateRoute: generateRoutes,
       title: "Fluteco",
       theme: ThemeData(
           primarySwatch: Colors.deepOrange,

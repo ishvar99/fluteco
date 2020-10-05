@@ -39,13 +39,27 @@ class SpecialCard extends StatelessWidget {
               style: TextStyle(color: Colors.black),
               maxLines: 2,
             ),
-            Text(
-              "₹$price",
-              style: TextStyle(
-                  fontSize: getProportionateScreenWidth(18),
-                  fontWeight: FontWeight.w600,
-                  color: kPrimaryColor),
-            )
+            Row(children: [
+              Padding(
+                padding: EdgeInsets.only(right: getProportionateScreenWidth(5)),
+                child: Text(
+                  "₹$price",
+                  style: TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      decorationThickness: 2.0,
+                      fontSize: getProportionateScreenWidth(18),
+                      fontWeight: FontWeight.w600,
+                      color: kPrimaryColor),
+                ),
+              ),
+              Text(
+                "₹999",
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(18),
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryColor),
+              )
+            ]),
           ],
         ),
       ),

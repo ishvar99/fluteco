@@ -2,16 +2,20 @@ import 'package:fluteco/widgets/Category.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
-  final String type;
-  Category({@required this.type});
+  final Map<String, String> arguments;
+  Category({this.arguments});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(type),
+        title: Text(arguments['type']),
       ),
       body: Container(
-        child: Text(type),
+        child: Center(
+          child: Text(
+            arguments['type'],
+          ),
+        ),
       ),
     );
   }
