@@ -34,13 +34,13 @@ SingleChildScrollView display({String type, BuildContext context}) {
                   )
                 : type == "special"
                     ? SpecialCard(
-                        title: special[index]['title'],
-                        image: special[index]['image'],
-                        price: special[index]['price'],
+                        title: special[index].name,
+                        image: special[index].image,
+                        price: special[index].price,
                         tapped: () => Navigator.pushNamed(
                           context,
                           '/products',
-                          arguments: special[index]['id'],
+                          arguments: special[index].id,
                         ),
                       )
                     : null,

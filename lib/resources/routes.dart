@@ -25,7 +25,8 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
     case '/products':
       {
         print(settings.arguments);
-        return MaterialPageRoute(builder: (context) => Product(id: arguments));
+        return MaterialPageRoute(
+            builder: (context) => ProductScreen(id: arguments));
       }
     default:
       {
