@@ -13,16 +13,16 @@ class Body extends StatelessWidget {
         Padding(
           padding:
               EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
-          child: display(type: "category", context: context),
+          child: display(type: "categories", context: context),
         ),
         PartitionHeader(
           type: "Recommended for you",
         ),
-        display(type: "recommended", context: context),
+        display(type: "recommended-genres", context: context),
         PartitionHeader(
           type: "Fluteco's Special",
         ),
-        display(type: "special", context: context),
+        display(type: "special-products", context: context),
         SizedBox(
           height: 25,
         )

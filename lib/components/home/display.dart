@@ -1,10 +1,10 @@
-import 'package:fluteco/data/special.dart';
+import 'package:fluteco/data/products.dart';
 import 'package:fluteco/widgets/RecommendedCard.dart';
 import 'package:fluteco/widgets/SpecialCard.dart';
 import 'package:flutter/material.dart';
 import '../../data/recommended.dart';
 import '../../data/categories.dart';
-import '../../data/special.dart';
+import '../../data/products.dart';
 import '../../widgets/Category.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
@@ -14,16 +14,16 @@ SingleChildScrollView display({String type, BuildContext context}) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: List.generate(
-        type == "recommended"
+        type == "recommended-genres"
             ? recommended.length
-            : type == "category" ? categories.length : special.length,
-        (index) => type == "recommended"
+            : type == "categories" ? categories.length : products.length,
+        (index) => type == "recommended-genres"
             ? RecommendedCard(
                 availability: recommended[index]['availability'],
                 category: recommended[index]['category'],
                 image: recommended[index]['image'],
               )
-            : type == "category"
+            : type == "categories"
                 ? Category(
                     icon: categories[index]['icon'],
                     text: categories[index]['text'],
@@ -32,17 +32,19 @@ SingleChildScrollView display({String type, BuildContext context}) {
                       arguments: categories[index]['text'],
                     ),
                   )
-                : type == "special"
-                    ? SpecialCard(
-                        title: special[index].name,
-                        image: special[index].image,
-                        price: special[index].price,
-                        tapped: () => Navigator.pushNamed(
-                          context,
-                          '/products',
-                          arguments: special[index].id,
-                        ),
-                      )
+                : type == "special-products"
+                    ? (products[index].special
+                        ? SpecialCard(
+                            title: products[index].name,
+                            image: products[index].image,
+                            price: products[index].price,
+                            tapped: () => Navigator.pushNamed(
+                              context,
+                              '/products',
+                              arguments: products[index].id,
+                            ),
+                          )
+                        : Container())
                     : null,
       ),
     ),
