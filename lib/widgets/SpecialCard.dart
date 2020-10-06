@@ -6,8 +6,12 @@ class SpecialCard extends StatelessWidget {
   final String title;
   final int price;
   final String image;
+  final Function tapped;
   SpecialCard(
-      {@required this.title, @required this.image, @required this.price});
+      {@required this.title,
+      @required this.image,
+      @required this.price,
+      @required this.tapped});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,18 +24,21 @@ class SpecialCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.02,
-              child: Container(
-                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                decoration: BoxDecoration(
+              child: InkWell(
                   borderRadius: BorderRadius.circular(15.0),
-                  color: kSecondaryColor.withOpacity(0.08),
-                  // color: Colors.deepOrange[50],
-                ),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.contain,
-                ),
-              ),
+                  onTap: tapped,
+                  child: Container(
+                    padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: kSecondaryColor.withOpacity(0.08),
+                      // color: Colors.deepOrange[50],
+                    ),
+                    child: Image.asset(
+                      image,
+                      fit: BoxFit.contain,
+                    ),
+                  )),
             ),
             const SizedBox(height: 5),
             Text(
@@ -41,7 +48,7 @@ class SpecialCard extends StatelessWidget {
             ),
             Row(children: [
               Padding(
-                padding: EdgeInsets.only(right: getProportionateScreenWidth(5)),
+                padding: EdgeInsets.only(right: getProportionateScreenWidth(7)),
                 child: Text(
                   "₹$price",
                   style: TextStyle(
@@ -57,7 +64,13 @@ class SpecialCard extends StatelessWidget {
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w600,
-                    color: kPrimaryColor),
+                    color: kOfferBannerColor),
+              ),
+              Spacer(),
+              Icon(
+                Icons.favorite_border,
+                size: getProportionateScreenWidth(20),
+                color: Colors.red,
               )
             ]),
           ],

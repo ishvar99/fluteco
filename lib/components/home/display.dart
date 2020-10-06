@@ -28,10 +28,8 @@ SingleChildScrollView display({String type, BuildContext context}) {
                     icon: categories[index]['icon'],
                     text: categories[index]['text'],
                     tapped: () => Navigator.of(context).pushNamed(
-                      '/${categories[index]['text'].toLowerCase()}',
-                      arguments: {
-                        'type': categories[index]['text'],
-                      },
+                      '/categories',
+                      arguments: categories[index]['text'],
                     ),
                   )
                 : type == "special"
@@ -39,6 +37,11 @@ SingleChildScrollView display({String type, BuildContext context}) {
                         title: special[index]['title'],
                         image: special[index]['image'],
                         price: special[index]['price'],
+                        tapped: () => Navigator.pushNamed(
+                          context,
+                          '/products',
+                          arguments: special[index]['id'],
+                        ),
                       )
                     : null,
       ),

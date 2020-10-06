@@ -1,3 +1,4 @@
+import 'package:fluteco/screens/Product.dart';
 import 'package:flutter/material.dart';
 import '../screens/Splash.dart';
 import '../screens/Home.dart';
@@ -15,19 +16,17 @@ final Map<String, WidgetBuilder> routes = {
 Route<dynamic> generateRoutes(RouteSettings settings) {
   final arguments = settings.arguments;
   switch (settings.name) {
-    case '/jewels':
-    case '/fashion':
-    case '/kitchen':
-    case '/stationary':
-    case '/eatables':
-    case '/groceries':
-    case '/home':
-    case '/electronics':
+    case '/categories':
       {
         return MaterialPageRoute(
-            builder: (context) => Category(arguments: arguments));
+            builder: (context) => Category(type: arguments));
       }
 
+    case '/products':
+      {
+        print(settings.arguments);
+        return MaterialPageRoute(builder: (context) => Product(id: arguments));
+      }
     default:
       {
         return MaterialPageRoute(builder: (context) => PageNotFound());
