@@ -25,11 +25,11 @@ SingleChildScrollView display({String type, BuildContext context}) {
               )
             : type == "categories"
                 ? Category(
-                    icon: categories[index]['icon'],
-                    text: categories[index]['text'],
+                    icon: categories[index].categoryIcon,
+                    text: categories[index].categoryText,
                     tapped: () => Navigator.of(context).pushNamed(
                       '/categories',
-                      arguments: categories[index]['text'],
+                      arguments: categories[index].categoryId,
                     ),
                   )
                 : type == "special-products"
