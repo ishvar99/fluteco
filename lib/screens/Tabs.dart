@@ -6,7 +6,13 @@ import './Feedback.dart';
 import './About.dart';
 import './Profile.dart';
 
-class Tabs extends StatelessWidget {
+class Tabs extends StatefulWidget {
+  @override
+  _TabsState createState() => _TabsState();
+}
+
+class _TabsState extends State<Tabs> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -15,6 +21,11 @@ class Tabs extends StatelessWidget {
         bottomNavigationBar: Container(
           color: kSecondaryColor.withOpacity(0.05),
           child: TabBar(
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
             labelColor: Colors.deepOrange,
             unselectedLabelColor: Colors.black87,
             tabs: <Widget>[
@@ -36,14 +47,24 @@ class Tabs extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            Home(),
-            Wishlist(),
-            Profile(),
-            FeedBackInfo(),
-            About()
-          ],
+        body: WillPopScope(
+          onWillPop: () {
+            if (_selectedIndex != 0)
+              Navigator.popAndPushNamed(context, '/home');
+            else
+              Navigator.pop(context, false);
+            return Future.value(false);
+          },
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              Home(),
+              Wishlist(),
+              Profile(),
+              FeedBackInfo(),
+              About()
+            ],
+          ),
         ),
       ),
     );
