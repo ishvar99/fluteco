@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 
 class RecommendedCard extends StatelessWidget {
   final String image;
-  final String category;
+  final String name;
   final int availability;
   RecommendedCard(
-      {@required this.image,
-      @required this.category,
-      @required this.availability});
+      {@required this.image, @required this.name, @required this.availability});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,7 +42,7 @@ class RecommendedCard extends StatelessWidget {
             child: Text.rich(
                 TextSpan(style: TextStyle(color: Colors.white), children: [
               TextSpan(
-                text: "$category\n",
+                text: "$name\n",
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.bold),
