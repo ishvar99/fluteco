@@ -26,11 +26,16 @@ class PartitionHeader extends StatelessWidget {
                     fontSize: getProportionateScreenWidth(16),
                     fontWeight: FontWeight.w900),
               ),
-              Text(
-                'See More',
-                style: TextStyle(
-                    fontSize: getProportionateScreenWidth(12),
-                    color: kTextColor),
+              InkWell(
+                borderRadius: BorderRadius.circular(15.0),
+                onTap: () => Navigator.of(context).pushNamed(
+                    '${type == "Recommended for you" ? "/genres" : "/special-products"}'),
+                child: Text(
+                  'See More',
+                  style: TextStyle(
+                      fontSize: getProportionateScreenWidth(12),
+                      color: kTextColor),
+                ),
               )
             ],
           ),

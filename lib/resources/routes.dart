@@ -6,11 +6,15 @@ import '../screens/Cart.dart';
 import '../screens/Tabs.dart';
 import '../screens/Category.dart';
 import '../screens/PageNotFound.dart';
+import '../screens/FlutecoSpecial.dart';
+import '../screens/Genres.dart';
 
 final Map<String, WidgetBuilder> routes = {
   Splash.routeName: (_) => Splash(),
   Home.routeName: (_) => Tabs(),
   Cart.routeName: (_) => Cart(),
+  FlutecoSpecial.routeName: (_) => FlutecoSpecial(),
+  Genres.routeName: (_) => Genres()
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
