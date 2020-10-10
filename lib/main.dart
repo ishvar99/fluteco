@@ -19,6 +19,7 @@ class Main extends StatelessWidget {
       title: "Fluteco",
       theme: ThemeData(
           primarySwatch: Colors.deepOrange,
+          accentColor: kOfferBannerColor,
           scaffoldBackgroundColor: Colors.white,
           fontFamily: "Muli",
           textTheme: TextTheme(bodyText1: TextStyle(color: kTextColor)),

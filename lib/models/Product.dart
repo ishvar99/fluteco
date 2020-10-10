@@ -5,6 +5,7 @@ class Product {
   final String name;
   final int price;
   final String image;
+  final String description;
   bool special;
   bool favourite;
 
@@ -14,6 +15,7 @@ class Product {
       @required this.price,
       @required this.image,
       @required this.special,
+      @required this.description,
       this.favourite});
 
   String get productId {
@@ -26,6 +28,10 @@ class Product {
 
   int get productPrice {
     return price;
+  }
+
+  String get productDescription {
+    return description;
   }
 
   String get productImage {

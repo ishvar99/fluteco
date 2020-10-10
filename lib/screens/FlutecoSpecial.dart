@@ -20,10 +20,10 @@ class FlutecoSpecial extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: getProportionateScreenWidth(2).round(),
-                      childAspectRatio: getProportionateScreenWidth(0.65),
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 2),
+                    crossAxisCount: getProportionateScreenWidth(2).round(),
+                    childAspectRatio: getProportionateScreenWidth(0.7),
+                    crossAxisSpacing: 2,
+                  ),
                   itemCount: products.length,
                   itemBuilder: (context, index) => SpecialCard(
                         image: products[index].productImage,

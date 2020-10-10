@@ -30,7 +30,8 @@ class _CategoriesListState extends State<CategoriesList> {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(14.0)),
+                  horizontal: getProportionateScreenWidth(14.0),
+                  vertical: getProportionateScreenWidth(10.0)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
