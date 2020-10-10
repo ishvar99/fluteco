@@ -10,6 +10,8 @@ import 'dart:math';
 import '../../models/Genre.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
+  int specialProductsLimit = 3;
+  int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];
   final _random = new Random();
   return SingleChildScrollView(
@@ -19,9 +21,10 @@ SingleChildScrollView display({String type, BuildContext context}) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: List.generate(
             type == "recommended-genres"
-                ? 3
-                : type == "categories" ? categories.length : products.length,
-            (index) {
+                ? recommendedGenresLimit
+                : type == "categories"
+                    ? categories.length
+                    : specialProductsLimit, (index) {
           if (type == "recommended-genres") {
             genres.shuffle();
             Genre randomGenre = genres[_random.nextInt(genres.length)];

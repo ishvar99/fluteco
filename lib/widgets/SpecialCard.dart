@@ -30,8 +30,10 @@ class SpecialCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(getProportionateScreenWidth(20)),
                     decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 0.5, color: kSecondaryColor.withOpacity(0.3)),
                       borderRadius: BorderRadius.circular(15.0),
-                      color: kSecondaryColor.withOpacity(0.08),
+                      color: kSecondaryColor.withOpacity(0.04),
                       // color: Colors.deepOrange[50],
                     ),
                     child: Image.asset(

@@ -7,18 +7,42 @@ List<Product> products = [
       id: "${uuid.v1()}",
       name: "Wireless Controller for PS4",
       price: 4998,
-      image: "assets/images/popular_product.png",
+      image: "assets/images/ps4_black.png",
       special: true),
   Product(
       id: "${uuid.v1()}",
-      name: "Nike Sport White- Man Pant",
+      name: "Nike Men's Regular T-Shirt",
       price: 3965,
-      image: "assets/images/popular_product2.png",
+      image: "assets/images/tshirt.png",
+      special: true),
+  Product(
+      id: "${uuid.v1()}",
+      name: "Nike Sports White Men's Pant",
+      price: 4998,
+      image: "assets/images/pant.png",
       special: true),
   Product(
       id: "${uuid.v1()}",
       name: "Wireless Controller for PS4",
       price: 4998,
-      image: "assets/images/popular_product.png",
-      special: false)
+      image: "assets/images/ps4_black.png",
+      special: true),
+  Product(
+      id: "${uuid.v1()}",
+      name: "Nike Men's Regular T-Shirt",
+      price: 4998,
+      image: "assets/images/tshirt.png",
+      special: false),
+  Product(
+      id: "${uuid.v1()}",
+      name: "Wireless Controller for PS4",
+      price: 4998,
+      image: "assets/images/ps4_black.png",
+      special: false),
+  Product(
+      id: "${uuid.v1()}",
+      name: "Nike Sports White Men's Pant",
+      price: 4998,
+      image: "assets/images/pant.png",
+      special: true)
 ];
