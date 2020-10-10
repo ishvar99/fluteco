@@ -12,12 +12,20 @@ class ProductScreen extends StatelessWidget {
     Product product = products.singleWhere((element) => element.id == id);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrange[400],
+        backgroundColor: Colors.white,
+        actions: [
+          Icon(Icons.card_travel),
+          SizedBox(
+            width: getProportionateScreenWidth(10),
+          )
+        ],
+        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(getProportionateScreenWidth(25.0)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(25.0)),
           child: Container(
             width: double.infinity,
             child: Center(
@@ -27,6 +35,9 @@ class ProductScreen extends StatelessWidget {
                   Image.asset(
                     product.image,
                     height: getProportionateScreenWidth(250),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenWidth(30.0),
                   ),
                   Text.rich(
                     TextSpan(
