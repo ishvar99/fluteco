@@ -1,6 +1,6 @@
-import '../resources/constants.dart';
+import '../../resources/constants.dart';
 import 'package:flutter/material.dart';
-import '../resources/size_config.dart';
+import '../../resources/size_config.dart';
 
 class OfferBanner extends StatelessWidget {
   const OfferBanner({

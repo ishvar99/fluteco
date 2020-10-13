@@ -1,4 +1,4 @@
-import '../resources/constants.dart';
+import '../../resources/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluteco/resources/size_config.dart';
 

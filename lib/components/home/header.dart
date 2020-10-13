@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
-import '../../widgets/IconWithCounter.dart';
-import '../../widgets/SearchBar.dart';
+import '../../widgets/home/IconWithCounter.dart';
+import '../../widgets/home/SearchBar.dart';
 
 AppBar header(BuildContext context) {
   return AppBar(

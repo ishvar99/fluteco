@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/PartitionHeader.dart';
-import '../../widgets/BannerCarousel.dart';
+import '../../widgets/home/PartitionHeader.dart';
+import '../../widgets/home/BannerCarousel.dart';
 import '../../resources/size_config.dart';
 import './display.dart';
 

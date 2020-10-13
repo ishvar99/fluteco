@@ -1,6 +1,6 @@
 import 'package:fluteco/resources/size_config.dart';
-import 'package:fluteco/widgets/CategoriesList.dart';
-import 'package:fluteco/widgets/SpecialCard.dart';
+import 'package:fluteco/widgets/miscellaneous/CategoriesList.dart';
+import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'package:flutter/material.dart';
 import '../data/products.dart';
 

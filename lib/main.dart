@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './resources/constants.dart';
 import './resources/routes.dart';
+import 'package:provider/provider.dart';
+import 'providers/Products.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  runApp(Main());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Products()),
+      ],
+      child: Main(),
+    ),
+  );
 }
 
 class Main extends StatelessWidget {

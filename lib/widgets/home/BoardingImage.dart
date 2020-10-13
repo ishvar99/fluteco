@@ -1,4 +1,4 @@
-import '../resources/size_config.dart';
+import '../../resources/size_config.dart';
 import 'package:flutter/material.dart';
 
 class BoardingImage extends StatelessWidget {

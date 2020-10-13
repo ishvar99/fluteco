@@ -1,11 +1,11 @@
 import 'package:fluteco/data/products.dart';
-import 'package:fluteco/widgets/RecommendedCard.dart';
-import 'package:fluteco/widgets/SpecialCard.dart';
+import 'package:fluteco/widgets/home/RecommendedCard.dart';
+import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'package:flutter/material.dart';
 import '../../data/genres.dart';
 import '../../data/categories.dart';
 import '../../data/products.dart';
-import '../../widgets/Category.dart';
+import '../../widgets/miscellaneous/Category.dart';
 import 'dart:math';
 import '../../models/Genre.dart';
 

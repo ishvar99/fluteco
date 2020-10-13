@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "../resources/size_config.dart";
-import "../widgets/BoardingImage.dart";
+import '../widgets/home/BoardingImage.dart';
 import "../resources/constants.dart";
 import '../screens/Home.dart';
 

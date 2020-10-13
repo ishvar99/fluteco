@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/RecommendedCard.dart';
+import '../widgets/home/RecommendedCard.dart';
 import '../data/genres.dart';
 import '../resources/size_config.dart';
 

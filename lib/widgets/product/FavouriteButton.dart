@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../resources/size_config.dart';
+import '../../resources/size_config.dart';
 
 class FavouriteButton extends StatelessWidget {
   const FavouriteButton({

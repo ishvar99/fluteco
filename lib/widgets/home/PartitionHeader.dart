@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../resources/size_config.dart';
-import '../resources/constants.dart';
+import '../../resources/size_config.dart';
+import '../../resources/constants.dart';
 
 class PartitionHeader extends StatelessWidget {
   final String type;

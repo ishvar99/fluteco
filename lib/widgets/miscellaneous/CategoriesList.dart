@@ -1,7 +1,7 @@
 import 'package:fluteco/resources/constants.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
-import '../data/categories.dart';
+import '../../data/categories.dart';
 
 class CategoriesList extends StatefulWidget {
   @override
