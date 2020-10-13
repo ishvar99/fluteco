@@ -2,12 +2,14 @@ import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/miscellaneous/CategoriesList.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'package:flutter/material.dart';
-import '../data/products.dart';
+import 'package:provider/provider.dart';
+import '../providers/Products.dart';
 
 class FlutecoSpecial extends StatelessWidget {
   static const routeName = '/special-products';
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context).products;
     return Scaffold(
       appBar: AppBar(
         title: Text("Fluteco's Special"),

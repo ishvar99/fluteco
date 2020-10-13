@@ -33,6 +33,7 @@ class PartitionHeader extends StatelessWidget {
                 child: Text(
                   'See More',
                   style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: getProportionateScreenWidth(12),
                       color: kTextColor),
                 ),

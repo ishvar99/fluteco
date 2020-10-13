@@ -1,15 +1,16 @@
-import 'package:fluteco/data/products.dart';
 import 'package:fluteco/widgets/home/RecommendedCard.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
+import 'dart:math';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../../data/genres.dart';
 import '../../data/categories.dart';
-import '../../data/products.dart';
 import '../../widgets/miscellaneous/Category.dart';
-import 'dart:math';
+import '../../providers/Products.dart';
 import '../../models/Genre.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
+  final products = Provider.of<Products>(context).products;
   int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];

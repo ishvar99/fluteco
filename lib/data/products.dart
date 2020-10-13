@@ -2,7 +2,7 @@ import 'package:uuid/uuid.dart';
 import '../models/Product.dart';
 
 var uuid = Uuid();
-List<Product> products = [
+List<Product> productsData = [
   Product(
       id: "${uuid.v1()}",
       name: "Wireless Controller for PS4",
