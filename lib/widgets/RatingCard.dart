@@ -1,4 +1,3 @@
-import 'package:fluteco/resources/constants.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -29,12 +28,12 @@ class RatingCard extends StatelessWidget {
               width: getProportionateScreenWidth(20),
             ),
             Text(
-              "8175 Buyers",
+              "8175 Ratings",
               style: TextStyle(
-                  color: kOfferBannerColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14),
-            )
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black54),
+            ),
           ]),
     );
   }

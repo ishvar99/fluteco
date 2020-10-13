@@ -4,6 +4,7 @@ import '../widgets/RatingCard.dart';
 import 'package:flutter/material.dart';
 import '../data/products.dart';
 import '../models/Product.dart';
+import '../widgets/FavouriteButton.dart';
 
 class ProductScreen extends StatelessWidget {
   final String id;
@@ -17,8 +18,8 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Colors.deepOrange,
         elevation: 0,
       ),
-      bottomNavigationBar: SizedBox(
-        height: getProportionateScreenWidth(50),
+      bottomNavigationBar: Container(
+        height: getProportionateScreenWidth(60),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -71,96 +72,89 @@ class ProductScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenWidth(25.0),
-              horizontal: getProportionateScreenWidth(25.0)),
-          child: Container(
-            width: double.infinity,
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(20.0)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    right: getProportionateScreenWidth(20),
+                    top: getProportionateScreenWidth(20)),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
                     product.image,
                     height: getProportionateScreenWidth(200),
                   ),
-                  SizedBox(
-                    height: getProportionateScreenWidth(10.0),
-                  ),
-                  Text("${product.name}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(24),
-                          fontWeight: FontWeight.bold,
-                          color: kOfferBannerColor)),
-                  SizedBox(
-                    height: getProportionateScreenWidth(5.0),
-                  ),
-                  Text(
-                    "₹ ${product.price}",
+                ),
+              ),
+              SizedBox(
+                height: getProportionateScreenWidth(10.0),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: getProportionateScreenWidth(20)),
+                child: RatingCard(
+                  rating: 4,
+                ),
+              ),
+              SizedBox(
+                height: getProportionateScreenWidth(25.0),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: getProportionateScreenWidth(20.0)),
+                child: Text("${product.name}",
                     style: TextStyle(
-                        fontSize: 26.0,
+                        fontSize: getProportionateScreenWidth(24),
                         fontWeight: FontWeight.bold,
-                        color: Colors.teal[800]),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenWidth(10.0),
-                  ),
-                  RatingCard(
-                    rating: 4,
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenWidth(10.0),
-                  ),
-                  Text(
-                    product.description,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenWidth(20.0),
-                  ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                        color: kOfferBannerColor)),
+              ),
+              SizedBox(
+                height: getProportionateScreenWidth(15.0),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text.rich(
+                    TextSpan(
                       children: [
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: Colors.teal, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
+                        TextSpan(
+                          text: "₹999\t\t",
+                          style: TextStyle(
+                              fontSize: 26.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal[700]),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(20)),
-                          child: Text(
-                            "1",
-                            style: TextStyle(
-                              fontSize: 24.0,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: Colors.teal, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                          ),
+                        TextSpan(
+                          text: "₹ ${product.price}",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.lineThrough,
+                              decorationThickness: 2.0,
+                              color: Colors.black54),
                         )
                       ],
                     ),
-                  )
+                  ),
+                  FavouriteButton()
                 ],
               ),
-            ),
+              SizedBox(
+                height: getProportionateScreenWidth(15),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: getProportionateScreenWidth(20.0)),
+                child: Text(
+                  product.description,
+                  // textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ],
           ),
         ),
       ),
