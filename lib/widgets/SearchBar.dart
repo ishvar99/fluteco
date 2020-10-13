@@ -25,7 +25,7 @@ class SearchBar extends StatelessWidget {
               prefixIcon: Icon(Icons.search),
               hintText: 'Search',
               contentPadding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(10),
+                  vertical: getProportionateScreenWidth(10),
                   horizontal: getProportionateScreenWidth(20))),
         ),
       ),

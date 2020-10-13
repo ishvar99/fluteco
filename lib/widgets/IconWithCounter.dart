@@ -13,13 +13,13 @@ class IconWithCounter extends StatelessWidget {
       onTap: press,
       child: Stack(overflow: Overflow.visible, children: [
         Container(
-          padding: EdgeInsets.all(getProportionateScreenWidth(12)),
+          padding: EdgeInsets.all(getProportionateScreenWidth(16)),
           child: Icon(Icons.shopping_cart),
         ),
         if (count != 0)
           Positioned(
-            top: getProportionateScreenWidth(5),
-            right: getProportionateScreenWidth(5),
+            top: getProportionateScreenWidth(8),
+            right: getProportionateScreenWidth(9),
             child: Container(
               width: getProportionateScreenWidth(15),
               height: getProportionateScreenWidth(15),
