@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Product {
+class Product with ChangeNotifier {
   final String id;
   final String name;
   final int price;
@@ -18,31 +18,8 @@ class Product {
       @required this.description,
       this.favourite = false});
 
-  String get productId {
-    return id;
-  }
-
-  String get productName {
-    return name;
-  }
-
-  int get productPrice {
-    return price;
-  }
-
-  String get productDescription {
-    return description;
-  }
-
-  String get productImage {
-    return image;
-  }
-
-  bool get productFavourite {
-    return favourite;
-  }
-
-  bool get specialProduct {
-    return special;
+  void toggleFavouriteStatus() {
+    favourite = !favourite;
+    notifyListeners();
   }
 }

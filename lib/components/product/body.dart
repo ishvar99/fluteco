@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../models/Product.dart';
+import '../../providers/Product.dart';
 import '../../resources/size_config.dart';
 import '../../resources/constants.dart';
 import '../../widgets/product/RatingCard.dart';
 import '../../widgets/product/FavouriteButton.dart';
+import 'package:intl/intl.dart';
 
 Padding displayContent(Product product) {
+  final formatter =
+      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
   return Padding(
     padding: EdgeInsets.only(left: getProportionateScreenWidth(20.0)),
     child: Column(
@@ -54,14 +57,14 @@ Padding displayContent(Product product) {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: "₹999\t\t",
+                    text: "${formatter.format(999)}\t\t",
                     style: TextStyle(
                         fontSize: 26.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.teal[700]),
+                        color: Colors.teal[600]),
                   ),
                   TextSpan(
-                    text: "₹ ${product.price}",
+                    text: "${formatter.format(product.price)}",
                     style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

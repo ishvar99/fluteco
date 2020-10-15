@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
-import '../../models/Product.dart';
+import '../../providers/Product.dart';
 
 class FavouriteButton extends StatefulWidget {
   final Product product;

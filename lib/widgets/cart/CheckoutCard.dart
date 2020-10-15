@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../widgets/splash/RoundedButton.dart';
 import '../../resources/size_config.dart';
+import 'package:intl/intl.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
+  final formatter =
+      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+  //  final formatter =
+  // new NumberFormat.simpleCurrency(name="INR" decimalDigits: 0);
+  CheckoutCard({
     Key key,
   }) : super(key: key);
 
@@ -56,13 +61,14 @@ class CheckoutCard extends StatelessWidget {
                 Text.rich(
                   TextSpan(
                     text: "Total:\n",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     children: [
                       TextSpan(
-                        text: "₹${938930}",
+                        text: "${formatter.format(938930)}",
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                            fontWeight: FontWeight.w900,
+                            color: Colors.teal[600]),
                       ),
                     ],
                   ),

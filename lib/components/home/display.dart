@@ -40,24 +40,18 @@ SingleChildScrollView display({String type, BuildContext context}) {
             );
           } else if (type == "categories") {
             return Category(
-              icon: categories[index].categoryIcon,
-              text: categories[index].categoryText,
+              icon: categories[index].icon,
+              text: categories[index].text,
               tapped: () => Navigator.of(context).pushNamed(
                 '/categories',
-                arguments: categories[index].categoryId,
+                arguments: categories[index].id,
               ),
             );
           } else if (type == "special-products") {
             if (products[index].special) {
-              return SpecialCard(
-                title: products[index].name,
-                image: products[index].image,
-                price: products[index].price,
-                tapped: () => Navigator.pushNamed(
-                  context,
-                  '/products',
-                  arguments: products[index].id,
-                ),
+              return ChangeNotifierProvider.value(
+                value: products[index],
+                child: SpecialCard(),
               );
             } else
               return Container();

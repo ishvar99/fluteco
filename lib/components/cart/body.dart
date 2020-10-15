@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
-import '../../models/Product.dart';
+import '../../providers/Product.dart';
 import '../../widgets/cart/CartProduct.dart';
 
 Padding displayCart(List<Product> products) {

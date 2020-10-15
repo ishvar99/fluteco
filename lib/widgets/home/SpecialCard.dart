@@ -1,20 +1,17 @@
-import 'package:fluteco/resources/constants.dart';
-import 'package:fluteco/resources/size_config.dart';
+import '../../providers/Product.dart';
+import '../../resources/constants.dart';
+import '../../resources/size_config.dart';
 import 'package:flutter/material.dart';
 import './ImageCard.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SpecialCard extends StatelessWidget {
-  final String title;
-  final int price;
-  final String image;
-  final Function tapped;
-  SpecialCard(
-      {@required this.title,
-      @required this.image,
-      @required this.price,
-      @required this.tapped});
+  final formatter =
+      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
@@ -23,10 +20,16 @@ class SpecialCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageCard(tapped: tapped, image: image),
+            ImageCard(
+                tapped: () => Navigator.pushNamed(
+                      context,
+                      '/products',
+                      arguments: product.id,
+                    ),
+                image: product.image),
             const SizedBox(height: 5),
             Text(
-              title,
+              product.name,
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               maxLines: 3,
@@ -36,7 +39,7 @@ class SpecialCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: getProportionateScreenWidth(7)),
                 child: Text(
-                  "₹$price",
+                  "${formatter.format(product.price)}",
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationThickness: 2.0,
@@ -46,17 +49,21 @@ class SpecialCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "₹999",
+                "${formatter.format(999)}",
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w600,
                     color: kOfferBannerColor),
               ),
               Spacer(),
-              Icon(
-                Icons.favorite_border,
-                size: getProportionateScreenWidth(20),
-                color: Colors.pink[500],
+              InkWell(
+                splashColor: Colors.pink,
+                onTap: () {},
+                child: Icon(
+                  Icons.favorite_border,
+                  size: getProportionateScreenWidth(20),
+                  color: Colors.pink[500],
+                ),
               )
             ]),
           ],

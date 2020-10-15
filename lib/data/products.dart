@@ -1,5 +1,5 @@
 import 'package:uuid/uuid.dart';
-import '../models/Product.dart';
+import '../providers/Product.dart';
 
 var uuid = Uuid();
 List<Product> productsData = [

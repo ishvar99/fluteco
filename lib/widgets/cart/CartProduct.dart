@@ -1,7 +1,8 @@
-import '../../models/Product.dart';
+import '../../providers/Product.dart';
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../widgets/home/ImageCard.dart';
+import 'package:intl/intl.dart';
 
 class CartProduct extends StatefulWidget {
   final Product product;
@@ -12,6 +13,8 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
+  final formatter =
+      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -66,7 +69,7 @@ class _CartProductState extends State<CartProduct> {
                     softWrap: true,
                   ),
                   Text(
-                    "₹${widget.product.price}",
+                    "${formatter.format(widget.product.price)}",
                     style: TextStyle(
                         fontSize: getProportionateScreenWidth(16),
                         fontWeight: FontWeight.bold,

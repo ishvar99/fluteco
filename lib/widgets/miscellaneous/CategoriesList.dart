@@ -35,7 +35,7 @@ class _CategoriesListState extends State<CategoriesList> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    categories[index].categoryText,
+                    categories[index].text,
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       color: Colors.teal[600],

@@ -25,9 +25,9 @@ class Genres extends StatelessWidget {
           itemBuilder: (context, index) => Container(
             width: double.infinity,
             child: RecommendedCard(
-              image: genres[index].genreImage,
-              name: genres[index].genreName,
-              availability: genres[index].genreAvailability,
+              image: genres[index].image,
+              name: genres[index].name,
+              availability: genres[index].availability,
             ),
           ),
         ),

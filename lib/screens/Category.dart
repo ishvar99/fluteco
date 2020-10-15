@@ -7,9 +7,8 @@ class CategoryScreen extends StatelessWidget {
   CategoryScreen({@required this.id});
   @override
   Widget build(BuildContext context) {
-    Category category =
-        categories.singleWhere((element) => element.categoryId == id);
-    String text = category.categoryText;
+    Category category = categories.singleWhere((element) => element.id == id);
+    String text = category.text;
     return Scaffold(
       appBar: AppBar(
         title: Text(

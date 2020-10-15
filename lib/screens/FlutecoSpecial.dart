@@ -24,22 +24,15 @@ class FlutecoSpecial extends StatelessWidget {
             CategoriesList(),
             Expanded(
               child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: getProportionateScreenWidth(2).round(),
-                    childAspectRatio: getProportionateScreenWidth(0.7),
-                    crossAxisSpacing: 2,
-                  ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) => SpecialCard(
-                        image: products[index].productImage,
-                        title: products[index].productName,
-                        price: products[index].productPrice,
-                        tapped: () => Navigator.pushNamed(
-                          context,
-                          '/products',
-                          arguments: products[index].id,
-                        ),
-                      )),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getProportionateScreenWidth(2).round(),
+                  childAspectRatio: getProportionateScreenWidth(0.7),
+                  crossAxisSpacing: 2,
+                ),
+                itemCount: products.length,
+                itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                    value: products[index], child: SpecialCard()),
+              ),
             ),
           ],
         ),
