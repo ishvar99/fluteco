@@ -3,6 +3,7 @@ import "../resources/size_config.dart";
 import '../widgets/home/BoardingImage.dart';
 import "../resources/constants.dart";
 import '../screens/Home.dart';
+import '../widgets/splash/RoundedButton.dart';
 
 class Splash extends StatefulWidget {
   static const routeName = '/';
@@ -72,21 +73,10 @@ class _SplashState extends State<Splash> {
                   horizontal: getProportionateScreenWidth(35)),
               width: double.infinity,
               height: 50,
-              child: RaisedButton(
-                color: kPrimaryColor,
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Home.routeName);
-                },
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
-              ),
+              child: RoundedButton(
+                  text: "Continue",
+                  pressed: () =>
+                      Navigator.of(context).pushNamed(Home.routeName)),
             )
           ],
         ),

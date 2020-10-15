@@ -1,6 +1,7 @@
 import 'package:fluteco/resources/constants.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
+import './ImageCard.dart';
 
 class SpecialCard extends StatelessWidget {
   final String title;
@@ -22,26 +23,7 @@ class SpecialCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 1.02,
-              child: InkWell(
-                  borderRadius: BorderRadius.circular(15.0),
-                  onTap: tapped,
-                  child: Container(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 0.5, color: kSecondaryColor.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(15.0),
-                      color: kSecondaryColor.withOpacity(0.04),
-                      // color: Colors.deepOrange[50],
-                    ),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.contain,
-                    ),
-                  )),
-            ),
+            ImageCard(tapped: tapped, image: image),
             const SizedBox(height: 5),
             Text(
               title,
@@ -72,7 +54,7 @@ class SpecialCard extends StatelessWidget {
               Icon(
                 Icons.favorite_border,
                 size: getProportionateScreenWidth(20),
-                color: Colors.red,
+                color: Colors.pink[500],
               )
             ]),
           ],

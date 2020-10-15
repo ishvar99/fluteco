@@ -2,7 +2,7 @@ import '../providers/Products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/Product.dart';
-import '../components/product/navigationBar.dart';
+import '../components/product/bottomNavigationBar.dart';
 import '../components/product/body.dart';
 
 class ProductScreen extends StatelessWidget {

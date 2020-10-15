@@ -72,7 +72,9 @@ Padding displayContent(Product product) {
                 ],
               ),
             ),
-            FavouriteButton()
+            FavouriteButton(
+              product: product,
+            )
           ],
         ),
         SizedBox(

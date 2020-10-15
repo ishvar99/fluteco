@@ -16,7 +16,7 @@ class Product {
       @required this.image,
       @required this.special,
       @required this.description,
-      this.favourite});
+      this.favourite = false});
 
   String get productId {
     return id;
@@ -36,6 +36,10 @@ class Product {
 
   String get productImage {
     return image;
+  }
+
+  bool get productFavourite {
+    return favourite;
   }
 
   bool get specialProduct {
