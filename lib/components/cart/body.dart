@@ -6,8 +6,8 @@ import '../../widgets/cart/CartProduct.dart';
 Padding displayCart(List<Product> products) {
   return Padding(
     padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(25),
-        vertical: getProportionateScreenWidth(10)),
+      horizontal: getProportionateScreenWidth(25),
+    ),
     child: ListView.builder(
       itemCount: products.length,
       itemBuilder: (context, index) => CartProduct(

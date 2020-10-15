@@ -6,7 +6,10 @@ class Profile extends StatelessWidget {
     return Scaffold(
       body: Container(),
       appBar: AppBar(
-        title: Text("Profile"),
+        title: Text(
+          "Profile",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
     );
   }

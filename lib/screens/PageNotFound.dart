@@ -5,7 +5,10 @@ class PageNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fluteco"),
+        title: Text(
+          "Fluteco",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
       body: Container(
         child: Center(

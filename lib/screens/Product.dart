@@ -14,7 +14,7 @@ class ProductScreen extends StatelessWidget {
     Product product = products.singleWhere((element) => element.id == id);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fluteco", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text("Fluteco", style: TextStyle(fontWeight: FontWeight.w900)),
         backgroundColor: Colors.deepOrange,
         elevation: 0,
       ),

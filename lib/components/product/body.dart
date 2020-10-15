@@ -88,6 +88,9 @@ Padding displayContent(Product product) {
             style: TextStyle(fontSize: 16),
           ),
         ),
+        SizedBox(
+          height: getProportionateScreenWidth(20.0),
+        )
       ],
     ),
   );

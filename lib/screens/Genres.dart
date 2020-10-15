@@ -9,7 +9,10 @@ class Genres extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Genres"),
+        title: Text(
+          "Genres",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(getProportionateScreenWidth(25.0)),

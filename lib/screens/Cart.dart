@@ -11,7 +11,10 @@ class Cart extends StatelessWidget {
     final products = Provider.of<Products>(context).products;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Your Cart'),
+          title: Text(
+            'Your Cart',
+            style: TextStyle(fontWeight: FontWeight.w900),
+          ),
         ),
         bottomNavigationBar: CheckoutCard(),
         body: displayCart(products));

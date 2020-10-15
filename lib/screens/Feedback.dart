@@ -6,7 +6,10 @@ class FeedBackInfo extends StatelessWidget {
     return Scaffold(
       body: Container(),
       appBar: AppBar(
-        title: Text("Feedback"),
+        title: Text(
+          "Feedback",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
     );
   }

@@ -14,18 +14,13 @@ class CheckoutCard extends StatelessWidget {
         vertical: getProportionateScreenWidth(15),
         horizontal: getProportionateScreenWidth(30),
       ),
-      // height: 174,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -15),
-            blurRadius: 20,
-            color: Color(0xFFDADADA).withOpacity(0.15),
+            blurRadius: 5,
+            spreadRadius: 1,
+            color: Colors.black.withOpacity(0.25),
           )
         ],
       ),
@@ -63,8 +58,11 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        text: "₹${938930}",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                     ],
                   ),

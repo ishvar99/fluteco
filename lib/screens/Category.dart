@@ -12,7 +12,10 @@ class CategoryScreen extends StatelessWidget {
     String text = category.categoryText;
     return Scaffold(
       appBar: AppBar(
-        title: Text(text),
+        title: Text(
+          text,
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
       body: Container(
         child: Center(child: Text(text)),

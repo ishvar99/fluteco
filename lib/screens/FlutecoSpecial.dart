@@ -12,7 +12,10 @@ class FlutecoSpecial extends StatelessWidget {
     final products = Provider.of<Products>(context).products;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fluteco's Special"),
+        title: Text(
+          "Fluteco's Special",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),

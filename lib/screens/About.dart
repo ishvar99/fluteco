@@ -6,7 +6,10 @@ class About extends StatelessWidget {
     return Scaffold(
       body: Container(),
       appBar: AppBar(
-        title: Text("About"),
+        title: Text(
+          "About",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
     );
   }

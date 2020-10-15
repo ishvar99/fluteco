@@ -27,8 +27,10 @@ class SpecialCard extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               title,
-              style: TextStyle(color: Colors.black),
-              maxLines: 2,
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
             Row(children: [
               Padding(

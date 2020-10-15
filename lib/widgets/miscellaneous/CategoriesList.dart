@@ -1,4 +1,3 @@
-import 'package:fluteco/resources/constants.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:flutter/material.dart';
 import '../../data/categories.dart';
@@ -22,7 +21,7 @@ class _CategoriesListState extends State<CategoriesList> {
           itemCount: categories.length,
           itemBuilder: (context, index) => InkWell(
             borderRadius: BorderRadius.circular(10.0),
-            splashColor: kOfferBannerColor.withOpacity(0.2),
+            splashColor: Colors.teal.withOpacity(0.1),
             onTap: () {
               setState(() {
                 _selectedIndex = index;
@@ -38,8 +37,8 @@ class _CategoriesListState extends State<CategoriesList> {
                   Text(
                     categories[index].categoryText,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: kOfferBannerColor,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.teal[600],
                       fontSize: getProportionateScreenWidth(16.0),
                     ),
                   ),
@@ -49,7 +48,7 @@ class _CategoriesListState extends State<CategoriesList> {
                           width: getProportionateScreenWidth(25),
                           margin: EdgeInsets.only(
                               top: getProportionateScreenWidth(2.0)),
-                          color: kOfferBannerColor,
+                          color: Colors.teal[700],
                         )
                       : Container()
                 ],

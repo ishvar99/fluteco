@@ -6,7 +6,10 @@ class Wishlist extends StatelessWidget {
     return Scaffold(
       body: Container(),
       appBar: AppBar(
-        title: Text("Wishlist"),
+        title: Text(
+          "Wishlist",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
       ),
     );
   }
