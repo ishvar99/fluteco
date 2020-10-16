@@ -4,12 +4,6 @@ import '../../providers/Product.dart';
 import 'package:provider/provider.dart';
 
 class FavouriteButton extends StatefulWidget {
-  final Product product;
-  const FavouriteButton({
-    Key key,
-    @required this.product,
-  }) : super(key: key);
-
   @override
   _FavouriteButtonState createState() => _FavouriteButtonState();
 }
@@ -17,9 +11,10 @@ class FavouriteButton extends StatefulWidget {
 class _FavouriteButtonState extends State<FavouriteButton> {
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return InkWell(
       onTap: () {
-        widget.product.toggleFavouriteStatus();
+        product.toggleFavouriteStatus();
       },
       splashColor: Colors.pink,
       borderRadius: BorderRadius.only(
@@ -35,10 +30,8 @@ class _FavouriteButtonState extends State<FavouriteButton> {
             )),
         height: getProportionateScreenWidth(40),
         width: getProportionateScreenWidth(60),
-        child: Icon(
-            widget.product.favourite ? Icons.favorite : Icons.favorite_border,
-            color: Colors.pink[500],
-            size: 22),
+        child: Icon(product.favourite ? Icons.favorite : Icons.favorite_border,
+            color: Colors.pink[500], size: 22),
       ),
     );
   }

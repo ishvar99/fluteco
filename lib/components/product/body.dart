@@ -5,10 +5,12 @@ import '../../resources/constants.dart';
 import '../../widgets/product/RatingCard.dart';
 import '../../widgets/product/FavouriteButton.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-Padding displayContent(Product product) {
+Padding displayContent(BuildContext context) {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+  final product = Provider.of<Product>(context, listen: false);
   return Padding(
     padding: EdgeInsets.only(left: getProportionateScreenWidth(20.0)),
     child: Column(
@@ -75,9 +77,7 @@ Padding displayContent(Product product) {
                 ],
               ),
             ),
-            FavouriteButton(
-              product: product,
-            )
+            FavouriteButton(),
           ],
         ),
         SizedBox(

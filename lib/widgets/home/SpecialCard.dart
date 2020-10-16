@@ -17,7 +17,7 @@ class _SpecialCardState extends State<SpecialCard> {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
@@ -68,11 +68,13 @@ class _SpecialCardState extends State<SpecialCard> {
                 onTap: () {
                   product.toggleFavouriteStatus();
                 },
-                child: Icon(
-                  product.favourite ? Icons.favorite : Icons.favorite_border,
-                  size: getProportionateScreenWidth(20),
-                  color: Colors.pink[500],
-                ),
+                child: Consumer<Product>(builder: (context, product, _) {
+                  return Icon(
+                    product.favourite ? Icons.favorite : Icons.favorite_border,
+                    size: getProportionateScreenWidth(20),
+                    color: Colors.pink[500],
+                  );
+                }),
               )
             ]),
           ],
