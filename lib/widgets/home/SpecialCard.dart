@@ -6,15 +6,33 @@ import 'package:flutter/material.dart';
 import './ImageCard.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../../components/wishlist/showDialog.dart';
 
 class SpecialCard extends StatefulWidget {
-  final bool shouldUpdate;
-  SpecialCard({this.shouldUpdate = false});
+  final bool wishListItem;
+  SpecialCard({this.wishListItem = false});
   @override
   _SpecialCardState createState() => _SpecialCardState();
 }
 
 class _SpecialCardState extends State<SpecialCard> {
+  void _showSnackbar(context, product) {
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: 1500),
+      content: Text(product.favourite
+          ? 'Product is added to wishlist'
+          : 'Product to removed from wishlist'),
+      action: SnackBarAction(
+        label: 'Undo',
+        textColor: Colors.amber,
+        onPressed: () {
+          product.toggleFavouriteStatus();
+        },
+      ),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
   final formatter =
       new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
 
@@ -22,6 +40,7 @@ class _SpecialCardState extends State<SpecialCard> {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final products = Provider.of<Products>(context);
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
@@ -68,16 +87,45 @@ class _SpecialCardState extends State<SpecialCard> {
               Spacer(),
               InkWell(
                 borderRadius: BorderRadius.circular(20),
-                splashColor: Colors.pink[50],
+                splashColor: Colors.pink.withOpacity(0.05),
                 onTap: () {
-                  product.toggleFavouriteStatus();
-                  if (widget.shouldUpdate) products.forceUpdate();
+                  if (widget.wishListItem) {
+                    showConfirmationDialog(context, (result) {
+                      if (result) {
+                        product.toggleFavouriteStatus();
+                        products.forceUpdate();
+                        _showSnackbar(context, product);
+                      }
+                    });
+                  } else {
+                    product.toggleFavouriteStatus();
+                    _showSnackbar(context, product);
+                  }
                 },
                 child: Consumer<Product>(builder: (context, product, _) {
-                  return Icon(
-                    product.favourite ? Icons.favorite : Icons.favorite_border,
-                    size: getProportionateScreenWidth(20),
-                    color: Colors.pink[500],
+                  return Container(
+                    width: getProportionateScreenWidth(25),
+                    height: getProportionateScreenWidth(25),
+                    decoration: BoxDecoration(
+                        color: widget.wishListItem
+                            ? Colors.red[50]
+                            : Colors.pink[50],
+                        shape: BoxShape.circle),
+                    child: Center(
+                      child: widget.wishListItem
+                          ? Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: getProportionateScreenWidth(16),
+                            )
+                          : Icon(
+                              product.favourite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: getProportionateScreenWidth(16),
+                              color: Colors.pink[500],
+                            ),
+                    ),
                   );
                 }),
               )

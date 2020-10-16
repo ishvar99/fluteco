@@ -8,7 +8,6 @@ import '../../data/categories.dart';
 import '../../widgets/miscellaneous/Category.dart';
 import '../../providers/Products.dart';
 import '../../models/Genre.dart';
-import '../../providers/Product.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
   final products = Provider.of<Products>(context).products;

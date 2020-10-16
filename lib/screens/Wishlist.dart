@@ -18,9 +18,10 @@ class _WishlistState extends State<Wishlist> {
         products.where((product) => product.favourite).toList();
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(15),
-            vertical: getProportionateScreenWidth(30)),
+        padding: EdgeInsets.only(
+            left: getProportionateScreenWidth(15),
+            right: getProportionateScreenWidth(15),
+            top: getProportionateScreenWidth(30)),
         child: filteredProducts.length == 0
             ? Center(
                 child: Text(
@@ -40,7 +41,7 @@ class _WishlistState extends State<Wishlist> {
                         ? ChangeNotifierProvider.value(
                             value: filteredProducts[index],
                             child: SpecialCard(
-                              shouldUpdate: true,
+                              wishListItem: true,
                             ),
                           )
                         : Container(),
