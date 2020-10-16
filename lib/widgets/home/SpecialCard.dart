@@ -1,3 +1,4 @@
+import '../../providers/Products.dart';
 import '../../providers/Product.dart';
 import '../../resources/constants.dart';
 import '../../resources/size_config.dart';
@@ -7,17 +8,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SpecialCard extends StatefulWidget {
+  final bool shouldUpdate;
+  SpecialCard({this.shouldUpdate = false});
   @override
   _SpecialCardState createState() => _SpecialCardState();
 }
 
 class _SpecialCardState extends State<SpecialCard> {
   final formatter =
-      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
 
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    final products = Provider.of<Products>(context);
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
@@ -67,6 +71,7 @@ class _SpecialCardState extends State<SpecialCard> {
                 splashColor: Colors.pink[50],
                 onTap: () {
                   product.toggleFavouriteStatus();
+                  if (widget.shouldUpdate) products.forceUpdate();
                 },
                 child: Consumer<Product>(builder: (context, product, _) {
                   return Icon(

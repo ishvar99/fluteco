@@ -8,4 +8,8 @@ class Products with ChangeNotifier {
   List<Product> get products {
     return [..._products];
   }
+
+  void forceUpdate() {
+    notifyListeners();
+  }
 }
