@@ -6,9 +6,15 @@ import './ImageCard.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class SpecialCard extends StatelessWidget {
+class SpecialCard extends StatefulWidget {
+  @override
+  _SpecialCardState createState() => _SpecialCardState();
+}
+
+class _SpecialCardState extends State<SpecialCard> {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
@@ -57,10 +63,13 @@ class SpecialCard extends StatelessWidget {
               ),
               Spacer(),
               InkWell(
-                splashColor: Colors.pink,
-                onTap: () {},
+                borderRadius: BorderRadius.circular(20),
+                splashColor: Colors.pink[50],
+                onTap: () {
+                  product.toggleFavouriteStatus();
+                },
                 child: Icon(
-                  Icons.favorite_border,
+                  product.favourite ? Icons.favorite : Icons.favorite_border,
                   size: getProportionateScreenWidth(20),
                   color: Colors.pink[500],
                 ),

@@ -1,3 +1,5 @@
+import 'package:fluteco/providers/Product.dart';
+import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/screens/Product.dart';
 import 'package:flutter/material.dart';
 import '../screens/Splash.dart';
@@ -8,6 +10,7 @@ import '../screens/Category.dart';
 import '../screens/PageNotFound.dart';
 import '../screens/FlutecoSpecial.dart';
 import '../screens/Genres.dart';
+import 'package:provider/provider.dart';
 
 final Map<String, WidgetBuilder> routes = {
   Splash.routeName: (_) => Splash(),
@@ -29,8 +32,12 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
     case '/products':
       {
         print(settings.arguments);
-        return MaterialPageRoute(
-            builder: (context) => ProductScreen(id: arguments));
+        return MaterialPageRoute(builder: (context) {
+          final products = Provider.of<Products>(context).products;
+          return ChangeNotifierProvider.value(
+              value: products.singleWhere((product) => product.id == arguments),
+              child: ProductScreen());
+        });
       }
     default:
       {

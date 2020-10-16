@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../providers/Product.dart';
+import 'package:provider/provider.dart';
 
 class FavouriteButton extends StatefulWidget {
   final Product product;
@@ -17,7 +18,9 @@ class _FavouriteButtonState extends State<FavouriteButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        widget.product.toggleFavouriteStatus();
+      },
       splashColor: Colors.pink,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20),
