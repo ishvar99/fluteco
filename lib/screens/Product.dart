@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/product/bottomNavigationBar.dart';
+import '../components/product/showBottomNavigationBar.dart';
 import '../components/product/body.dart';
 
 class ProductScreen extends StatelessWidget {

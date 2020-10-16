@@ -13,7 +13,6 @@ class _WishlistState extends State<Wishlist> {
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context).products;
-    print(products);
     final filteredProducts =
         products.where((product) => product.favourite).toList();
     return Scaffold(

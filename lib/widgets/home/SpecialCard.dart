@@ -7,6 +7,7 @@ import './ImageCard.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../components/wishlist/showDialog.dart';
+import '../../components/home/showSnackbar.dart';
 
 class SpecialCard extends StatefulWidget {
   final bool wishListItem;
@@ -16,23 +17,6 @@ class SpecialCard extends StatefulWidget {
 }
 
 class _SpecialCardState extends State<SpecialCard> {
-  void _showSnackbar(context, product) {
-    final snackBar = SnackBar(
-      duration: Duration(milliseconds: 1500),
-      content: Text(product.favourite
-          ? 'Product is added to wishlist'
-          : 'Product to removed from wishlist'),
-      action: SnackBarAction(
-        label: 'Undo',
-        textColor: Colors.amber,
-        onPressed: () {
-          product.toggleFavouriteStatus();
-        },
-      ),
-    );
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
-
   final formatter =
       new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
 
@@ -94,12 +78,16 @@ class _SpecialCardState extends State<SpecialCard> {
                       if (result) {
                         product.toggleFavouriteStatus();
                         products.forceUpdate();
-                        _showSnackbar(context, product);
+                        showSnackbar(
+                            context: context,
+                            product: product,
+                            products: products,
+                            wishListItem: widget.wishListItem);
                       }
                     });
                   } else {
                     product.toggleFavouriteStatus();
-                    _showSnackbar(context, product);
+                    showSnackbar(context: context, product: product);
                   }
                 },
                 child: Consumer<Product>(builder: (context, product, _) {
