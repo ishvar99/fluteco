@@ -1,11 +1,11 @@
-import '../../providers/Product.dart';
+import '../../providers/Cart.dart';
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../widgets/home/ImageCard.dart';
 import 'package:intl/intl.dart';
 
 class CartProduct extends StatefulWidget {
-  final Product product;
+  final CartItem product;
   const CartProduct({Key key, this.product}) : super(key: key);
 
   @override
@@ -59,7 +59,7 @@ class _CartProductState extends State<CartProduct> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.product.name}",
+                    "${widget.product.title}",
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

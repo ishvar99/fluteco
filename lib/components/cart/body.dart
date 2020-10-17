@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
-import '../../providers/Product.dart';
+import '../../providers/Cart.dart';
 import '../../widgets/cart/CartProduct.dart';
 
-Padding displayCart(List<Product> products) {
+Padding displayCart(Map<String, CartItem> cartProducts) {
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: getProportionateScreenWidth(25),
     ),
     child: ListView.builder(
-      itemCount: products.length,
+      itemCount: cartProducts.length,
       itemBuilder: (context, index) => CartProduct(
-        product: products[index],
+        product: cartProducts.values.elementAt(index),
       ),
     ),
   );

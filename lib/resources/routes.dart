@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 final Map<String, WidgetBuilder> routes = {
   Splash.routeName: (_) => Splash(),
   Home.routeName: (_) => Tabs(),
-  Cart.routeName: (_) => Cart(),
+  CartScreen.routeName: (_) => CartScreen(),
   FlutecoSpecial.routeName: (_) => FlutecoSpecial(),
   Genres.routeName: (_) => Genres()
 };

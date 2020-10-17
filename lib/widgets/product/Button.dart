@@ -14,16 +14,22 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: tapped,
+      splashColor: text == "ADD TO CART" || text == "GO TO CART"
+          ? Colors.grey
+          : Colors.deepOrange[600],
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-          color: text == "ADD TO CART" ? Color(0xFFF5F6F9) : Colors.deepOrange,
+          color: text == "ADD TO CART" || text == "GO TO CART"
+              ? Color(0xFFF5F6F9)
+              : Colors.deepOrange,
           boxShadow: [
             BoxShadow(
-                color: text == "ADD TO CART"
+                color: text == "ADD TO CART" || text == "GO TO CART"
                     ? Colors.black.withOpacity(0.2)
                     : Colors.black.withOpacity(0.3),
                 offset: Offset(
-                    text == "ADD TO CART"
+                    text == "ADD TO CART" || text == "GO TO CART"
                         ? getProportionateScreenWidth(3.0)
                         : getProportionateScreenWidth(6.0),
                     0.0),
@@ -35,7 +41,9 @@ class Button extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-                color: text == "ADD TO CART" ? Colors.black : Colors.white,
+                color: text == "ADD TO CART" || text == "GO TO CART"
+                    ? Colors.black
+                    : Colors.white,
                 fontWeight: FontWeight.bold),
           ),
         ),
