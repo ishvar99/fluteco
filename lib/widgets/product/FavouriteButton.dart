@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../providers/Product.dart';
 import 'package:provider/provider.dart';
+import '../../components/home/showSnackbar.dart';
 
 class FavouriteButton extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _FavouriteButtonState extends State<FavouriteButton> {
     return InkWell(
       onTap: () {
         product.toggleFavouriteStatus();
+        showSnackbar(context: context, product: product);
       },
       splashColor: Colors.pink,
       borderRadius: BorderRadius.only(

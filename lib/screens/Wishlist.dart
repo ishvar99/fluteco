@@ -1,3 +1,4 @@
+import 'package:fluteco/providers/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../resources/size_config.dart';
@@ -10,6 +11,16 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
+  // List<Product> _filteredProducts;
+  // Future<void> _onRefresh(BuildContext context) async {
+  //   setState(() {
+  //     _filteredProducts = Provider.of<Products>(context)
+  //         .products
+  //         .where((product) => product.favourite)
+  //         .toList();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context).products;

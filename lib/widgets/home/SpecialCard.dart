@@ -76,7 +76,8 @@ class _SpecialCardState extends State<SpecialCard> {
                   if (widget.wishListItem) {
                     showConfirmationDialog(context, (result) {
                       if (result) {
-                        product.toggleFavouriteStatus();
+                        if (product.favourite) product.toggleFavouriteStatus();
+
                         products.forceUpdate();
                         showSnackbar(
                             context: context,
