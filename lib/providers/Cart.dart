@@ -33,6 +33,11 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItem(String id) {
+    _items.removeWhere((key, values) => values.id == id);
+    notifyListeners();
+  }
+
   int getCount() {
     return _items.length;
   }

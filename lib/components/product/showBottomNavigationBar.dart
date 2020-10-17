@@ -28,7 +28,7 @@ Container displayBottomNavigationBar(BuildContext context, Product product) {
                         title: product.name);
                     final snackBar = SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      duration: Duration(milliseconds: 1500),
+                      duration: Duration(milliseconds: 500),
                       content: Text(
                         'Product added to the cart!',
                         textAlign: TextAlign.center,

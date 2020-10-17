@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../resources/size_config.dart';
 import '../../widgets/home/IconWithCounter.dart';
 import '../../widgets/home/SearchBar.dart';
+import '../../providers/Cart.dart';
 
 AppBar header(BuildContext context) {
+  final cart = Provider.of<Cart>(context);
   return AppBar(
     title: Text(
       'Fluteco',
@@ -11,7 +14,7 @@ AppBar header(BuildContext context) {
     ),
     actions: [
       IconWithCounter(
-          count: 2,
+          count: cart.items.length,
           press: () {
             Navigator.pushNamed(context, '/cart');
           }),

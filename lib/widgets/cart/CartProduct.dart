@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../widgets/home/ImageCard.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CartProduct extends StatefulWidget {
   final CartItem product;
@@ -15,12 +16,24 @@ class CartProduct extends StatefulWidget {
 class _CartProductState extends State<CartProduct> {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Dismissible(
       onDismissed: (index) {
         setState(() {
           //delete from cart
+          cart.removeItem(widget.product.id);
+          final snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(milliseconds: 500),
+            content: Text(
+              'Product removed from the cart!',
+              textAlign: TextAlign.center,
+            ),
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
         });
       },
       direction: DismissDirection.endToStart,
@@ -68,13 +81,23 @@ class _CartProductState extends State<CartProduct> {
                     ),
                     softWrap: true,
                   ),
-                  Text(
-                    "${formatter.format(widget.product.price)}",
-                    style: TextStyle(
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                      text: "${formatter.format(widget.product.price)} ",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenWidth(16),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    TextSpan(
+                      text: "x${widget.product.quantity}",
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
                         fontSize: getProportionateScreenWidth(16),
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor),
-                  )
+                      ),
+                    )
+                  ])),
                 ],
               ),
             )
