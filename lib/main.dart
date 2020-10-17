@@ -1,3 +1,4 @@
+import './providers/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './resources/constants.dart';
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Products()),
+        ChangeNotifierProvider(create: (_) => Cart()),
       ],
       child: Main(),
     ),

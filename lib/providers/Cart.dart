@@ -4,9 +4,9 @@ class CartItem {
   final String id;
   final String title;
   final int quantity;
-  final String price;
+  final int price;
 
-  CartItem({this.id, this.title, this.quantity, this.price});
+  CartItem({this.id, this.title, this.quantity = 1, this.price});
 }
 
 class Cart with ChangeNotifier {
@@ -15,14 +15,18 @@ class Cart with ChangeNotifier {
     return {...items};
   }
 
-  void addItem(String productId, String price, String title, int quantity) {
+  void addItem({String productId, int price, String title}) {
     _items.putIfAbsent(
       productId,
       () => CartItem(
-          id: DateTime.now().toString(),
-          title: title,
-          price: price,
-          quantity: quantity),
+        id: DateTime.now().toString(),
+        title: title,
+        price: price,
+      ),
     );
+  }
+
+  int getCount() {
+    return _items.length;
   }
 }
