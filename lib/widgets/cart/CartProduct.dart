@@ -4,6 +4,7 @@ import '../../resources/size_config.dart';
 import '../../widgets/home/ImageCard.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../../components/wishlist/showDialog.dart';
 
 class CartProduct extends StatefulWidget {
   final CartItem cartProduct;
@@ -23,19 +24,27 @@ class _CartProductState extends State<CartProduct> {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
     return Dismissible(
-      onDismissed: (index) {
-        setState(() {
-          //delete from cart
-          cart.removeItem(widget.cartProduct.id);
-          final snackBar = SnackBar(
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(milliseconds: 500),
-            content: Text(
-              'Product removed from the cart!',
-              textAlign: TextAlign.center,
-            ),
-          );
-          Scaffold.of(context).showSnackBar(snackBar);
+      confirmDismiss: (index) {
+        showConfirmationDialog(
+            'Do you want to remove this product from the cart?', context,
+            (result) {
+          if (result) {
+            setState(() {
+              //delete from cart
+              cart.removeItem(widget.cartProduct.id);
+              final snackBar = SnackBar(
+                behavior: SnackBarBehavior.floating,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  'Product removed from the cart!',
+                  textAlign: TextAlign.center,
+                ),
+              );
+              Scaffold.of(context).showSnackBar(snackBar);
+            });
+            return true;
+          } else
+            return false;
         });
       },
       direction: DismissDirection.endToStart,

@@ -1,3 +1,4 @@
+import 'package:fluteco/components/wishlist/showDialog.dart';
 import 'package:flutter/material.dart';
 
 class CartItem {
@@ -45,7 +46,7 @@ class Cart with ChangeNotifier {
   void updateQuantity({String productId, String type, BuildContext context}) {
     _items.update(productId, (value) {
       if (type == "ADD") {
-        if (value.quantity < 5)
+        if (value.quantity < value.limit)
           value.quantity += 1;
         else {
           final snackBar = SnackBar(
@@ -64,6 +65,15 @@ class Cart with ChangeNotifier {
       }
       if (type == "SUBTRACT" && value.quantity > 1) {
         value.quantity -= 1;
+      } else if (type == "SUBTRACT" && value.quantity == 1) {
+        showConfirmationDialog(
+            'Do you want to remove this product from the cart?', context,
+            (result) {
+          if (result) {
+            _items.removeWhere((key, value) => key == productId);
+            notifyListeners();
+          }
+        });
       }
       return value;
     });

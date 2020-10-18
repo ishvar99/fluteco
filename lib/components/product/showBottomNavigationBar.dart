@@ -25,6 +25,7 @@ Container displayBottomNavigationBar(BuildContext context, Product product) {
                         productId: product.id,
                         price: product.price,
                         image: product.image,
+                        limit: product.limit,
                         title: product.name);
                     final snackBar = SnackBar(
                       behavior: SnackBarBehavior.floating,

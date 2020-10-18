@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Future<void> showConfirmationDialog(
-    BuildContext context, Function callback) async {
+    String text, BuildContext context, Function callback) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -14,7 +14,7 @@ Future<void> showConfirmationDialog(
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('Do you want to remove this product from Wishlist?'),
+              Text(text),
             ],
           ),
         ),

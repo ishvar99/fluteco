@@ -74,7 +74,9 @@ class _SpecialCardState extends State<SpecialCard> {
                 splashColor: Colors.pink.withOpacity(0.05),
                 onTap: () {
                   if (widget.wishListItem) {
-                    showConfirmationDialog(context, (result) {
+                    showConfirmationDialog(
+                        'Do you want to remove this product from Wishlist?',
+                        context, (result) {
                       if (result) {
                         if (product.favourite) product.toggleFavouriteStatus();
 
