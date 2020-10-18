@@ -11,8 +11,8 @@ Padding displayCart(Map<String, CartItem> cartProducts) {
     child: ListView.builder(
       itemCount: cartProducts.length,
       itemBuilder: (context, index) => CartProduct(
-        product: cartProducts.values.elementAt(index),
-      ),
+          cartProduct: cartProducts.values.elementAt(index),
+          productId: cartProducts.keys.elementAt(index)),
     ),
   );
 }

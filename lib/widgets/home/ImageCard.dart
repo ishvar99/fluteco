@@ -23,7 +23,9 @@ class ImageCard extends StatelessWidget {
             padding: EdgeInsets.all(getProportionateScreenWidth(20)),
             decoration: BoxDecoration(
               border: Border.all(
-                  width: 0.5, color: kSecondaryColor.withOpacity(0.3)),
+                width: 0.5,
+                color: kSecondaryColor.withOpacity(0.4),
+              ),
               borderRadius: BorderRadius.circular(15.0),
               color: kSecondaryColor.withOpacity(0.04),
               // color: Colors.deepOrange[50],

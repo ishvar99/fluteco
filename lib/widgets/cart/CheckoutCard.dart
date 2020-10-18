@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../widgets/splash/RoundedButton.dart';
 import '../../resources/size_config.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../../providers/Cart.dart';
 
 class CheckoutCard extends StatelessWidget {
   final formatter =
@@ -58,19 +60,21 @@ class CheckoutCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: "Total:\n",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    children: [
-                      TextSpan(
-                        text: "${formatter.format(938930)}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.teal[600]),
-                      ),
-                    ],
+                Consumer<Cart>(
+                  builder: (context, cart, _) => Text.rich(
+                    TextSpan(
+                      text: "Total:\n",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      children: [
+                        TextSpan(
+                          text: "${formatter.format(cart.totalPrice())}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.teal[600]),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

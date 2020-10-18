@@ -4,7 +4,7 @@ class CartItem {
   final String id;
   final String title;
   final String image;
-  final int quantity;
+  int quantity;
   final int price;
 
   CartItem(
@@ -34,8 +34,24 @@ class Cart with ChangeNotifier {
   }
 
   void removeItem(String id) {
-    _items.removeWhere((key, values) => values.id == id);
+    _items.removeWhere((key, value) => value.id == id);
     notifyListeners();
+  }
+
+  void updateQuantity(String productId) {
+    _items.update(productId, (value) {
+      value.quantity += 1;
+      return value;
+    });
+    notifyListeners();
+  }
+
+  int totalPrice() {
+    int total = 0;
+    _items.forEach((key, value) {
+      total += value.price * value.quantity;
+    });
+    return total;
   }
 
   int getCount() {
