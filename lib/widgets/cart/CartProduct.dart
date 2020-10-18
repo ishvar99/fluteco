@@ -57,20 +57,28 @@ class _CartProductState extends State<CartProduct> {
             ],
           )),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               children: [
                 SizedBox(
-                  width: getProportionateScreenWidth(100),
-                  height: getProportionateScreenWidth(100),
-                  child:
-                      ImageCard(tapped: () {}, image: widget.cartProduct.image),
+                  width: getProportionateScreenWidth(125),
+                  height: getProportionateScreenWidth(125),
+                  child: ImageCard(
+                      tapped: () {
+                        Navigator.pushNamed(
+                          context,
+                          "/products",
+                          arguments: widget.productId,
+                        );
+                      },
+                      image: widget.cartProduct.image),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: getProportionateScreenWidth(12),
                 ),
                 Consumer<Cart>(
                   builder: (context, cart, _) => Row(
@@ -79,11 +87,14 @@ class _CartProductState extends State<CartProduct> {
                       InkWell(
                         splashColor: Colors.deepOrange[100],
                         onTap: () {
-                          cart.updateQuantity(widget.productId);
+                          cart.updateQuantity(
+                              productId: widget.productId,
+                              type: "ADD",
+                              context: context);
                         },
                         child: Container(
-                          width: getProportionateScreenWidth(22),
-                          height: getProportionateScreenWidth(22),
+                          width: getProportionateScreenWidth(28),
+                          height: getProportionateScreenWidth(28),
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 0.09,
@@ -98,35 +109,39 @@ class _CartProductState extends State<CartProduct> {
                         ),
                       ),
                       Container(
-                        height: getProportionateScreenWidth(22),
-                        width: getProportionateScreenWidth(35),
+                        height: getProportionateScreenWidth(28),
+                        width: getProportionateScreenWidth(40),
                         child: Text(
                           "${widget.cartProduct.quantity}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.w900,
+                              fontSize: 18,
                               color: Theme.of(context).accentColor),
                         ),
                         color: Colors.white,
                       ),
-                      Consumer<Cart>(
-                        builder: (context, cart, _) => InkWell(
-                          splashColor: Colors.deepOrange[100],
-                          onTap: () {},
-                          child: Container(
-                            width: getProportionateScreenWidth(22),
-                            height: getProportionateScreenWidth(22),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 0.09, color: Colors.deepOrange),
-                                // color: Colors.teal,
-                                color: Colors.deepOrange.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Icon(
-                              Icons.remove,
-                              size: 18,
-                              color: Colors.deepOrange[800],
-                            ),
+                      InkWell(
+                        splashColor: Colors.deepOrange[100],
+                        onTap: () {
+                          cart.updateQuantity(
+                              productId: widget.productId,
+                              type: "SUBTRACT",
+                              context: context);
+                        },
+                        child: Container(
+                          width: getProportionateScreenWidth(28),
+                          height: getProportionateScreenWidth(28),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 0.09, color: Colors.deepOrange),
+                              // color: Colors.teal,
+                              color: Colors.deepOrange.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Icon(
+                            Icons.remove,
+                            size: 18,
+                            color: Colors.deepOrange[800],
                           ),
                         ),
                       ),
@@ -142,6 +157,9 @@ class _CartProductState extends State<CartProduct> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: getProportionateScreenWidth(25),
+                  ),
                   Text(
                     "${widget.cartProduct.title}",
                     maxLines: 3,

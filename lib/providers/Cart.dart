@@ -6,13 +6,15 @@ class CartItem {
   final String image;
   int quantity;
   final int price;
+  final int limit;
 
   CartItem(
       {@required this.id,
       @required this.title,
       this.quantity = 1,
       @required this.price,
-      @required this.image});
+      @required this.image,
+      @required this.limit});
 }
 
 class Cart with ChangeNotifier {
@@ -21,13 +23,15 @@ class Cart with ChangeNotifier {
     return {..._items};
   }
 
-  void addItem({String productId, int price, String title, String image}) {
+  void addItem(
+      {String productId, int price, String title, String image, int limit}) {
     _items.putIfAbsent(
       productId,
       () => CartItem(
           id: DateTime.now().toString(),
           title: title,
           price: price,
+          limit: limit,
           image: image),
     );
     notifyListeners();
@@ -38,9 +42,29 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateQuantity(String productId) {
+  void updateQuantity({String productId, String type, BuildContext context}) {
     _items.update(productId, (value) {
-      value.quantity += 1;
+      if (type == "ADD") {
+        if (value.quantity < 5)
+          value.quantity += 1;
+        else {
+          final snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(milliseconds: 1000),
+            content: Text(
+              'Quantity limit exceeded!',
+              textAlign: TextAlign.center,
+            ),
+          );
+          Scaffold.of(context).removeCurrentSnackBar(
+            reason: SnackBarClosedReason.remove,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        }
+      }
+      if (type == "SUBTRACT" && value.quantity > 1) {
+        value.quantity -= 1;
+      }
       return value;
     });
     notifyListeners();

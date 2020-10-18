@@ -8,6 +8,7 @@ class Product with ChangeNotifier {
   final String description;
   bool special;
   bool favourite;
+  int limit;
 
   Product(
       {@required this.id,
@@ -16,6 +17,7 @@ class Product with ChangeNotifier {
       @required this.image,
       @required this.special,
       @required this.description,
+      @required this.limit,
       this.favourite = false});
 
   void toggleFavouriteStatus() {

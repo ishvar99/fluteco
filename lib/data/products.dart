@@ -10,7 +10,8 @@ List<Product> productsData = [
       image: "assets/images/ps4_black.png",
       description:
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
-      special: true),
+      special: true,
+      limit: 5),
   Product(
       id: "${uuid.v1()}",
       name: "Nike Men's Regular T-Shirt",
@@ -18,6 +19,7 @@ List<Product> productsData = [
       description:
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       image: "assets/images/tshirt.png",
+      limit: 5,
       special: true),
   Product(
       id: "${uuid.v1()}",
@@ -26,7 +28,8 @@ List<Product> productsData = [
       image: "assets/images/pant.png",
       description:
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
-      special: true),
+      special: true,
+      limit: 3),
   Product(
       id: "${uuid.v1()}",
       name: "Wireless Controller for PS4",
@@ -34,6 +37,7 @@ List<Product> productsData = [
       description:
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       image: "assets/images/ps4_black.png",
+      limit: 2,
       special: true),
   Product(
       id: "${uuid.v1()}",
@@ -42,6 +46,7 @@ List<Product> productsData = [
       description:
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       image: "assets/images/tshirt.png",
+      limit: 3,
       special: false),
   Product(
       id: "${uuid.v1()}",
@@ -50,6 +55,7 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/ps4_black.png",
+      limit: 3,
       special: false),
   Product(
       id: "${uuid.v1()}",
@@ -58,6 +64,7 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/pant.png",
+      limit: 1,
       special: true),
   Product(
       id: "${uuid.v1()}",
@@ -66,6 +73,7 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/ps4_black.png",
+      limit: 10,
       special: true),
   Product(
       id: "${uuid.v1()}",
@@ -74,6 +82,7 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/tshirt.png",
+      limit: 5,
       special: false),
   Product(
       id: "${uuid.v1()}",
@@ -82,6 +91,7 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/ps4_black.png",
+      limit: 7,
       special: false),
   Product(
       id: "${uuid.v1()}",
@@ -90,5 +100,6 @@ List<Product> productsData = [
           "The feel, shape, and sensitivity of the dual analog sticks and trigger buttons have been improved to provide a greater sense of control, no matter what you play",
       price: 4998,
       image: "assets/images/pant.png",
+      limit: 3,
       special: true)
 ];

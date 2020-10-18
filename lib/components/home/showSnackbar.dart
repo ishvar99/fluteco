@@ -16,5 +16,8 @@ void showSnackbar({context, product, products, bool wishListItem = false}) {
       },
     ),
   );
+  Scaffold.of(context).removeCurrentSnackBar(
+    reason: SnackBarClosedReason.remove,
+  );
   Scaffold.of(context).showSnackBar(snackBar);
 }
