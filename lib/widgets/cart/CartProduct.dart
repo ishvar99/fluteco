@@ -24,6 +24,7 @@ class _CartProductState extends State<CartProduct> {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
     return Dismissible(
+      // ignore: missing_return
       confirmDismiss: (index) {
         showConfirmationDialog(
             'Do you want to remove this product from the cart?', context,
@@ -42,9 +43,7 @@ class _CartProductState extends State<CartProduct> {
               );
               Scaffold.of(context).showSnackBar(snackBar);
             });
-            return true;
-          } else
-            return false;
+          }
         });
       },
       direction: DismissDirection.endToStart,

@@ -1,6 +1,6 @@
-import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/screens/Product.dart';
+import 'package:fluteco/screens/edit_product.dart';
 import 'package:flutter/material.dart';
 import '../screens/Splash.dart';
 import '../screens/Home.dart';
@@ -17,7 +17,8 @@ final Map<String, WidgetBuilder> routes = {
   Home.routeName: (_) => Tabs(),
   CartScreen.routeName: (_) => CartScreen(),
   FlutecoSpecial.routeName: (_) => FlutecoSpecial(),
-  Genres.routeName: (_) => Genres()
+  Genres.routeName: (_) => Genres(),
+  EditProduct.routeName: (_) => EditProduct()
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
