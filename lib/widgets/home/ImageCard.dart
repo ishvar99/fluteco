@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../resources/constants.dart';
@@ -10,7 +12,7 @@ class ImageCard extends StatelessWidget {
   }) : super(key: key);
 
   final Function tapped;
-  final String image;
+  final File image;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class ImageCard extends StatelessWidget {
               color: kSecondaryColor.withOpacity(0.04),
               // color: Colors.deepOrange[50],
             ),
-            child: Image.asset(
+            child: Image.file(
               image,
               fit: BoxFit.contain,
             ),

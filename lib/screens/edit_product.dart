@@ -1,8 +1,12 @@
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../data/categories.dart';
+import '../providers/Products.dart';
+import 'package:uuid/uuid.dart';
 
 class EditProduct extends StatefulWidget {
   static const routeName = "/edit-product";
@@ -13,13 +17,14 @@ class EditProduct extends StatefulWidget {
 
 class _EditProductState extends State<EditProduct> {
   final _formKey = GlobalKey<FormState>();
-
+  var uuid = Uuid();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
   TextEditingController _quantityController = TextEditingController();
   TextEditingController _imageController = TextEditingController();
-  String dropDownValue = "Jewels";
 
+  String dropDownValue = "Jewels";
+  PlatformFile image;
   void chooseImage() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -30,21 +35,35 @@ class _EditProductState extends State<EditProduct> {
       PlatformFile file = result.files.first;
       setState(() {
         _imageController.text = file.name;
+        image = file;
       });
     } else {
       // User canceled the picker
     }
   }
 
-  _addProduct() {
+  _addProduct(Products products) {
     if (_formKey.currentState.validate()) {
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Processing Data')));
+      print(_nameController.text);
+      print(_priceController.text);
+      print(_quantityController.text);
+      print(dropDownValue);
+      print(image);
+      products.addProduct(
+        special: true,
+        id: "${uuid.v1()}",
+        name: _nameController.text,
+        description: "lorem ipsum",
+        price: int.parse(_priceController.text),
+        limit: int.parse(_quantityController.text),
+        image: File(image.path),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -159,7 +178,7 @@ class _EditProductState extends State<EditProduct> {
                   readOnly: true,
                   controller: _imageController,
                   validator: (value) {
-                    if (value == " ") {
+                    if (value == "") {
                       return 'Image is required';
                     }
                     return null;
@@ -183,7 +202,7 @@ class _EditProductState extends State<EditProduct> {
                   width: getProportionateScreenWidth(200),
                   child: RoundedButton(
                     text: "Add Product",
-                    pressed: _addProduct,
+                    pressed: () => _addProduct(products),
                   )),
             ],
           ),

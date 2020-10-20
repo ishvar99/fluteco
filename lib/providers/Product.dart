@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
   final String id;
   final String name;
   final int price;
-  final String image;
+  final File image;
   final String description;
   bool special;
   bool favourite;
