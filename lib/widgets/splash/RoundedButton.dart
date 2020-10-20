@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../resources/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
@@ -13,7 +12,8 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      color: kPrimaryColor,
+      color:
+          text == "Add Product" ? Colors.teal : Theme.of(context).primaryColor,
       onPressed: pressed,
       child: Text(
         text,
