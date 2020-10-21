@@ -18,45 +18,47 @@ SingleChildScrollView display({String type, BuildContext context}) {
   final _random = new Random();
   return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(
-            type == "recommended-genres"
-                ? recommendedGenresLimit
-                : type == "categories" ? categories.length : products.length,
-            (index) {
-          if (type == "recommended-genres") {
-            genres.shuffle();
-            Genre randomGenre = genres[_random.nextInt(genres.length)];
-            while (randomGenres.contains(randomGenre)) {
-              randomGenre = genres[_random.nextInt(genres.length)];
-            }
-            randomGenres.add(randomGenre);
-            return RecommendedCard(
-              availability: randomGenre.availability,
-              name: randomGenre.name,
-              image: randomGenre.image,
-            );
-          } else if (type == "categories") {
-            return Category(
-              icon: categories[index].icon,
-              text: categories[index].text,
-              tapped: () => Navigator.of(context).pushNamed(
-                '/categories',
-                arguments: categories[index].id,
-              ),
-            );
-          } else if (type == "special-products") {
-            if (products[index].special) {
-              return ChangeNotifierProvider.value(
-                value: products[index],
-                child: SpecialCard(),
+      child: Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+              type == "recommended-genres"
+                  ? recommendedGenresLimit
+                  : type == "categories" ? categories.length : products.length,
+              (index) {
+            if (type == "recommended-genres") {
+              genres.shuffle();
+              Genre randomGenre = genres[_random.nextInt(genres.length)];
+              while (randomGenres.contains(randomGenre)) {
+                randomGenre = genres[_random.nextInt(genres.length)];
+              }
+              randomGenres.add(randomGenre);
+              return RecommendedCard(
+                availability: randomGenre.availability,
+                name: randomGenre.name,
+                image: randomGenre.image,
               );
+            } else if (type == "categories") {
+              return Category(
+                icon: categories[index].icon,
+                text: categories[index].text,
+                tapped: () => Navigator.of(context).pushNamed(
+                  '/categories',
+                  arguments: categories[index].id,
+                ),
+              );
+            } else if (type == "special-products") {
+              if (products[index].special) {
+                return ChangeNotifierProvider.value(
+                  value: products[index],
+                  child: SpecialCard(),
+                );
+              } else
+                return Container();
             } else
-              return Container();
-          } else
-            return null;
-        }),
+              return null;
+          }),
+        ),
       ));
 }

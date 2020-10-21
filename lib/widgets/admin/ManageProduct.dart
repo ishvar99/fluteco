@@ -1,6 +1,9 @@
+import 'package:fluteco/components/wishlist/showDialog.dart';
+import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/home/ImageCard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../providers/Product.dart';
 import '../../resources/size_config.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +18,7 @@ class ManageProduct extends StatefulWidget {
 class _ManageProductState extends State<ManageProduct> {
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context);
     final formatter =
         new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
     return Container(
@@ -76,6 +80,15 @@ class _ManageProductState extends State<ManageProduct> {
                     width: 20,
                   ),
                   GestureDetector(
+                    onTap: () {
+                      showConfirmationDialog(
+                          'Do you want to delete this product?', context,
+                          (result) {
+                        if (result) {
+                          products.removeProduct(widget.product.id);
+                        }
+                      });
+                    },
                     child: Icon(
                       Icons.delete,
                       size: 20,

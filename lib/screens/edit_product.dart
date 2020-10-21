@@ -148,9 +148,13 @@ class _EditProductState extends State<EditProduct> {
                             if (value.isEmpty) {
                               return 'Price is required';
                             }
+
                             var potentialNumber = int.tryParse(value);
                             if (potentialNumber == null) {
                               return 'Price should be a number';
+                            } else if (potentialNumber < 99 ||
+                                potentialNumber > 99999) {
+                              return 'Price should be in the range 99 to 99999';
                             }
                             return null;
                           },
@@ -222,9 +226,9 @@ class _EditProductState extends State<EditProduct> {
                               var potentialNumber = int.tryParse(value);
                               if (potentialNumber == null) {
                                 return 'Discount should be a number';
-                              } else if (potentialNumber < 0 &&
-                                  potentialNumber > 100) {
-                                return 'Invalid Discount';
+                              } else if (potentialNumber <= 0 ||
+                                  potentialNumber >= 100) {
+                                return 'Invalid % Discount';
                               }
                             }
                             return null;
