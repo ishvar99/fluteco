@@ -173,7 +173,7 @@ class _CartProductState extends State<CartProduct> {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: getProportionateScreenWidth(16),
+                      fontSize: getProportionateScreenWidth(18),
                       fontWeight: FontWeight.bold,
                     ),
                     softWrap: true,
@@ -182,7 +182,7 @@ class _CartProductState extends State<CartProduct> {
                     TextSpan(
                       text: "${formatter.format(widget.cartProduct.price)} ",
                       style: TextStyle(
-                          fontSize: getProportionateScreenWidth(16),
+                          fontSize: getProportionateScreenWidth(18),
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor),
                     ),
@@ -190,7 +190,7 @@ class _CartProductState extends State<CartProduct> {
                       text: "x${widget.cartProduct.quantity}",
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
-                        fontSize: getProportionateScreenWidth(16),
+                        fontSize: getProportionateScreenWidth(18),
                         fontWeight: FontWeight.bold,
                       ),
                     )

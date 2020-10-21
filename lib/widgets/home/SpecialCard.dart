@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+
 import '../../providers/Products.dart';
 import '../../providers/Product.dart';
 import '../../resources/constants.dart';
@@ -27,7 +29,7 @@ class _SpecialCardState extends State<SpecialCard> {
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(15)),
       child: SizedBox(
         width: getProportionateScreenWidth(160),
         child: Column(
@@ -48,25 +50,35 @@ class _SpecialCardState extends State<SpecialCard> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            Row(children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Padding(
                 padding: EdgeInsets.only(right: getProportionateScreenWidth(7)),
-                child: Text(
-                  "${formatter.format(product.originalPrice)}",
-                  style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      decorationThickness: 2.0,
-                      fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor),
+                child: SizedBox(
+                  width: getProportionateScreenWidth(70),
+                  child: FittedBox(
+                    child: Text(
+                      "${formatter.format(product.discountedPrice)}",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenWidth(18),
+                          fontWeight: FontWeight.w600,
+                          color: kOfferBannerColor),
+                    ),
+                  ),
                 ),
               ),
-              Text(
-                "${formatter.format(product.discountedPrice)}",
-                style: TextStyle(
-                    fontSize: getProportionateScreenWidth(18),
-                    fontWeight: FontWeight.w600,
-                    color: kOfferBannerColor),
+              SizedBox(
+                width: getProportionateScreenWidth(50),
+                child: FittedBox(
+                  child: Text(
+                    "${formatter.format(product.originalPrice)}",
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        decorationThickness: 2.0,
+                        fontSize: getProportionateScreenWidth(14),
+                        fontWeight: FontWeight.w600,
+                        color: kPrimaryColor),
+                  ),
+                ),
               ),
               Spacer(),
               InkWell(
@@ -125,18 +137,29 @@ class _SpecialCardState extends State<SpecialCard> {
               height: getProportionateScreenWidth(5),
             ),
             (product.discount != 0)
-                ? Container(
-                    width: getProportionateScreenWidth(70),
-                    height: getProportionateScreenWidth(25),
-                    color: Colors.teal[50],
-                    child: Center(
-                        child: Text(
-                      "${product.discount}% Off",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900, color: Colors.teal[500]),
-                    )),
+                ? Row(
+                    children: [
+                      Container(
+                        width: getProportionateScreenWidth(70),
+                        height: getProportionateScreenWidth(25),
+                        color: Colors.teal[50],
+                        child: Center(
+                            child: Text(
+                          "${product.discount}% Off",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: Colors.teal[500]),
+                        )),
+                      ),
+                      // SizedBox(width: getProportionateScreenWidth(10)),
+                      // Icon(
+                      //   Icons.offline_bolt,
+                      //   color: Colors.teal[600],
+                      //   size: 20,
+                      // )
+                    ],
                   )
-                : Container()
+                : Container(),
           ],
         ),
       ),

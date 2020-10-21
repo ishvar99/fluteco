@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fluteco/models/Category.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
@@ -10,6 +11,7 @@ class Product with ChangeNotifier {
   final int discount;
   final File image;
   final String description;
+  final String category;
   bool special;
   bool favourite;
   int limit;
@@ -24,6 +26,7 @@ class Product with ChangeNotifier {
       @required this.special,
       @required this.description,
       @required this.limit,
+      @required this.category,
       this.favourite = false});
 
   void toggleFavouriteStatus() {

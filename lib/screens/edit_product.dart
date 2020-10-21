@@ -17,6 +17,7 @@ class EditProduct extends StatefulWidget {
 
 class _EditProductState extends State<EditProduct> {
   final _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
   var uuid = Uuid();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
@@ -24,7 +25,7 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _imageController = TextEditingController();
   TextEditingController _discountController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  String dropDownValue = "Jewels";
+  String dropDownValue;
   PlatformFile image;
   void chooseImage() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -64,10 +65,12 @@ class _EditProductState extends State<EditProduct> {
         description: _descriptionController.text,
         originalPrice: _originalPrice,
         discountedPrice: _discountedPrice,
+        category: dropDownValue,
         discount: _discount,
         limit: int.parse(_quantityController.text),
         image: File(image.path),
       );
+      Navigator.pop(context);
     }
   }
 
@@ -83,185 +86,196 @@ class _EditProductState extends State<EditProduct> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Name is required';
-                    } else if (value.length < 5) {
-                      return "Name should be atleast 5 characters";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Name",
-                  ),
-                  controller: _nameController,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  maxLines: 2,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Description is required';
-                    } else if (value.length < 20) {
-                      return "Description is too short";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Description",
-                  ),
-                  controller: _descriptionController,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _priceController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Price is required';
-                    }
-                    var potentialNumber = int.tryParse(value);
-                    if (potentialNumber == null) {
-                      return 'Price should be a number';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Price (₹)",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  controller: _quantityController,
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Quantity is required';
-                    }
-                    var potentialNumber = int.tryParse(value);
-                    if (potentialNumber == null) {
-                      return 'Quantity should be a number';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Quantity",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _discountController,
-                  validator: (value) {
-                    if (value.isNotEmpty) {
-                      var potentialNumber = int.tryParse(value);
-                      if (potentialNumber == null) {
-                        return 'Discount should be a number';
-                      } else if (potentialNumber < 0 && potentialNumber > 100) {
-                        return 'Invalid Discount';
-                      }
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "% Discount (Opt)",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: DropdownButtonFormField(
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Category is required';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Category",
-                  ),
-                  items: [
-                    ...categories
-                        .map((element) => DropdownMenuItem(
-                              value: element.text.toString(),
-                              child: Text(element.text),
-                            ))
-                        .toList()
-                  ],
-                  onChanged: (val) {
-                    setState(() {
-                      dropDownValue = val;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenWidth(15),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: TextFormField(
-                  readOnly: true,
-                  controller: _imageController,
-                  validator: (value) {
-                    if (value == "") {
-                      return 'Image is required';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: chooseImage,
-                      child: Icon(
-                        Icons.image,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Expanded(
+              child: Scrollbar(
+                controller: _scrollController,
+                isAlwaysShown: true,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Name is required';
+                            } else if (value.length < 5) {
+                              return "Name should be atleast 5 characters";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Name",
+                          ),
+                          controller: _nameController,
+                        ),
                       ),
-                    ),
-                    hintText: "Image",
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          maxLines: 2,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Description is required';
+                            } else if (value.length < 20) {
+                              return "Description is too short";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Description",
+                          ),
+                          controller: _descriptionController,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: _priceController,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Price is required';
+                            }
+                            var potentialNumber = int.tryParse(value);
+                            if (potentialNumber == null) {
+                              return 'Price should be a number';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Price (₹)",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          controller: _quantityController,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Quantity is required';
+                            }
+                            var potentialNumber = int.tryParse(value);
+                            if (potentialNumber == null) {
+                              return 'Quantity should be a number';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Quantity",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: DropdownButtonFormField(
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Category is required';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Category",
+                          ),
+                          items: [
+                            ...categories
+                                .map((element) => DropdownMenuItem(
+                                      value: element.text.toString(),
+                                      child: Text(element.text),
+                                    ))
+                                .toList()
+                          ],
+                          onChanged: (val) {
+                            setState(() {
+                              dropDownValue = val;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: _discountController,
+                          validator: (value) {
+                            if (value.isNotEmpty) {
+                              var potentialNumber = int.tryParse(value);
+                              if (potentialNumber == null) {
+                                return 'Discount should be a number';
+                              } else if (potentialNumber < 0 &&
+                                  potentialNumber > 100) {
+                                return 'Invalid Discount';
+                              }
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              labelText: "% Discount (optional)"),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenWidth(10),
+                            horizontal: getProportionateScreenWidth(30)),
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: _imageController,
+                          validator: (value) {
+                            if (value == "") {
+                              return 'Image is required';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: chooseImage,
+                              child: Icon(
+                                Icons.image,
+                              ),
+                            ),
+                            labelText: "Image",
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: getProportionateScreenWidth(40),
-              ),
-              SizedBox(
-                  height: getProportionateScreenWidth(45),
-                  width: getProportionateScreenWidth(200),
-                  child: RoundedButton(
-                    text: "Add Product",
-                    pressed: () => _addProduct(products),
-                  )),
-              SizedBox(
-                height: getProportionateScreenWidth(20),
-              )
-            ],
-          ),
+            ),
+            SizedBox(
+              height: getProportionateScreenWidth(60),
+            ),
+            SizedBox(
+                height: getProportionateScreenWidth(50),
+                width: getProportionateScreenWidth(220),
+                child: RoundedButton(
+                  text: "Add Product",
+                  pressed: () => _addProduct(products),
+                )),
+            SizedBox(
+              height: getProportionateScreenWidth(60),
+            )
+          ],
         ),
       ),
     );

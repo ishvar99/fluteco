@@ -9,7 +9,8 @@ class FlutecoSpecial extends StatelessWidget {
   static const routeName = '/special-products';
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context).products;
+    var products = Provider.of<Products>(context).products;
+    products = products.where((element) => element.discount > 0).toList();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -17,25 +18,22 @@ class FlutecoSpecial extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            CategoriesList(),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: getProportionateScreenWidth(2).round(),
-                  childAspectRatio: getProportionateScreenWidth(0.7),
-                  crossAxisSpacing: 2,
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) => ChangeNotifierProvider.value(
-                    value: products[index], child: SpecialCard()),
+      body: Column(
+        children: [
+          CategoriesList(),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: getProportionateScreenWidth(2).round(),
+                childAspectRatio: getProportionateScreenWidth(0.7),
+                crossAxisSpacing: 2,
               ),
+              itemCount: products.length,
+              itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                  value: products[index], child: SpecialCard()),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

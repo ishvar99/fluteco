@@ -20,7 +20,8 @@ class Products with ChangeNotifier {
       int discount,
       int limit,
       bool special,
-      File image}) {
+      File image,
+      String category}) {
     _products.add(new Product(
         name: name,
         id: id,
@@ -29,6 +30,7 @@ class Products with ChangeNotifier {
         discountedPrice: discountedPrice,
         limit: limit,
         discount: discount,
+        category: category,
         special: special,
         image: image));
     notifyListeners();

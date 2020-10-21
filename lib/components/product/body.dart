@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 Padding displayContent(BuildContext context, Product product) {
   final formatter =
-      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
 
   return Padding(
     padding: EdgeInsets.only(left: getProportionateScreenWidth(20.0)),
@@ -43,12 +43,12 @@ Padding displayContent(BuildContext context, Product product) {
           padding: EdgeInsets.only(right: getProportionateScreenWidth(20.0)),
           child: Text("${product.name}",
               style: TextStyle(
-                  fontSize: getProportionateScreenWidth(24),
+                  fontSize: getProportionateScreenWidth(28),
                   fontWeight: FontWeight.bold,
                   color: kOfferBannerColor)),
         ),
         SizedBox(
-          height: getProportionateScreenWidth(15.0),
+          height: getProportionateScreenWidth(5.0),
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,14 +60,14 @@ Padding displayContent(BuildContext context, Product product) {
                   TextSpan(
                     text: "${formatter.format(product.discountedPrice)}\t\t",
                     style: TextStyle(
-                        fontSize: 26.0,
+                        fontSize: 22.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal[600]),
                   ),
                   TextSpan(
                     text: "${formatter.format(product.originalPrice)}",
                     style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.lineThrough,
                         decorationThickness: 2.0,
