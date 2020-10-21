@@ -22,7 +22,8 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _priceController = TextEditingController();
   TextEditingController _quantityController = TextEditingController();
   TextEditingController _imageController = TextEditingController();
-
+  TextEditingController _discountController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
   String dropDownValue = "Jewels";
   PlatformFile image;
   void chooseImage() async {
@@ -44,17 +45,26 @@ class _EditProductState extends State<EditProduct> {
 
   _addProduct(Products products) {
     if (_formKey.currentState.validate()) {
-      print(_nameController.text);
-      print(_priceController.text);
-      print(_quantityController.text);
-      print(dropDownValue);
-      print(image);
+      int _discountedPrice;
+      int _originalPrice = int.parse(_priceController.text);
+
+      int _discount;
+      if (_discountController.text.isEmpty) {
+        _discount = 0;
+        _discountedPrice = int.parse(_priceController.text);
+      } else {
+        _discount = int.parse(_discountController.text);
+        _discountedPrice =
+            (_originalPrice - (_discount / 100 * _originalPrice)).round();
+      }
       products.addProduct(
-        special: true,
+        special: _discount != 0 ? true : false,
         id: "${uuid.v1()}",
         name: _nameController.text,
-        description: "lorem ipsum",
-        price: int.parse(_priceController.text),
+        description: _descriptionController.text,
+        originalPrice: _originalPrice,
+        discountedPrice: _discountedPrice,
+        discount: _discount,
         limit: int.parse(_quantityController.text),
         image: File(image.path),
       );
@@ -102,6 +112,26 @@ class _EditProductState extends State<EditProduct> {
                     vertical: getProportionateScreenWidth(15),
                     horizontal: getProportionateScreenWidth(30)),
                 child: TextFormField(
+                  maxLines: 2,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Description is required';
+                    } else if (value.length < 20) {
+                      return "Description is too short";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Description",
+                  ),
+                  controller: _descriptionController,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenWidth(15),
+                    horizontal: getProportionateScreenWidth(30)),
+                child: TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _priceController,
                   validator: (value) {
@@ -138,6 +168,29 @@ class _EditProductState extends State<EditProduct> {
                   },
                   decoration: InputDecoration(
                     hintText: "Quantity",
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenWidth(15),
+                    horizontal: getProportionateScreenWidth(30)),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _discountController,
+                  validator: (value) {
+                    if (value.isNotEmpty) {
+                      var potentialNumber = int.tryParse(value);
+                      if (potentialNumber == null) {
+                        return 'Discount should be a number';
+                      } else if (potentialNumber < 0 && potentialNumber > 100) {
+                        return 'Invalid Discount';
+                      }
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "% Discount (Opt)",
                   ),
                 ),
               ),
@@ -204,6 +257,9 @@ class _EditProductState extends State<EditProduct> {
                     text: "Add Product",
                     pressed: () => _addProduct(products),
                   )),
+              SizedBox(
+                height: getProportionateScreenWidth(20),
+              )
             ],
           ),
         ),

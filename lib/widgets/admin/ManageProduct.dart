@@ -53,7 +53,7 @@ class _ManageProductState extends State<ManageProduct> {
                     ),
                     softWrap: true,
                   ),
-                  Text("${formatter.format(widget.product.price)} ",
+                  Text("${formatter.format(widget.product.discountedPrice)} ",
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(16),
                           fontWeight: FontWeight.w900,

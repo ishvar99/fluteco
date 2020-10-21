@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 class Product with ChangeNotifier {
   final String id;
   final String name;
-  final int price;
+  final int originalPrice;
+  final int discountedPrice;
+  final int discount;
   final File image;
   final String description;
   bool special;
@@ -15,7 +17,9 @@ class Product with ChangeNotifier {
   Product(
       {@required this.id,
       @required this.name,
-      @required this.price,
+      @required this.originalPrice,
+      @required this.discountedPrice,
+      @required this.discount,
       @required this.image,
       @required this.special,
       @required this.description,

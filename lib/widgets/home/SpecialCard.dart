@@ -52,7 +52,7 @@ class _SpecialCardState extends State<SpecialCard> {
               Padding(
                 padding: EdgeInsets.only(right: getProportionateScreenWidth(7)),
                 child: Text(
-                  "${formatter.format(product.price)}",
+                  "${formatter.format(product.originalPrice)}",
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationThickness: 2.0,
@@ -62,7 +62,7 @@ class _SpecialCardState extends State<SpecialCard> {
                 ),
               ),
               Text(
-                "${formatter.format(999)}",
+                "${formatter.format(product.discountedPrice)}",
                 style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w600,
@@ -121,6 +121,22 @@ class _SpecialCardState extends State<SpecialCard> {
                 }),
               )
             ]),
+            SizedBox(
+              height: getProportionateScreenWidth(5),
+            ),
+            (product.discount != 0)
+                ? Container(
+                    width: getProportionateScreenWidth(70),
+                    height: getProportionateScreenWidth(25),
+                    color: Colors.teal[50],
+                    child: Center(
+                        child: Text(
+                      "${product.discount}% Off",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900, color: Colors.teal[500]),
+                    )),
+                  )
+                : Container()
           ],
         ),
       ),

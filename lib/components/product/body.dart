@@ -58,14 +58,14 @@ Padding displayContent(BuildContext context, Product product) {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: "${formatter.format(999)}\t\t",
+                    text: "${formatter.format(product.discountedPrice)}\t\t",
                     style: TextStyle(
                         fontSize: 26.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal[600]),
                   ),
                   TextSpan(
-                    text: "${formatter.format(product.price)}",
+                    text: "${formatter.format(product.originalPrice)}",
                     style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

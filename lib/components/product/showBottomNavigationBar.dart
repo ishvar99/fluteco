@@ -23,7 +23,7 @@ Container displayBottomNavigationBar(BuildContext context, Product product) {
                   } else {
                     cart.addItem(
                         productId: product.id,
-                        price: product.price,
+                        price: product.discountedPrice,
                         image: product.image,
                         limit: product.limit,
                         title: product.name);

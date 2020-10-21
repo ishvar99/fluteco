@@ -25,12 +25,16 @@ class Profile extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) => ManageProduct(
-          product: products[index],
-        ),
-      ),
+      body: products.length == 0
+          ? Center(
+              child: Text("No products to display"),
+            )
+          : ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) => ManageProduct(
+                product: products[index],
+              ),
+            ),
     );
   }
 }

@@ -15,7 +15,9 @@ class Products with ChangeNotifier {
       {String id,
       String name,
       String description,
-      int price,
+      int originalPrice,
+      int discountedPrice,
+      int discount,
       int limit,
       bool special,
       File image}) {
@@ -23,8 +25,10 @@ class Products with ChangeNotifier {
         name: name,
         id: id,
         description: description,
-        price: price,
+        originalPrice: originalPrice,
+        discountedPrice: discountedPrice,
         limit: limit,
+        discount: discount,
         special: special,
         image: image));
     notifyListeners();

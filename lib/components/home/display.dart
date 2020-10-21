@@ -24,7 +24,8 @@ SingleChildScrollView display({String type, BuildContext context}) {
         children: List.generate(
             type == "recommended-genres"
                 ? recommendedGenresLimit
-                : type == "categories" ? categories.length : 1, (index) {
+                : type == "categories" ? categories.length : products.length,
+            (index) {
           if (type == "recommended-genres") {
             genres.shuffle();
             Genre randomGenre = genres[_random.nextInt(genres.length)];
