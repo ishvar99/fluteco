@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/models/Category.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class Product with ChangeNotifier {
   String category;
   bool special;
   bool favourite;
+  PlatformFile platformImage;
   int limit;
 
   Product(
@@ -26,6 +28,7 @@ class Product with ChangeNotifier {
       @required this.special,
       @required this.description,
       @required this.limit,
+      @required this.platformImage,
       @required this.category,
       this.favourite = false});
 

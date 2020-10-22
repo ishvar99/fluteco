@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import './Product.dart';
 import '../data/products.dart';
@@ -20,6 +21,7 @@ class Products with ChangeNotifier {
       int limit,
       bool special,
       File image,
+      PlatformFile platformImage,
       String category}) {
     _products.add(new Product(
         name: name,
@@ -31,6 +33,7 @@ class Products with ChangeNotifier {
         discount: discount,
         category: category,
         special: special,
+        platformImage: platformImage,
         image: image));
     notifyListeners();
   }
@@ -49,6 +52,7 @@ class Products with ChangeNotifier {
       int discount,
       int limit,
       bool special,
+      PlatformFile platformImage,
       File image,
       String category}) {
     _products.forEach((element) {
@@ -62,6 +66,7 @@ class Products with ChangeNotifier {
         element.category = category;
         element.originalPrice = originalPrice;
         element.discountedPrice = discountedPrice;
+        element.platformImage = platformImage;
       }
     });
     // Cart().removeItem(id);

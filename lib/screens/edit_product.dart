@@ -59,30 +59,30 @@ class _EditProductState extends State<EditProduct> {
       }
       if (update) {
         products.updateProduct(
-          special: _discount != 0 ? true : false,
-          id: id,
-          name: _nameController.text,
-          description: _descriptionController.text,
-          originalPrice: _originalPrice,
-          discountedPrice: _discountedPrice,
-          category: dropDownValue,
-          discount: _discount,
-          limit: int.parse(_quantityController.text),
-          image: File(image.path),
-        );
+            special: _discount != 0 ? true : false,
+            id: id,
+            name: _nameController.text,
+            description: _descriptionController.text,
+            originalPrice: _originalPrice,
+            discountedPrice: _discountedPrice,
+            category: dropDownValue,
+            discount: _discount,
+            limit: int.parse(_quantityController.text),
+            image: File(image.path),
+            platformImage: image);
       } else {
         products.addProduct(
-          special: _discount != 0 ? true : false,
-          id: "${uuid.v1()}",
-          name: _nameController.text,
-          description: _descriptionController.text,
-          originalPrice: _originalPrice,
-          discountedPrice: _discountedPrice,
-          category: dropDownValue,
-          discount: _discount,
-          limit: int.parse(_quantityController.text),
-          image: File(image.path),
-        );
+            special: _discount != 0 ? true : false,
+            id: "${uuid.v1()}",
+            name: _nameController.text,
+            description: _descriptionController.text,
+            originalPrice: _originalPrice,
+            discountedPrice: _discountedPrice,
+            category: dropDownValue,
+            discount: _discount,
+            limit: int.parse(_quantityController.text),
+            image: File(image.path),
+            platformImage: image);
       }
       Navigator.pop(context);
     }
@@ -99,7 +99,8 @@ class _EditProductState extends State<EditProduct> {
       dropDownValue = product.category;
       _discountController.text =
           product.discount != 0 ? product.discount.toString() : "";
-      // _imageController.text = product.image.uri.toString();
+      _imageController.text = product.platformImage.name;
+      image = product.platformImage;
     }
     final products = Provider.of<Products>(context, listen: false);
     return Scaffold(
