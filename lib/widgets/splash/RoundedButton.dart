@@ -12,8 +12,9 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      color:
-          text == "Add Product" ? Colors.teal : Theme.of(context).primaryColor,
+      color: text == "Add Product" || text == "Update Product"
+          ? Colors.teal
+          : Theme.of(context).primaryColor,
       onPressed: pressed,
       child: Text(
         text,

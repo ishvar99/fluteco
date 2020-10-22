@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
@@ -35,16 +36,14 @@ class _EditProductState extends State<EditProduct> {
 
     if (result != null) {
       PlatformFile file = result.files.first;
-      setState(() {
-        _imageController.text = file.name;
-        image = file;
-      });
+      _imageController.text = file.name;
+      image = file;
     } else {
       // User canceled the picker
     }
   }
 
-  _addProduct(Products products) {
+  _addProduct({Products products, bool update = false, id}) {
     if (_formKey.currentState.validate()) {
       int _discountedPrice;
       int _originalPrice = int.parse(_priceController.text);
@@ -58,25 +57,51 @@ class _EditProductState extends State<EditProduct> {
         _discountedPrice =
             (_originalPrice - (_discount / 100 * _originalPrice)).round();
       }
-      products.addProduct(
-        special: _discount != 0 ? true : false,
-        id: "${uuid.v1()}",
-        name: _nameController.text,
-        description: _descriptionController.text,
-        originalPrice: _originalPrice,
-        discountedPrice: _discountedPrice,
-        category: dropDownValue,
-        discount: _discount,
-        limit: int.parse(_quantityController.text),
-        image: File(image.path),
-      );
+      if (update) {
+        products.updateProduct(
+          special: _discount != 0 ? true : false,
+          id: id,
+          name: _nameController.text,
+          description: _descriptionController.text,
+          originalPrice: _originalPrice,
+          discountedPrice: _discountedPrice,
+          category: dropDownValue,
+          discount: _discount,
+          limit: int.parse(_quantityController.text),
+          image: File(image.path),
+        );
+      } else {
+        products.addProduct(
+          special: _discount != 0 ? true : false,
+          id: "${uuid.v1()}",
+          name: _nameController.text,
+          description: _descriptionController.text,
+          originalPrice: _originalPrice,
+          discountedPrice: _discountedPrice,
+          category: dropDownValue,
+          discount: _discount,
+          limit: int.parse(_quantityController.text),
+          image: File(image.path),
+        );
+      }
       Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context);
+    final Product product = ModalRoute.of(context).settings.arguments;
+    if (product != null) {
+      _nameController.text = product.name;
+      _descriptionController.text = product.description;
+      _priceController.text = product.originalPrice.toString();
+      _quantityController.text = product.limit.toString();
+      dropDownValue = product.category;
+      _discountController.text =
+          product.discount != 0 ? product.discount.toString() : "";
+      // _imageController.text = product.image.uri.toString();
+    }
+    final products = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -111,7 +136,7 @@ class _EditProductState extends State<EditProduct> {
                             }
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Name",
                           ),
                           controller: _nameController,
@@ -190,6 +215,7 @@ class _EditProductState extends State<EditProduct> {
                             vertical: getProportionateScreenWidth(10),
                             horizontal: getProportionateScreenWidth(30)),
                         child: DropdownButtonFormField(
+                          value: dropDownValue,
                           validator: (value) {
                             if (value == null) {
                               return 'Category is required';
@@ -273,8 +299,11 @@ class _EditProductState extends State<EditProduct> {
                 height: getProportionateScreenWidth(50),
                 width: getProportionateScreenWidth(220),
                 child: RoundedButton(
-                  text: "Add Product",
-                  pressed: () => _addProduct(products),
+                  text: product != null ? "Update Product" : "Add Product",
+                  pressed: () => product != null
+                      ? _addProduct(
+                          products: products, update: true, id: product.id)
+                      : _addProduct(products: products),
                 )),
             SizedBox(
               height: getProportionateScreenWidth(60),

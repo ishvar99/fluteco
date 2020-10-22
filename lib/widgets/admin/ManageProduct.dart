@@ -70,6 +70,10 @@ class _ManageProductState extends State<ManageProduct> {
               child: Row(
                 children: [
                   GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/edit-product',
+                          arguments: widget.product);
+                    },
                     child: Icon(
                       Icons.edit,
                       size: 20,

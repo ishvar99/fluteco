@@ -18,22 +18,25 @@ class FlutecoSpecial extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
-      body: Column(
-        children: [
-          CategoriesList(),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getProportionateScreenWidth(2).round(),
-                childAspectRatio: getProportionateScreenWidth(0.7),
-                crossAxisSpacing: 2,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          children: [
+            CategoriesList(),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getProportionateScreenWidth(2).round(),
+                  childAspectRatio: getProportionateScreenWidth(0.7),
+                  crossAxisSpacing: 2,
+                ),
+                itemCount: products.length,
+                itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                    value: products[index], child: SpecialCard()),
               ),
-              itemCount: products.length,
-              itemBuilder: (context, index) => ChangeNotifierProvider.value(
-                  value: products[index], child: SpecialCard()),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
