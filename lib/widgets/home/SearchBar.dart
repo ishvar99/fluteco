@@ -8,25 +8,28 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
-        ),
-        height: getProportionateScreenHeight(50),
-        width: double.infinity,
-        child: TextField(
-          decoration: InputDecoration(
-              enabledBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search',
-              contentPadding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenWidth(10),
-                  horizontal: getProportionateScreenWidth(20))),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      height: getProportionateScreenHeight(50),
+      width: double.infinity,
+      child: TextField(
+        style: TextStyle(fontSize: 16),
+        decoration: InputDecoration(
+          enabledBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          prefixIcon: Icon(
+            Icons.search,
+            size: 18,
+          ),
+          hintText: 'Search for products',
+          hintStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: getProportionateScreenWidth(11),
+          ),
         ),
       ),
     );
