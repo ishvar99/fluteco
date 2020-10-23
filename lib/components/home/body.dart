@@ -22,6 +22,14 @@ class Body extends StatelessWidget {
         PartitionHeader(
           type: "Fluteco's Special",
         ),
+        display(type: "recommended-genres", context: context),
+        PartitionHeader(
+          type: "Fluteco's Special",
+        ),
+        display(type: "recommended-genres", context: context),
+        PartitionHeader(
+          type: "Fluteco's Special",
+        ),
         display(type: "special-products", context: context),
         SizedBox(
           height: 25,

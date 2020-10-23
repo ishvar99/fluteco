@@ -72,17 +72,18 @@ class _EditProductState extends State<EditProduct> {
             platformImage: image);
       } else {
         products.addProduct(
-            special: _discount != 0 ? true : false,
-            id: "${uuid.v1()}",
-            name: _nameController.text,
-            description: _descriptionController.text,
-            originalPrice: _originalPrice,
-            discountedPrice: _discountedPrice,
-            category: dropDownValue,
-            discount: _discount,
-            limit: int.parse(_quantityController.text),
-            image: File(image.path),
-            platformImage: image);
+          special: _discount != 0 ? true : false,
+          id: "${uuid.v1()}",
+          name: _nameController.text,
+          description: _descriptionController.text,
+          originalPrice: _originalPrice,
+          discountedPrice: _discountedPrice,
+          category: dropDownValue,
+          discount: _discount,
+          limit: int.parse(_quantityController.text),
+          image: File(image.path),
+          platformImage: image,
+        );
       }
       Navigator.pop(context);
     }

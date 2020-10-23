@@ -13,8 +13,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context),
-      body: SingleChildScrollView(child: Body()),
+      // appBar: header(context),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: header(context),
+          )
+        ],
+      ),
     );
   }
 }
