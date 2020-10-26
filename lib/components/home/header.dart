@@ -8,6 +8,8 @@ import '../../providers/Cart.dart';
 AppBar header(BuildContext context) {
   final cart = Provider.of<Cart>(context);
   return AppBar(
+    titleSpacing: getProportionateScreenWidth(10),
+    toolbarHeight: getProportionateScreenWidth(130),
     title: Text(
       'Fluteco',
       style: TextStyle(fontWeight: FontWeight.w900),
@@ -15,7 +17,7 @@ AppBar header(BuildContext context) {
     actions: [
       Icon(Icons.notifications),
       SizedBox(
-        width: 15,
+        width: getProportionateScreenWidth(15),
       ),
       IconWithCounter(
           count: cart.items.length,
@@ -23,7 +25,7 @@ AppBar header(BuildContext context) {
             Navigator.pushNamed(context, '/cart');
           }),
       SizedBox(
-        width: 15,
+        width: getProportionateScreenWidth(20),
       ),
     ],
     bottom: PreferredSize(

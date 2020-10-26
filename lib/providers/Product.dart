@@ -10,7 +10,7 @@ class Product with ChangeNotifier {
   int originalPrice;
   int discountedPrice;
   int discount;
-  File image;
+  String image;
   String description;
   String category;
   bool special;

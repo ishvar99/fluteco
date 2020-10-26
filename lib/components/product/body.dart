@@ -21,7 +21,7 @@ Padding displayContent(BuildContext context, Product product) {
               top: getProportionateScreenWidth(20)),
           child: Container(
             alignment: Alignment.center,
-            child: Image.file(
+            child: Image.network(
               product.image,
               height: getProportionateScreenWidth(200),
             ),

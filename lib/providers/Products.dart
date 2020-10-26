@@ -20,7 +20,7 @@ class Products with ChangeNotifier {
       int discount,
       int limit,
       bool special,
-      File image,
+      String image,
       PlatformFile platformImage,
       String category}) {
     _products.add(new Product(
@@ -53,7 +53,7 @@ class Products with ChangeNotifier {
       int limit,
       bool special,
       PlatformFile platformImage,
-      File image,
+      String image,
       String category}) {
     _products.forEach((element) {
       if (element.id == id) {

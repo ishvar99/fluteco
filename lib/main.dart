@@ -5,8 +5,11 @@ import './resources/constants.dart';
 import './resources/routes.dart';
 import 'package:provider/provider.dart';
 import 'providers/Products.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(

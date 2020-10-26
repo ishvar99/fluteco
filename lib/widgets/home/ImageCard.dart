@@ -12,7 +12,7 @@ class ImageCard extends StatelessWidget {
   }) : super(key: key);
 
   final Function tapped;
-  final File image;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ImageCard extends StatelessWidget {
               color: kSecondaryColor.withOpacity(0.04),
               // color: Colors.deepOrange[50],
             ),
-            child: Image.file(
+            child: Image.network(
               image,
               fit: BoxFit.contain,
             ),

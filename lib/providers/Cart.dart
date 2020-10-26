@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class CartItem {
   final String id;
   final String title;
-  final File image;
+  final String image;
   int quantity;
   final int price;
   final int limit;
@@ -27,7 +27,7 @@ class Cart with ChangeNotifier {
   }
 
   void addItem(
-      {String productId, int price, String title, File image, int limit}) {
+      {String productId, int price, String title, String image, int limit}) {
     _items.putIfAbsent(
       productId,
       () => CartItem(

@@ -11,38 +11,36 @@ class IconWithCounter extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: press,
-      child: Stack(overflow: Overflow.visible, children: [
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: getProportionateScreenWidth(15.2),
-          ),
-          child: Icon(Icons.shopping_cart),
-        ),
-        if (count != 0)
-          Positioned(
-            top: getProportionateScreenWidth(8),
-            right: getProportionateScreenWidth(9),
-            child: Container(
-              width: getProportionateScreenWidth(15),
-              height: getProportionateScreenWidth(15),
-              decoration: BoxDecoration(
-                color: kOfferBannerColor,
-                shape: BoxShape.circle,
-                // border: Border.all(width: 0.5, color: Colors.white),
-              ),
-              child: Center(
-                child: Text(
-                  count.toString(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: getProportionateScreenWidth(10),
-                      height: 1,
-                      fontWeight: FontWeight.w900),
+      child: Stack(
+          overflow: Overflow.visible,
+          alignment: Alignment.center,
+          children: [
+            Icon(Icons.shopping_cart),
+            if (count != 0)
+              Positioned(
+                top: getProportionateScreenWidth(8),
+                right: getProportionateScreenWidth(9),
+                child: Container(
+                  width: getProportionateScreenWidth(15),
+                  height: getProportionateScreenWidth(15),
+                  decoration: BoxDecoration(
+                    color: kOfferBannerColor,
+                    shape: BoxShape.circle,
+                    // border: Border.all(width: 0.5, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Text(
+                      count.toString(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: getProportionateScreenWidth(10),
+                          height: 1,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
-      ]),
+              )
+          ]),
     );
   }
 }
