@@ -73,8 +73,8 @@ class _CartProductState extends State<CartProduct> {
             Column(
               children: [
                 SizedBox(
-                  width: getProportionateScreenWidth(125),
-                  height: getProportionateScreenWidth(125),
+                  width: getProportionateScreenWidth(110),
+                  height: getProportionateScreenWidth(110),
                   child: ImageCard(
                       tapped: () {
                         Navigator.pushNamed(
@@ -159,14 +159,14 @@ class _CartProductState extends State<CartProduct> {
               ],
             ),
             SizedBox(
-              width: getProportionateScreenWidth(25),
+              width: getProportionateScreenWidth(40),
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: getProportionateScreenWidth(25),
+                    height: getProportionateScreenWidth(20),
                   ),
                   Text(
                     "${widget.cartProduct.title}",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showSnackbar({context, product, products, bool wishListItem = false}) {
+void showSnackbar(
+    {BuildContext context, product, products, bool wishListItem = false}) {
   final snackBar = SnackBar(
     behavior: SnackBarBehavior.floating,
     duration: Duration(milliseconds: 1000),

@@ -1,10 +1,11 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import './Product.dart';
-import '../data/products.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _products = [...productsData];
+  NetworkHelper helper = NetworkHelper();
+  List<Product> _products = [];
 
   List<Product> get products {
     return [..._products];

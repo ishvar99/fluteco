@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
 import '../../resources/constants.dart';
@@ -22,7 +22,7 @@ class ImageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
           onTap: tapped,
           child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+            padding: EdgeInsets.all(getProportionateScreenWidth(10)),
             decoration: BoxDecoration(
               border: Border.all(
                 width: 0.5,
@@ -32,8 +32,12 @@ class ImageCard extends StatelessWidget {
               color: kSecondaryColor.withOpacity(0.04),
               // color: Colors.deepOrange[50],
             ),
-            child: Image.network(
-              image,
+            child: CachedNetworkImage(
+              imageUrl: image,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) =>
+                  Icon(Icons.error, color: Colors.red),
               fit: BoxFit.contain,
             ),
           )),

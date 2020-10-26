@@ -28,7 +28,7 @@ class Product with ChangeNotifier {
       @required this.special,
       @required this.description,
       @required this.limit,
-      @required this.platformImage,
+      this.platformImage,
       @required this.category,
       this.favourite = false});
 

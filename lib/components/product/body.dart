@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../providers/Product.dart';
 import '../../resources/size_config.dart';
@@ -21,8 +22,12 @@ Padding displayContent(BuildContext context, Product product) {
               top: getProportionateScreenWidth(20)),
           child: Container(
             alignment: Alignment.center,
-            child: Image.network(
-              product.imageUrl,
+            child: CachedNetworkImage(
+              imageUrl: product.imageUrl,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) =>
+                  Icon(Icons.error, color: Colors.red),
               height: getProportionateScreenWidth(200),
             ),
           ),

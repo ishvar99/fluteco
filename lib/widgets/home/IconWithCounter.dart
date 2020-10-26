@@ -18,8 +18,8 @@ class IconWithCounter extends StatelessWidget {
             Icon(Icons.shopping_cart),
             if (count != 0)
               Positioned(
-                top: getProportionateScreenWidth(8),
-                right: getProportionateScreenWidth(9),
+                top: getProportionateScreenWidth(7),
+                left: getProportionateScreenWidth(16),
                 child: Container(
                   width: getProportionateScreenWidth(15),
                   height: getProportionateScreenWidth(15),

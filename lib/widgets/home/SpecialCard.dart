@@ -28,7 +28,7 @@ class _SpecialCardState extends State<SpecialCard> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        width: getProportionateScreenWidth(160),
+        width: getProportionateScreenWidth(150),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
