@@ -22,7 +22,7 @@ Padding displayContent(BuildContext context, Product product) {
           child: Container(
             alignment: Alignment.center,
             child: Image.network(
-              product.image,
+              product.imageUrl,
               height: getProportionateScreenWidth(200),
             ),
           ),

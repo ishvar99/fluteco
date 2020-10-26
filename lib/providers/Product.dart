@@ -10,7 +10,7 @@ class Product with ChangeNotifier {
   int originalPrice;
   int discountedPrice;
   int discount;
-  String image;
+  String imageUrl;
   String description;
   String category;
   bool special;
@@ -24,7 +24,7 @@ class Product with ChangeNotifier {
       @required this.originalPrice,
       @required this.discountedPrice,
       @required this.discount,
-      @required this.image,
+      @required this.imageUrl,
       @required this.special,
       @required this.description,
       @required this.limit,

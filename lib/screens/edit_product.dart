@@ -1,6 +1,7 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluteco/utility/computeDiscount.dart';
+import '../services/NetworkHelper.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
@@ -9,12 +10,11 @@ import 'package:provider/provider.dart';
 import '../data/categories.dart';
 import '../providers/Products.dart';
 import 'package:uuid/uuid.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/miscellaneous/LoadingBackdrop.dart';
 
 class EditProduct extends StatefulWidget {
   static const routeName = "/edit-product";
-
+  final helper = NetworkHelper();
   @override
   _EditProductState createState() => _EditProductState();
 }
@@ -29,41 +29,9 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _imageController = TextEditingController();
   TextEditingController _discountController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  String dropDownValue;
+  String _dropDownValue;
   bool _loading = false;
-  PlatformFile image;
-  String networkImage;
-  Future<dynamic> _uploadData(
-      _discount, _originalPrice, _discountedPrice) async {
-    setState(() {
-      _loading = true;
-    });
-    final StorageReference storageReference =
-        FirebaseStorage().ref().child("images/${image.name}");
-    final StorageUploadTask uploadTask =
-        storageReference.putFile(File(image.path));
-    StorageTaskSnapshot snapshot = await uploadTask.onComplete;
-    if (snapshot.error == null) {
-      final String downloadUrl = await snapshot.ref.getDownloadURL();
-      networkImage = downloadUrl;
-      CollectionReference collectionReferece =
-          FirebaseFirestore.instance.collection('products');
-      return collectionReferece.add({
-        "special": _discount != 0 ? true : false,
-        "name": _nameController.text,
-        "description": _descriptionController.text,
-        "originalPrice": _originalPrice,
-        "discountedPrice": _discountedPrice,
-        "category": dropDownValue,
-        "discount": _discount,
-        "limit": int.parse(_quantityController.text),
-        "image": downloadUrl,
-      });
-    } else {
-      // handle error
-    }
-  }
-
+  PlatformFile _image;
   void chooseImage() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -73,60 +41,73 @@ class _EditProductState extends State<EditProduct> {
     if (result != null) {
       PlatformFile file = result.files.first;
       _imageController.text = file.name;
-      image = file;
+      _image = file;
     } else {
       // User canceled the picker
     }
   }
 
-  _addProduct({Products products, bool update = false, id}) {
+  _editProduct({@required Products products, String id}) async {
     if (_formKey.currentState.validate()) {
-      int _discountedPrice;
+      setState(() {
+        _loading = true;
+      });
       int _originalPrice = int.parse(_priceController.text);
-
-      int _discount;
-      if (_discountController.text.isEmpty) {
-        _discount = 0;
-        _discountedPrice = int.parse(_priceController.text);
+      int _discount = _discountController.text.isEmpty
+          ? 0
+          : int.parse(_discountController.text);
+      int _discountedPrice = computeDiscount(_originalPrice, _discount);
+      bool _special = _discount != 0 ? true : false;
+      String _name = _nameController.text;
+      String _description = _descriptionController.text;
+      String _category = _dropDownValue;
+      int _limit = int.parse(_quantityController.text);
+      String _imageUrl = await widget.helper.uploadProductImage(_image);
+      print(_imageUrl);
+      Map<String, dynamic> _data = {
+        "name": _name,
+        "description": _description,
+        "special": _special,
+        "imageUrl": _imageUrl,
+        "limit": _limit,
+        "category": _category,
+        "discount": _discount,
+        "originalPrice": _originalPrice,
+        "discountedPrice": _discountedPrice
+      };
+      if (id != null) {
+        // products.updateProduct(
+        //     special: _special,
+        //     id: id,
+        //     name: _name,
+        //     description: _description,
+        //     originalPrice: _originalPrice,
+        //     discountedPrice: _discountedPrice,
+        //     category: _category,
+        //     discount: _discount,
+        //     limit: _limit,
+        //     image: _imageUrl,
+        //     platformImage: _image);
       } else {
-        _discount = int.parse(_discountController.text);
-        _discountedPrice =
-            (_originalPrice - (_discount / 100 * _originalPrice)).round();
-      }
-      if (update) {
-        products.updateProduct(
-            special: _discount != 0 ? true : false,
-            id: id,
-            name: _nameController.text,
-            description: _descriptionController.text,
-            originalPrice: _originalPrice,
-            discountedPrice: _discountedPrice,
-            category: dropDownValue,
-            discount: _discount,
-            limit: int.parse(_quantityController.text),
-            // image: File(image.path),
-            platformImage: image);
-      } else {
-        _uploadData(_discount, _originalPrice, _discountedPrice).then((docRef) {
-          print(docRef.id);
+        DocumentReference docRef;
+        try {
+          docRef = await widget.helper.uploadProduct(productData: _data);
           products.addProduct(
-            special: _discount != 0 ? true : false,
-            id: docRef.id,
-            name: _nameController.text,
-            description: _descriptionController.text,
-            originalPrice: _originalPrice,
-            discountedPrice: _discountedPrice,
-            category: dropDownValue,
-            discount: _discount,
-            limit: int.parse(_quantityController.text),
-            image: networkImage,
-            platformImage: image,
+            productData: {
+              ..._data,
+              "id": docRef.id,
+              "platformImage": _image,
+            },
           );
           setState(() {
             _loading = false;
           });
+
           Navigator.pop(context);
-        });
+        } catch (e) {
+          // Error Handling
+          print(e);
+        }
       }
     }
   }
@@ -139,11 +120,11 @@ class _EditProductState extends State<EditProduct> {
       _descriptionController.text = product.description;
       _priceController.text = product.originalPrice.toString();
       _quantityController.text = product.limit.toString();
-      dropDownValue = product.category;
+      _dropDownValue = product.category;
       _discountController.text =
           product.discount != 0 ? product.discount.toString() : "";
       _imageController.text = product.platformImage.name;
-      image = product.platformImage;
+      _image = product.platformImage;
     }
     final products = Provider.of<Products>(context, listen: false);
     return Scaffold(
@@ -236,8 +217,9 @@ class _EditProductState extends State<EditProduct> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: getProportionateScreenWidth(10),
-                                horizontal: getProportionateScreenWidth(30)),
+                              vertical: getProportionateScreenWidth(10),
+                              horizontal: getProportionateScreenWidth(30),
+                            ),
                             child: TextFormField(
                               controller: _quantityController,
                               keyboardType: TextInputType.number,
@@ -261,7 +243,7 @@ class _EditProductState extends State<EditProduct> {
                                 vertical: getProportionateScreenWidth(10),
                                 horizontal: getProportionateScreenWidth(30)),
                             child: DropdownButtonFormField(
-                              value: dropDownValue,
+                              value: _dropDownValue,
                               validator: (value) {
                                 if (value == null) {
                                   return 'Category is required';
@@ -281,7 +263,7 @@ class _EditProductState extends State<EditProduct> {
                               ],
                               onChanged: (val) {
                                 setState(() {
-                                  dropDownValue = val;
+                                  _dropDownValue = val;
                                 });
                               },
                             ),
@@ -347,9 +329,8 @@ class _EditProductState extends State<EditProduct> {
                     child: RoundedButton(
                       text: product != null ? "Update Product" : "Add Product",
                       pressed: () => product != null
-                          ? _addProduct(
-                              products: products, update: true, id: product.id)
-                          : _addProduct(products: products),
+                          ? _editProduct(products: products, id: product.id)
+                          : _editProduct(products: products),
                     )),
                 SizedBox(
                   height: getProportionateScreenWidth(60),

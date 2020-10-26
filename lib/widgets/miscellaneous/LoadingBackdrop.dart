@@ -7,9 +7,9 @@ class LoadingBackdrop extends StatelessWidget {
       child: Center(
           child: CircularProgressIndicator(
         strokeWidth: 8,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),
       )),
-      color: Colors.black.withOpacity(0.5),
+      color: Colors.black.withOpacity(0.4),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
     );

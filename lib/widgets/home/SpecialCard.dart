@@ -38,7 +38,7 @@ class _SpecialCardState extends State<SpecialCard> {
                       '/products',
                       arguments: product.id,
                     ),
-                image: product.image),
+                image: product.imageUrl),
             const SizedBox(height: 5),
             Text(
               product.name,

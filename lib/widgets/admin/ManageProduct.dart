@@ -39,7 +39,7 @@ class _ManageProductState extends State<ManageProduct> {
               child: SizedBox(
                 height: getProportionateScreenWidth(70),
                 width: getProportionateScreenWidth(70),
-                child: ImageCard(tapped: () {}, image: widget.product.image),
+                child: ImageCard(tapped: () {}, image: widget.product.imageUrl),
               ),
             ),
             Expanded(

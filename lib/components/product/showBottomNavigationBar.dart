@@ -24,7 +24,7 @@ Container displayBottomNavigationBar(BuildContext context, Product product) {
                     cart.addItem(
                         productId: product.id,
                         price: product.discountedPrice,
-                        image: product.image,
+                        image: product.imageUrl,
                         limit: product.limit,
                         title: product.name);
                     final snackBar = SnackBar(
