@@ -70,9 +70,18 @@ class _ManageProductState extends State<ManageProduct> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/edit-product',
+                    onTap: () async {
+                      bool result = await Navigator.pushNamed(
+                          context, '/edit-product',
                           arguments: widget.product);
+                      if (result) {
+                        final snackBar = SnackBar(
+                          content: Text('product added successfully'),
+                          duration: Duration(milliseconds: 1500),
+                          behavior: SnackBarBehavior.floating,
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      }
                     },
                     child: Icon(
                       Icons.edit,

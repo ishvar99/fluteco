@@ -19,7 +19,7 @@ class FlutecoSpecial extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             CategoriesList(),

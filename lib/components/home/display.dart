@@ -1,3 +1,4 @@
+import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/home/RecommendedCard.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'dart:math';
@@ -18,15 +19,18 @@ SingleChildScrollView display({String type, BuildContext context}) {
   final _random = new Random();
   return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: Padding(
+        padding: EdgeInsets.only(
+          right: getProportionateScreenWidth(8),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
               type == "recommended-genres"
                   ? recommendedGenresLimit
-                  : type == "categories" ? categories.length : products.length,
-              (index) {
+                  : type == "categories"
+                      ? categories.length
+                      : products.length, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
