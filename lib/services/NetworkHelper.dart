@@ -38,7 +38,7 @@ class NetworkHelper {
         name: doc.data()['name'],
         originalPrice: doc.data()['originalPrice'],
         discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discount'],
+        discountedPrice: doc.data()['discountedPrice'],
         imageUrl: doc.data()['imageUrl'],
         limit: doc.data()['limit'],
         special: doc.data()['special'],

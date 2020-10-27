@@ -61,6 +61,7 @@ class _EditProductState extends State<EditProduct> {
           ? 0
           : int.parse(_discountController.text);
       int _discountedPrice = computeDiscount(_originalPrice, _discount);
+      print(_discountedPrice);
       bool _special = _discount != 0 ? true : false;
       String _name = _nameController.text;
       String _description = _descriptionController.text;
