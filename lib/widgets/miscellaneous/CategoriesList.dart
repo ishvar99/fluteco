@@ -39,7 +39,7 @@ class _CategoriesListState extends State<CategoriesList> {
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       color: Colors.teal[600],
-                      fontSize: getProportionateScreenWidth(16.0),
+                      fontSize: getProportionateScreenWidth(15.0),
                     ),
                   ),
                   index == _selectedIndex

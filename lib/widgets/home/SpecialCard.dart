@@ -63,7 +63,7 @@ class _SpecialCardState extends State<SpecialCard> {
                     child: Text(
                       "${formatter.format(product.discountedPrice)}",
                       style: TextStyle(
-                          fontSize: getProportionateScreenWidth(17),
+                          fontSize: getProportionateScreenWidth(15.5),
                           fontWeight: FontWeight.w600,
                           color: kOfferBannerColor),
                     ),
@@ -81,7 +81,7 @@ class _SpecialCardState extends State<SpecialCard> {
                         decoration: TextDecoration.lineThrough,
                         decorationThickness: 2.0,
                         fontWeight: FontWeight.w600,
-                        fontSize: getProportionateScreenWidth(13),
+                        fontSize: getProportionateScreenWidth(10),
                         color: kPrimaryColor),
                   ),
                 ),

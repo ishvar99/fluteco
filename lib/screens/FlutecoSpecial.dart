@@ -27,7 +27,7 @@ class FlutecoSpecial extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: getProportionateScreenWidth(2).round(),
-                  childAspectRatio: getProportionateScreenWidth(0.7),
+                  childAspectRatio: getProportionateScreenWidth(0.63),
                   crossAxisSpacing: 2,
                 ),
                 itemCount: products.length,

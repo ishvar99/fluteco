@@ -90,7 +90,7 @@ class _ManageProductState extends State<ManageProduct> {
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 25,
                   ),
                   GestureDetector(
                     onTap: () {

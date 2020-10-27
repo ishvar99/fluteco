@@ -10,7 +10,8 @@ class LoadingBackdrop extends StatelessWidget {
         valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
       )),
       color: Colors.black.withOpacity(0.4),
-      height: MediaQuery.of(context).size.height,
+      height:
+          MediaQuery.of(context).size.height - AppBar().preferredSize.height,
       width: MediaQuery.of(context).size.width,
     );
   }
