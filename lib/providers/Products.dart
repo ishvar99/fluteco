@@ -11,6 +11,17 @@ class Products with ChangeNotifier {
     return [..._products];
   }
 
+  Future<void> fetchProducts() async {
+    try {
+      List<Product> loadedProducts = await helper.getProducts();
+      _products = loadedProducts;
+      print(_products);
+    } catch (error) {
+      throw error;
+    }
+    notifyListeners();
+  }
+
   void addProduct({@required Map<String, dynamic> productData}) {
     _products.add(
       new Product(

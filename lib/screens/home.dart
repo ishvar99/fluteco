@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../components/home/header.dart';
 import '../components/home/body.dart';
+import 'package:provider/provider.dart';
+import '../providers/Products.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';
@@ -15,7 +17,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       drawer: Drawer(),
       appBar: header(context),
-      body: SingleChildScrollView(child: Body()),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Provider.of<Products>(context).fetchProducts();
+        },
+        child: SingleChildScrollView(
+          child: Body(),
+        ),
+      ),
     );
   }
 }

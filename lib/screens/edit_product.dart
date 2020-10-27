@@ -346,7 +346,7 @@ class _EditProductState extends State<EditProduct> {
                                 context: context, products: products),
                       )),
                   SizedBox(
-                    height: getProportionateScreenWidth(80),
+                    height: getProportionateScreenWidth(70),
                   )
                 ],
               ),

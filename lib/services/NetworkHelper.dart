@@ -32,6 +32,7 @@ class NetworkHelper {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('products').get();
     List<Product> productList = querySnapshot.docs.map((doc) {
+      print(doc.data()['imageUrl']);
       return Product(
         id: doc.id,
         name: doc.data()['name'],
