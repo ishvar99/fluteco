@@ -21,7 +21,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.only(
-          right: getProportionateScreenWidth(8),
+          right: getProportionateScreenWidth(5),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -17,13 +17,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       drawer: Drawer(),
       appBar: header(context),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await Provider.of<Products>(context).fetchProducts();
-        },
-        child: SingleChildScrollView(
-          child: Body(),
-        ),
+      body: SingleChildScrollView(
+        child: Body(),
       ),
     );
   }

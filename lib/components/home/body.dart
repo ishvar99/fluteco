@@ -35,38 +35,39 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Column(
-          children: [
-            BannerCarousel(),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenWidth(5)),
-              child: display(type: "categories", context: context),
-            ),
-            PartitionHeader(
-              type: "Recommended for you",
-            ),
-            display(type: "recommended-genres", context: context),
-            PartitionHeader(
-              type: "Fluteco's Special",
-            ),
-            display(type: "recommended-genres", context: context),
-            PartitionHeader(
-              type: "Fluteco's Special",
-            ),
-            display(type: "recommended-genres", context: context),
-            PartitionHeader(
-              type: "Fluteco's Special",
-            ),
-            display(type: "special-products", context: context),
-            SizedBox(
-              height: 25,
-            )
-          ],
+        !_loading
+            ? LinearProgressIndicator(
+                minHeight: 5,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+              )
+            : Container(),
+        BannerCarousel(),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
+          child: display(type: "categories", context: context),
         ),
-        _loading ? LoadingBackdrop() : Container()
+        PartitionHeader(
+          type: "Recommended for you",
+        ),
+        display(type: "recommended-genres", context: context),
+        PartitionHeader(
+          type: "Fluteco's Special",
+        ),
+        display(type: "recommended-genres", context: context),
+        PartitionHeader(
+          type: "Fluteco's Special",
+        ),
+        display(type: "recommended-genres", context: context),
+        PartitionHeader(
+          type: "Fluteco's Special",
+        ),
+        display(type: "special-products", context: context),
+        SizedBox(
+          height: 25,
+        )
       ],
     );
   }

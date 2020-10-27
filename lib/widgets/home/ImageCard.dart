@@ -17,13 +17,15 @@ class ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: getProportionateScreenWidth(140),
+      width: getProportionateScreenWidth(145),
       height: getProportionateScreenWidth(120),
       child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
           onTap: tapped,
           child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(5)),
+            padding: EdgeInsets.all(
+              getProportionateScreenWidth(5),
+            ),
             decoration: BoxDecoration(
               border: Border.all(
                 width: 0.5,

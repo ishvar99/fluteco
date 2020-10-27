@@ -27,13 +27,12 @@ class _SpecialCardState extends State<SpecialCard> {
 
     return Padding(
       padding: EdgeInsets.only(
-        left: getProportionateScreenWidth(8),
+        left: getProportionateScreenWidth(15),
         // right: getProportionateScreenWidth(5),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8),
         // color: Colors.red,
-        width: getProportionateScreenWidth(165),
+        width: getProportionateScreenWidth(160),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -138,10 +137,13 @@ class _SpecialCardState extends State<SpecialCard> {
                     ),
                   );
                 }),
-              )
+              ),
+              SizedBox(
+                width: getProportionateScreenWidth(12),
+              ),
             ]),
             SizedBox(
-              height: getProportionateScreenWidth(5),
+              height: getProportionateScreenWidth(7),
             ),
             (product.discount != 0)
                 ? Row(
