@@ -49,7 +49,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                 text: categories[index].text,
                 tapped: () => Navigator.of(context).pushNamed(
                   '/categories',
-                  arguments: categories[index].id,
+                  arguments: categories[index].text,
                 ),
               );
             } else if (type == "special-products") {

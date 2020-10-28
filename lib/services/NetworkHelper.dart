@@ -48,4 +48,32 @@ class NetworkHelper {
     }).toList();
     return productList;
   }
+
+  Future<List<Product>> getProductsByCategory(String category) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .where("category", isEqualTo: category)
+          .get();
+      List<Product> productList = querySnapshot.docs.map((doc) {
+        print(doc.data()['imageUrl']);
+        return Product(
+          id: doc.id,
+          name: doc.data()['name'],
+          originalPrice: doc.data()['originalPrice'],
+          discount: doc.data()['discount'],
+          discountedPrice: doc.data()['discountedPrice'],
+          imageUrl: doc.data()['imageUrl'],
+          limit: doc.data()['limit'],
+          special: doc.data()['special'],
+          category: doc.data()['category'],
+          description: doc.data()['description'],
+        );
+      }).toList();
+      return productList;
+    } catch (error) {
+      print(error);
+      return [];
+    }
+  }
 }

@@ -27,7 +27,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
     case '/categories':
       {
         return MaterialPageRoute(
-            builder: (context) => CategoryScreen(id: arguments));
+            builder: (context) => CategoryScreen(category: arguments));
       }
 
     case '/products':
