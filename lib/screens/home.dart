@@ -14,11 +14,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(),
-      appBar: header(context),
-      body: SingleChildScrollView(
-        child: Body(),
+    return RefreshIndicator(
+      onRefresh: () =>
+          Provider.of<Products>(context, listen: false).fetchProducts(),
+      child: Scaffold(
+        drawer: Drawer(),
+        appBar: header(context),
+        body: SingleChildScrollView(
+          child: Body(),
+        ),
       ),
     );
   }
