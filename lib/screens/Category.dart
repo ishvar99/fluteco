@@ -43,7 +43,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       ),
       body: _loading
-          ? CircularProgressIndicator()
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
           : Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(15),
