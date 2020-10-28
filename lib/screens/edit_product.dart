@@ -67,35 +67,36 @@ class _EditProductState extends State<EditProduct> {
       String _description = _descriptionController.text;
       String _category = _dropDownValue;
       int _limit = int.parse(_quantityController.text);
-      String _imageUrl = await widget.helper.uploadProductImage(_image);
-      print(_imageUrl);
-      Map<String, dynamic> _data = {
-        "name": _name,
-        "description": _description,
-        "special": _special,
-        "imageUrl": _imageUrl,
-        "limit": _limit,
-        "category": _category,
-        "discount": _discount,
-        "originalPrice": _originalPrice,
-        "discountedPrice": _discountedPrice
-      };
-      if (id != null) {
-        // products.updateProduct(
-        //     special: _special,
-        //     id: id,
-        //     name: _name,
-        //     description: _description,
-        //     originalPrice: _originalPrice,
-        //     discountedPrice: _discountedPrice,
-        //     category: _category,
-        //     discount: _discount,
-        //     limit: _limit,
-        //     image: _imageUrl,
-        //     platformImage: _image);
-      } else {
-        DocumentReference docRef;
-        try {
+      try {
+        String _imageUrl = await widget.helper.uploadProductImage(_image);
+        print(_imageUrl);
+        Map<String, dynamic> _data = {
+          "name": _name,
+          "description": _description,
+          "special": _special,
+          "imageUrl": _imageUrl,
+          "limit": _limit,
+          "category": _category,
+          "discount": _discount,
+          "originalPrice": _originalPrice,
+          "discountedPrice": _discountedPrice
+        };
+        if (id != null) {
+          // products.updateProduct(
+          //     special: _special,
+          //     id: id,
+          //     name: _name,
+          //     description: _description,
+          //     originalPrice: _originalPrice,
+          //     discountedPrice: _discountedPrice,
+          //     category: _category,
+          //     discount: _discount,
+          //     limit: _limit,
+          //     image: _imageUrl,
+          //     platformImage: _image);
+        } else {
+          DocumentReference docRef;
+
           docRef = await widget.helper.uploadProduct(productData: _data);
           products.addProduct(
             productData: {
@@ -108,14 +109,15 @@ class _EditProductState extends State<EditProduct> {
             _loading = false;
           });
 
-          Navigator.pop(context);
-        } catch (e) {
-          showSnackbar(context: context, text: "Something went wrong!");
-          print(e);
+          Navigator.pop(context, true);
         }
+      } catch (e) {
+        showSnackbar(context: context, text: "Something went wrong!");
+        print(e);
       }
     } else {
-      showSnackbar(context: context, text: "Fill all the required fields");
+      showSnackbar(
+          context: context, text: "Fill all the required fields correctly");
     }
   }
 

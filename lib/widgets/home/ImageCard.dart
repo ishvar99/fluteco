@@ -37,11 +37,15 @@ class ImageCard extends StatelessWidget {
             ),
             child: CachedNetworkImage(
               imageUrl: image,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  CircularProgressIndicator(value: downloadProgress.progress),
-              errorWidget: (context, url, error) =>
-                  Icon(Icons.error, color: Colors.red),
-              fit: BoxFit.contain,
+              placeholder: (context, url) => FittedBox(
+                fit: BoxFit.contain,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Image.asset("assets/images/placeholder.png"),
+                ),
+              ),
             ),
           )),
     );

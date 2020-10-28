@@ -37,7 +37,7 @@ class Category extends StatelessWidget {
               Text(
                 text,
                 style: TextStyle(
-                    fontSize: getProportionateScreenWidth(9),
+                    fontSize: getProportionateScreenWidth(9.5),
                     fontWeight: FontWeight.bold),
               )
             ],

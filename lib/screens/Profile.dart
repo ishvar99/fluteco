@@ -13,8 +13,18 @@ class Profile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/edit-product');
+              onTap: () async {
+                var result =
+                    await Navigator.pushNamed(context, '/edit-product');
+                print(result);
+                if (result) {
+                  final snackBar = SnackBar(
+                    content: Text('product added successfully'),
+                    duration: Duration(milliseconds: 1500),
+                    behavior: SnackBarBehavior.floating,
+                  );
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
               },
               child: Icon(Icons.add),
             ),

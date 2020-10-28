@@ -42,7 +42,7 @@ class PartitionHeader extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: getProportionateScreenHeight(15),
+          height: getProportionateScreenHeight(25),
         ),
       ],
     );

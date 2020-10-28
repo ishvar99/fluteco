@@ -24,11 +24,8 @@ Padding displayContent(BuildContext context, Product product) {
             alignment: Alignment.center,
             child: CachedNetworkImage(
               imageUrl: product.imageUrl,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  CircularProgressIndicator(value: downloadProgress.progress),
-              errorWidget: (context, url, error) =>
-                  Icon(Icons.error, color: Colors.red),
-              height: getProportionateScreenWidth(200),
+              placeholder: (context, url) => Container(
+                  child: Image.asset("assets/images/placeholder.png")),
             ),
           ),
         ),

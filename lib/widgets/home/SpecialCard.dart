@@ -53,7 +53,7 @@ class _SpecialCardState extends State<SpecialCard> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 7),
+            SizedBox(height: 5),
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Padding(
                 padding: EdgeInsets.only(right: getProportionateScreenWidth(5)),
