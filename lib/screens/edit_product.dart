@@ -62,7 +62,6 @@ class _EditProductState extends State<EditProduct> {
           : int.parse(_discountController.text);
       int _discountedPrice = computeDiscount(_originalPrice, _discount);
       print(_discountedPrice);
-      bool _special = _discount != 0 ? true : false;
       String _name = _nameController.text;
       String _description = _descriptionController.text;
       String _category = _dropDownValue;
@@ -73,7 +72,6 @@ class _EditProductState extends State<EditProduct> {
         Map<String, dynamic> _data = {
           "name": _name,
           "description": _description,
-          "special": _special,
           "imageUrl": _imageUrl,
           "limit": _limit,
           "category": _category,

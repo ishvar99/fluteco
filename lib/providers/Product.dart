@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:fluteco/models/Category.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
@@ -13,7 +10,6 @@ class Product with ChangeNotifier {
   String imageUrl;
   String description;
   String category;
-  bool special;
   bool favourite;
   PlatformFile platformImage;
   int limit;
@@ -25,7 +21,6 @@ class Product with ChangeNotifier {
       @required this.discountedPrice,
       @required this.discount,
       @required this.imageUrl,
-      @required this.special,
       @required this.description,
       @required this.limit,
       this.platformImage,

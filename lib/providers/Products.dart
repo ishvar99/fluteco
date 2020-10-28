@@ -33,7 +33,6 @@ class Products with ChangeNotifier {
         limit: productData['limit'],
         discount: productData['discount'],
         category: productData['category'],
-        special: productData['special'],
         platformImage: productData['platformImage'],
         imageUrl: productData['imageUrl'],
       ),
@@ -54,7 +53,6 @@ class Products with ChangeNotifier {
       int discountedPrice,
       int discount,
       int limit,
-      bool special,
       PlatformFile platformImage,
       String image,
       String category}) {
@@ -64,7 +62,6 @@ class Products with ChangeNotifier {
         product.discount = discount;
         product.description = description;
         product.limit = limit;
-        product.special = special;
         product.imageUrl = image;
         product.category = category;
         product.originalPrice = originalPrice;

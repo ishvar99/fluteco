@@ -41,7 +41,6 @@ class NetworkHelper {
         discountedPrice: doc.data()['discountedPrice'],
         imageUrl: doc.data()['imageUrl'],
         limit: doc.data()['limit'],
-        special: doc.data()['special'],
         category: doc.data()['category'],
         description: doc.data()['description'],
       );
@@ -65,7 +64,6 @@ class NetworkHelper {
           discountedPrice: doc.data()['discountedPrice'],
           imageUrl: doc.data()['imageUrl'],
           limit: doc.data()['limit'],
-          special: doc.data()['special'],
           category: doc.data()['category'],
           description: doc.data()['description'],
         );

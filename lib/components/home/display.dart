@@ -30,7 +30,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : products.length, (index) {
+                      : 4, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
@@ -53,7 +53,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                 ),
               );
             } else if (type == "special-products") {
-              if (products[index].special) {
+              if (products[index].discount > 0) {
                 return ChangeNotifierProvider.value(
                   value: products[index],
                   child: SpecialCard(),

@@ -5,8 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/Products.dart';
 
-class FlutecoSpecial extends StatelessWidget {
+class FlutecoSpecial extends StatefulWidget {
   static const routeName = '/special-products';
+
+  @override
+  _FlutecoSpecialState createState() => _FlutecoSpecialState();
+}
+
+class _FlutecoSpecialState extends State<FlutecoSpecial> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var products = Provider.of<Products>(context).products;
