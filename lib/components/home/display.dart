@@ -1,3 +1,4 @@
+import 'package:fluteco/data/limit.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/home/RecommendedCard.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
@@ -11,7 +12,7 @@ import '../../providers/Products.dart';
 import '../../models/Genre.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
-  final products = Provider.of<Products>(context).products;
+  final products = Provider.of<Products>(context).homeProducts;
 
   // int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
@@ -30,7 +31,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : 4, (index) {
+                      : products.length, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
@@ -53,13 +54,14 @@ SingleChildScrollView display({String type, BuildContext context}) {
                 ),
               );
             } else if (type == "special-products") {
-              if (products[index].discount > 0) {
-                return ChangeNotifierProvider.value(
-                  value: products[index],
-                  child: SpecialCard(),
-                );
-              } else
-                return Container();
+              // if (products[index].discount > 0) {
+              return ChangeNotifierProvider.value(
+                value: products[index],
+                child: SpecialCard(),
+              );
+              // }
+              // else
+              //   return Container();
             } else
               return null;
           }),

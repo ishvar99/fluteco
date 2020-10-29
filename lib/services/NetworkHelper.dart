@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../data/limit.dart';
 
 class NetworkHelper {
   Future<String> uploadProductImage(PlatformFile image) async {
@@ -28,9 +29,11 @@ class NetworkHelper {
     return collectionReferece.add(productData);
   }
 
-  Future<List<Product>> getProducts() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('products').get();
+  Future<List<Product>> getSelectedProducts() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .limit(flutecoSpecialHome)
+        .get();
     List<Product> productList = querySnapshot.docs.map((doc) {
       print(doc.data()['imageUrl']);
       return Product(

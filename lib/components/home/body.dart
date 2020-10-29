@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
       setState(() {
         _loading = true;
       });
-      Provider.of<Products>(context).fetchProducts().then((_) {
+      Provider.of<Products>(context).fetchLimitedSpecialProducts().then((_) {
         setState(() {
           _loading = false;
         });

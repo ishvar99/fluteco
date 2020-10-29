@@ -6,18 +6,27 @@ import './Product.dart';
 class Products with ChangeNotifier {
   NetworkHelper helper = NetworkHelper();
   List<Product> _products = [];
-
+  List<Product> _specialProducts = [];
   List<Product> get products {
     return [..._products];
   }
 
-  Future<void> fetchProducts() async {
+  List<Product> _homeProducts = [];
+  List<Product> get specialProducts {
+    return [..._specialProducts];
+  }
+
+  List<Product> get homeProducts {
+    return [..._homeProducts];
+  }
+
+  Future<void> fetchLimitedSpecialProducts() async {
     try {
-      List<Product> loadedProducts = await helper.getProducts();
-      _products = loadedProducts;
-      print(_products);
+      List<Product> loadedProducts = await helper.getSelectedProducts();
+      _homeProducts = loadedProducts;
+      print(_homeProducts);
     } catch (error) {
-      throw error;
+      print("Error: $error");
     }
     notifyListeners();
   }
