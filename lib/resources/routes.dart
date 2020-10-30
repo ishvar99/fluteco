@@ -34,7 +34,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
       {
         print(settings.arguments);
         return MaterialPageRoute(builder: (context) {
-          final products = Provider.of<Products>(context).products;
+          var products = Provider.of<Products>(context).products;
           return ChangeNotifierProvider.value(
               value: products.singleWhere((product) => product.id == arguments),
               child: ProductScreen());

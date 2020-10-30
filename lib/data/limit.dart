@@ -1,1 +1,1 @@
-int flutecoSpecialHome = 5;
+int flutecoSpecialHome = 4;

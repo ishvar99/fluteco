@@ -6,12 +6,13 @@ import './Product.dart';
 class Products with ChangeNotifier {
   NetworkHelper helper = NetworkHelper();
   List<Product> _products = [];
+  List<Product> _categoryProducts = [];
   List<Product> _specialProducts = [];
-  List<Product> get products {
-    return [..._products];
+  List<Product> _homeProducts = [];
+  List<Product> get categoryProducts {
+    return [..._categoryProducts];
   }
 
-  List<Product> _homeProducts = [];
   List<Product> get specialProducts {
     return [..._specialProducts];
   }
@@ -20,11 +21,46 @@ class Products with ChangeNotifier {
     return [..._homeProducts];
   }
 
-  Future<void> fetchLimitedSpecialProducts() async {
+  List<Product> get products {
+    return [..._products];
+  }
+
+  Future<void> fetchAllProducts() async {
     try {
-      List<Product> loadedProducts = await helper.getSelectedProducts();
+      List<Product> loadedProducts = await helper.getAllProducts();
+      print(loadedProducts);
+      _products = loadedProducts;
+    } catch (error) {
+      print("Error: $error");
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchHomeProducts() async {
+    try {
+      List<Product> loadedProducts = await helper.getHomeProducts();
       _homeProducts = loadedProducts;
-      print(_homeProducts);
+    } catch (error) {
+      print("Error: $error");
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchSpecialProducts() async {
+    try {
+      List<Product> loadedProducts = await helper.getSpecialProducts();
+      _specialProducts = loadedProducts;
+    } catch (error) {
+      print("Error: $error");
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchCategoryProducts(String category) async {
+    try {
+      List<Product> loadedProducts =
+          await helper.getProductsByCategory(category);
+      _categoryProducts = loadedProducts;
     } catch (error) {
       print("Error: $error");
     }

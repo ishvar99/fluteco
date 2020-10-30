@@ -35,7 +35,9 @@ class _BodyState extends State<Body> {
       setState(() {
         _loading = true;
       });
-      Provider.of<Products>(context).fetchLimitedSpecialProducts().then((_) {
+      Provider.of<Products>(context, listen: false)
+          .fetchHomeProducts()
+          .then((_) {
         setState(() {
           _loading = false;
         });
@@ -47,13 +49,13 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text("No Internet Connection"),
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(
-        days: 365,
-      ),
-    );
+    // final snackBar = SnackBar(
+    //   content: Text("No Internet Connection"),
+    //   behavior: SnackBarBehavior.floating,
+    //   duration: Duration(
+    //     days: 365,
+    //   ),
+    // );
     switch (_source.keys.toList()[0]) {
       case ConnectivityResult.none:
         {

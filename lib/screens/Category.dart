@@ -1,3 +1,4 @@
+import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,15 +17,12 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   bool _loading = true;
-  final NetworkHelper helper = NetworkHelper();
-  List<Product> products;
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      List<Product> _products =
-          await helper.getProductsByCategory(widget.category);
+      await Provider.of<Products>(context, listen: false)
+          .fetchCategoryProducts(widget.category);
       setState(() {
-        products = _products;
         _loading = false;
       });
     });
@@ -33,14 +31,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(products);
+    final List<Product> products =
+        Provider.of<Products>(context, listen: false).categoryProducts;
     return RefreshIndicator(
       onRefresh: () async {
-        helper.getProductsByCategory(widget.category).then((value) {
-          setState(() {
-            products = value;
-          });
-        });
+        await Provider.of<Products>(context, listen: false)
+            .fetchCategoryProducts(widget.category);
       },
       child: Scaffold(
         appBar: AppBar(

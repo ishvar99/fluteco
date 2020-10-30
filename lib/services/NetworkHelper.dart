@@ -29,11 +29,32 @@ class NetworkHelper {
     return collectionReferece.add(productData);
   }
 
-  Future<List<Product>> getSelectedProducts() async {
+  Future<List<Product>> getHomeProducts() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('products')
+        .where('discount', isGreaterThan: 25)
         .limit(flutecoSpecialHome)
         .get();
+    List<Product> productList = querySnapshot.docs.map((doc) {
+      print(doc.data()['imageUrl']);
+      return Product(
+        id: doc.id,
+        name: doc.data()['name'],
+        originalPrice: doc.data()['originalPrice'],
+        discount: doc.data()['discount'],
+        discountedPrice: doc.data()['discountedPrice'],
+        imageUrl: doc.data()['imageUrl'],
+        limit: doc.data()['limit'],
+        category: doc.data()['category'],
+        description: doc.data()['description'],
+      );
+    }).toList();
+    return productList;
+  }
+
+  Future<List<Product>> getAllProducts() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('products').get();
     List<Product> productList = querySnapshot.docs.map((doc) {
       print(doc.data()['imageUrl']);
       return Product(
@@ -76,5 +97,27 @@ class NetworkHelper {
       print(error);
       return [];
     }
+  }
+
+  Future<List<Product>> getSpecialProducts() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .where('discount', isGreaterThan: 25)
+        .get();
+    List<Product> productList = querySnapshot.docs.map((doc) {
+      print(doc.data()['imageUrl']);
+      return Product(
+        id: doc.id,
+        name: doc.data()['name'],
+        originalPrice: doc.data()['originalPrice'],
+        discount: doc.data()['discount'],
+        discountedPrice: doc.data()['discountedPrice'],
+        imageUrl: doc.data()['imageUrl'],
+        limit: doc.data()['limit'],
+        category: doc.data()['category'],
+        description: doc.data()['description'],
+      );
+    }).toList();
+    return productList;
   }
 }

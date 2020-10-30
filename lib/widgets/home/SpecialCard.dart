@@ -23,6 +23,7 @@ class _SpecialCardState extends State<SpecialCard> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    // print("Product Id: ${product.id}");
     final products = Provider.of<Products>(context);
 
     return Padding(
@@ -37,11 +38,14 @@ class _SpecialCardState extends State<SpecialCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageCard(
-                tapped: () => Navigator.pushNamed(
-                      context,
-                      '/products',
-                      arguments: product.id,
-                    ),
+                tapped: () {
+                  print('Tapped');
+                  Navigator.pushNamed(
+                    context,
+                    '/products',
+                    arguments: product.id,
+                  );
+                },
                 image: product.imageUrl),
             const SizedBox(height: 5),
             Text(

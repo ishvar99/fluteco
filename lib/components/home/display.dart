@@ -12,8 +12,8 @@ import '../../providers/Products.dart';
 import '../../models/Genre.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
-  final products = Provider.of<Products>(context).homeProducts;
-
+  print('hello');
+  final products = Provider.of<Products>(context, listen: false).homeProducts;
   // int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];
@@ -54,6 +54,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                 ),
               );
             } else if (type == "special-products") {
+              print('check');
               // if (products[index].discount > 0) {
               return ChangeNotifierProvider.value(
                 value: products[index],
