@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
-  final String id;
+  String id;
   String name;
   int originalPrice;
   int discountedPrice;

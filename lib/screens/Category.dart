@@ -17,11 +17,15 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   bool _loading = true;
+  Map<String, Map<String, Product>> products;
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      await Provider.of<Products>(context, listen: false)
-          .fetchCategoryProducts(widget.category);
+      if (products[widget.category] == null) {
+        print('net');
+        await Provider.of<Products>(context, listen: false)
+            .fetchCategoryProducts(widget.category);
+      }
       setState(() {
         _loading = false;
       });
@@ -31,8 +35,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Product> products =
-        Provider.of<Products>(context, listen: false).categoryProducts;
+    products = Provider.of<Products>(context).products;
+    print(products);
     return RefreshIndicator(
       onRefresh: () async {
         await Provider.of<Products>(context, listen: false)
@@ -60,10 +64,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       childAspectRatio: getProportionateScreenWidth(0.7),
                       crossAxisSpacing: 2,
                     ),
-                    itemCount: products.length,
+                    itemCount: products[widget.category].length,
                     itemBuilder: (context, index) =>
                         ChangeNotifierProvider.value(
-                            value: products[index], child: SpecialCard()),
+                            value: products[widget.category]
+                                .values
+                                .toList()[index],
+                            child: SpecialCard()),
                   ),
                 ),
               ),

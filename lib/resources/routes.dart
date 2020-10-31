@@ -1,3 +1,4 @@
+import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/screens/Product.dart';
 import 'package:fluteco/screens/edit_product.dart';
@@ -32,12 +33,18 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
 
     case '/products':
       {
+        // products.singleWhere((product) => product.id == arguments)
         print(settings.arguments);
         return MaterialPageRoute(builder: (context) {
           var products = Provider.of<Products>(context).products;
+          Product _product;
+          products.forEach((_, value) {
+            value.forEach((k, v) {
+              if (k == arguments) _product = v;
+            });
+          });
           return ChangeNotifierProvider.value(
-              value: products.singleWhere((product) => product.id == arguments),
-              child: ProductScreen());
+              value: _product, child: ProductScreen());
         });
       }
     default:

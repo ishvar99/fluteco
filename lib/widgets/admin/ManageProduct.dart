@@ -89,7 +89,7 @@ class _ManageProductState extends State<ManageProduct> {
                           'Do you want to delete this product?', context,
                           (result) {
                         if (result) {
-                          products.removeProduct(widget.product.id);
+                          // products.removeProduct(widget.product.id);
                         }
                       });
                     },

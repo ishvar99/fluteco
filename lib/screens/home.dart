@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () =>
-          Provider.of<Products>(context, listen: false).fetchHomeProducts(),
+          Provider.of<Products>(context, listen: false).fetchSpecialProducts(),
       child: Scaffold(
         drawer: Drawer(),
         appBar: header(context),

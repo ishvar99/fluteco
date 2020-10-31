@@ -1,7 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/data/categories.dart';
 import 'package:fluteco/providers/Product.dart';
+import 'package:fluteco/providers/Products.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../data/limit.dart';
@@ -29,58 +31,41 @@ class NetworkHelper {
     return collectionReferece.add(productData);
   }
 
-  Future<List<Product>> getHomeProducts() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('products')
-        .where('discount', isGreaterThan: 25)
-        .limit(flutecoSpecialHome)
-        .get();
-    List<Product> productList = querySnapshot.docs.map((doc) {
-      print(doc.data()['imageUrl']);
-      return Product(
-        id: doc.id,
-        name: doc.data()['name'],
-        originalPrice: doc.data()['originalPrice'],
-        discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discountedPrice'],
-        imageUrl: doc.data()['imageUrl'],
-        limit: doc.data()['limit'],
-        category: doc.data()['category'],
-        description: doc.data()['description'],
-      );
-    }).toList();
-    return productList;
-  }
+  // Future<List<Product>> getHomeProducts() async {
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('products')
+  //       .where('discount', isGreaterThan: 25)
+  //       .limit(flutecoSpecialHome)
+  //       .get();
+  //   List<Product> productList = querySnapshot.docs.map((doc) {
+  //     print(doc.data()['imageUrl']);
+  //     return Product(
 
-  Future<List<Product>> getAllProducts() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('products').get();
-    List<Product> productList = querySnapshot.docs.map((doc) {
-      print(doc.data()['imageUrl']);
-      return Product(
-        id: doc.id,
-        name: doc.data()['name'],
-        originalPrice: doc.data()['originalPrice'],
-        discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discountedPrice'],
-        imageUrl: doc.data()['imageUrl'],
-        limit: doc.data()['limit'],
-        category: doc.data()['category'],
-        description: doc.data()['description'],
-      );
-    }).toList();
-    return productList;
-  }
+  //       name: doc.data()['name'],
+  //       originalPrice: doc.data()['originalPrice'],
+  //       discount: doc.data()['discount'],
+  //       discountedPrice: doc.data()['discountedPrice'],
+  //       imageUrl: doc.data()['imageUrl'],
+  //       limit: doc.data()['limit'],
+  //       category: doc.data()['category'],
+  //       description: doc.data()['description'],
+  //     );
+  //   }).toList();
+  //   return productList;
+  // }
 
-  Future<List<Product>> getProductsByCategory(String category) async {
+  Future<Map<String, Map<String, Product>>> getAllProducts(
+      Map<String, Map<String, Product>> products) async {
+    Map<String, Map<String, Product>> _products = products;
+    _products['special'] = {};
+    categories.forEach((e) {
+      _products[e.text] = {};
+    });
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('products')
-          .where("category", isEqualTo: category)
-          .get();
-      List<Product> productList = querySnapshot.docs.map((doc) {
-        print(doc.data()['imageUrl']);
-        return Product(
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+      querySnapshot.docs.forEach((doc) {
+        Product _product = Product(
           id: doc.id,
           name: doc.data()['name'],
           originalPrice: doc.data()['originalPrice'],
@@ -91,22 +76,60 @@ class NetworkHelper {
           category: doc.data()['category'],
           description: doc.data()['description'],
         );
-      }).toList();
-      return productList;
+        if (_product.discount >= thresholdDiscount) {
+          _products['special'].putIfAbsent(doc.id, () => _product);
+        } else {
+          _products[_product.category].putIfAbsent(doc.id, () => _product);
+        }
+      });
+      return _products;
     } catch (error) {
       print(error);
-      return [];
+      return {};
     }
   }
 
-  Future<List<Product>> getSpecialProducts() async {
+  Future<Map<String, Map<String, Product>>> getProductsByCategory(
+      Map<String, Map<String, Product>> products, String category) async {
+    try {
+      Map<String, Map<String, Product>> _products = products;
+      _products[category] = {};
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .where("category", isEqualTo: category)
+          .get();
+      querySnapshot.docs.forEach((doc) {
+        Product _product = Product(
+          id: doc.id,
+          name: doc.data()['name'],
+          originalPrice: doc.data()['originalPrice'],
+          discount: doc.data()['discount'],
+          discountedPrice: doc.data()['discountedPrice'],
+          imageUrl: doc.data()['imageUrl'],
+          limit: doc.data()['limit'],
+          category: doc.data()['category'],
+          description: doc.data()['description'],
+        );
+        _products[category].putIfAbsent(doc.id, () => _product);
+        print("products $_products");
+      });
+      return _products;
+    } catch (error) {
+      print(error);
+      return {};
+    }
+  }
+
+  Future<Map<String, Map<String, Product>>> getSpecialProducts(
+      Map<String, Map<String, Product>> products) async {
+    Map<String, Map<String, Product>> _products = products;
+    _products['special'] = {};
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('products')
         .where('discount', isGreaterThan: 25)
         .get();
-    List<Product> productList = querySnapshot.docs.map((doc) {
-      print(doc.data()['imageUrl']);
-      return Product(
+    querySnapshot.docs.forEach((doc) {
+      Product _product = Product(
         id: doc.id,
         name: doc.data()['name'],
         originalPrice: doc.data()['originalPrice'],
@@ -117,7 +140,8 @@ class NetworkHelper {
         category: doc.data()['category'],
         description: doc.data()['description'],
       );
-    }).toList();
-    return productList;
+      _products['special'].putIfAbsent(doc.id, () => _product);
+    });
+    return _products;
   }
 }

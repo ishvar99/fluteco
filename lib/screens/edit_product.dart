@@ -340,9 +340,7 @@ class _EditProductState extends State<EditProduct> {
                             product != null ? "Update Product" : "Add Product",
                         pressed: () => product != null
                             ? _editProduct(
-                                context: context,
-                                products: products,
-                                id: product.id)
+                                context: context, products: products, id: "id")
                             : _editProduct(
                                 context: context, products: products),
                       )),

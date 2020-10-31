@@ -16,13 +16,15 @@ class FlutecoSpecial extends StatefulWidget {
 
 class _FlutecoSpecialState extends State<FlutecoSpecial> {
   final NetworkHelper helper = NetworkHelper();
-  List<Product> products;
+  Map<String, Map<String, Product>> products;
   bool _loading = true;
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      await Provider.of<Products>(context, listen: false)
-          .fetchSpecialProducts();
+      if (products['special'] == null) {
+        await Provider.of<Products>(context, listen: false)
+            .fetchSpecialProducts();
+      }
       setState(() {
         _loading = false;
       });
@@ -32,8 +34,7 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Product> products =
-        Provider.of<Products>(context, listen: false).specialProducts;
+    products = Provider.of<Products>(context).products;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -71,7 +72,8 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
                         itemBuilder: (context, index) {
                           print(products[index]);
                           return ChangeNotifierProvider.value(
-                              value: products[index], child: SpecialCard());
+                              value: products['special'].values.toList()[index],
+                              child: SpecialCard());
                         },
                       ),
                     ),

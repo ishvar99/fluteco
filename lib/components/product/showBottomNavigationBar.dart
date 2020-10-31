@@ -14,15 +14,16 @@ Container displayBottomNavigationBar(BuildContext context, Product product) {
         Expanded(
           child: Consumer<Cart>(
             builder: (context, cart, _) => Button(
-                text: cart.items.containsKey(product.id)
+                text: cart.items.containsKey(product) //product.id
                     ? "GO TO CART"
                     : "ADD TO CART",
                 tapped: () {
-                  if (cart.items.containsKey(product.id)) {
+                  if (cart.items.containsKey(product)) {
+                    //product.id
                     Navigator.pushNamed(context, '/cart');
                   } else {
                     cart.addItem(
-                        productId: product.id,
+                        // productId: product.id,
                         price: product.discountedPrice,
                         image: product.imageUrl,
                         limit: product.limit,

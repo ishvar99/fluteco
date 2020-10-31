@@ -31,13 +31,13 @@ class _BodyState extends State<Body> {
 
   @override
   void didChangeDependencies() {
+    print('hello');
     if (!_init) {
       setState(() {
         _loading = true;
       });
-      Provider.of<Products>(context, listen: false)
-          .fetchHomeProducts()
-          .then((_) {
+      Provider.of<Products>(context).fetchSpecialProducts().then((_) {
+        print('done');
         setState(() {
           _loading = false;
         });

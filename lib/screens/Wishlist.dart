@@ -1,4 +1,5 @@
 import 'package:fluteco/providers/Product.dart';
+import 'package:fluteco/utility/transformProductsMap.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../resources/size_config.dart';
@@ -24,8 +25,9 @@ class _WishlistState extends State<Wishlist> {
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context).products;
-    final filteredProducts =
-        products.where((product) => product.favourite).toList();
+    final filteredProducts = transformProducts(products)
+        .where((product) => product.favourite)
+        .toList();
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(

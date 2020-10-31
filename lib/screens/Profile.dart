@@ -1,3 +1,4 @@
+import 'package:fluteco/utility/transformProductsMap.dart';
 import 'package:flutter/material.dart';
 import '../widgets/admin/ManageProduct.dart';
 import '../providers/Products.dart';
@@ -65,10 +66,9 @@ class _ProfileState extends State<Profile> {
                     child: Text("No products to display"),
                   )
                 : ListView.builder(
-                    itemCount: products.length,
+                    itemCount: transformProducts(products).length,
                     itemBuilder: (context, index) => ManageProduct(
-                      product: products[index],
-                    ),
+                        product: transformProducts(products)[index]),
                   ),
       ),
     );

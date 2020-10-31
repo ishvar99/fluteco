@@ -12,8 +12,7 @@ import '../../providers/Products.dart';
 import '../../models/Genre.dart';
 
 SingleChildScrollView display({String type, BuildContext context}) {
-  print('hello');
-  final products = Provider.of<Products>(context, listen: false).homeProducts;
+  final products = Provider.of<Products>(context).products;
   // int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];
@@ -31,7 +30,9 @@ SingleChildScrollView display({String type, BuildContext context}) {
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : products.length, (index) {
+                      : products['special'] != null
+                          ? products['special'].length
+                          : 0, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
@@ -54,15 +55,10 @@ SingleChildScrollView display({String type, BuildContext context}) {
                 ),
               );
             } else if (type == "special-products") {
-              print('check');
-              // if (products[index].discount > 0) {
               return ChangeNotifierProvider.value(
-                value: products[index],
+                value: products['special'].values.toList()[index],
                 child: SpecialCard(),
               );
-              // }
-              // else
-              //   return Container();
             } else
               return null;
           }),
