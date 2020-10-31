@@ -33,6 +33,7 @@ class Products with ChangeNotifier {
   Future<void> fetchSpecialProducts() async {
     try {
       _products = await helper.getSpecialProducts(Map.from(_products));
+      print(_products);
     } catch (error) {
       print("Error: $error");
     }

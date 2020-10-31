@@ -68,7 +68,7 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
                           childAspectRatio: getProportionateScreenWidth(0.63),
                           crossAxisSpacing: 2,
                         ),
-                        itemCount: products.length,
+                        itemCount: products['special'].length,
                         itemBuilder: (context, index) {
                           print(products[index]);
                           return ChangeNotifierProvider.value(

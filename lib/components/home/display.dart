@@ -1,4 +1,5 @@
 import 'package:fluteco/data/limit.dart';
+import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/home/RecommendedCard.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
@@ -11,8 +12,10 @@ import '../../widgets/miscellaneous/Category.dart';
 import '../../providers/Products.dart';
 import '../../models/Genre.dart';
 
-SingleChildScrollView display({String type, BuildContext context}) {
-  final products = Provider.of<Products>(context).products;
+SingleChildScrollView display(
+    {String type,
+    BuildContext context,
+    Map<String, Map<String, Product>> products}) {
   // int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];
@@ -30,9 +33,7 @@ SingleChildScrollView display({String type, BuildContext context}) {
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : products['special'] != null
-                          ? products['special'].length
-                          : 0, (index) {
+                      : products['special'].length, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];

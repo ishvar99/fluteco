@@ -1,3 +1,4 @@
+import 'package:fluteco/providers/Product.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
@@ -6,7 +7,7 @@ import './display.dart';
 import 'package:provider/provider.dart';
 import '../../providers/Products.dart';
 import 'package:connectivity/connectivity.dart';
-import '../../utility/connectivity.dart';
+// import '../../utility/connectivity.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -14,41 +15,32 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Map _source = {ConnectivityResult.none: false};
-  MyConnectivity _connectivity = MyConnectivity.instance;
-  bool _init = false;
-  bool _loading = false;
+  Map<String, Map<String, Product>> products;
+  // Map _source = {ConnectivityResult.none: false};
+  // MyConnectivity _connectivity = MyConnectivity.instance;
+  bool _loading = true;
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      _connectivity.initialise();
-      _connectivity.myStream.listen((source) {
-        setState(() => _source = source);
+      if (products["special"] == null) {
+        print("yes");
+        await Provider.of<Products>(context, listen: false)
+            .fetchSpecialProducts();
+      }
+      setState(() {
+        _loading = false;
       });
+      // _connectivity.initialise();
+      // _connectivity.myStream.listen((source) {
+      //   setState(() => _source = source);
+      // });
     });
   }
 
   @override
-  void didChangeDependencies() {
-    print('hello');
-    if (!_init) {
-      setState(() {
-        _loading = true;
-      });
-      Provider.of<Products>(context).fetchSpecialProducts().then((_) {
-        print('done');
-        setState(() {
-          _loading = false;
-        });
-      });
-    }
-    _init = true;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    products = Provider.of<Products>(context).products;
     // final snackBar = SnackBar(
     //   content: Text("No Internet Connection"),
     //   behavior: SnackBarBehavior.floating,
@@ -56,21 +48,21 @@ class _BodyState extends State<Body> {
     //     days: 365,
     //   ),
     // );
-    switch (_source.keys.toList()[0]) {
-      case ConnectivityResult.none:
-        {
-          print('disconnected');
-          // Scaffold.of(context).showSnackBar(snackBar);
-          break;
-        }
-      case ConnectivityResult.mobile:
-      case ConnectivityResult.wifi:
-        {
-          print('connected');
-          // Scaffold.of(context).removeCurrentSnackBar();
-          break;
-        }
-    }
+    // switch (_source.keys.toList()[0]) {
+    //   case ConnectivityResult.none:
+    //     {
+    //       print('disconnected');
+    //       Scaffold.of(context).showSnackBar(snackBar);
+    //       break;
+    //     }
+    //   case ConnectivityResult.mobile:
+    //   case ConnectivityResult.wifi:
+    //     {
+    //       print('connected');
+    //       Scaffold.of(context).removeCurrentSnackBar();
+    //       break;
+    //     }
+    // }
 
     return Column(
       children: [
@@ -78,17 +70,20 @@ class _BodyState extends State<Body> {
         Padding(
           padding:
               EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
-          child: display(type: "categories", context: context),
+          child:
+              display(type: "categories", context: context, products: products),
         ),
         PartitionHeader(
           type: "Recommended for you",
         ),
-        display(type: "recommended-genres", context: context),
+        display(
+            type: "recommended-genres", context: context, products: products),
         PartitionHeader(
           type: "Fluteco's Special",
         ),
         !_loading
-            ? display(type: "special-products", context: context)
+            ? display(
+                type: "special-products", context: context, products: products)
             : SizedBox(
                 height: getProportionateScreenWidth(30),
                 width: getProportionateScreenWidth(30),
@@ -106,9 +101,9 @@ class _BodyState extends State<Body> {
     );
   }
 
-  @override
-  void dispose() {
-    _connectivity.disposeStream();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _connectivity.disposeStream();
+  //   super.dispose();
+  // }
 }

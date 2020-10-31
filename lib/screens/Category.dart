@@ -22,7 +22,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void initState() {
     Future.delayed(Duration.zero, () async {
       if (products[widget.category] == null) {
-        print('net');
         await Provider.of<Products>(context, listen: false)
             .fetchCategoryProducts(widget.category);
       }
