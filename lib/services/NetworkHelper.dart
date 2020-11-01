@@ -26,6 +26,7 @@ class NetworkHelper {
 
   Future<DocumentReference> uploadProduct(
       {@required Map<String, dynamic> productData}) async {
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
     CollectionReference collectionReferece =
         FirebaseFirestore.instance.collection('products');
     return collectionReferece.add(productData);
@@ -61,73 +62,70 @@ class NetworkHelper {
     categories.forEach((e) {
       _products[e.text] = {};
     });
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('products').get();
-      querySnapshot.docs.forEach((doc) {
-        Product _product = Product(
-          id: doc.id,
-          name: doc.data()['name'],
-          originalPrice: doc.data()['originalPrice'],
-          discount: doc.data()['discount'],
-          discountedPrice: doc.data()['discountedPrice'],
-          imageUrl: doc.data()['imageUrl'],
-          limit: doc.data()['limit'],
-          category: doc.data()['category'],
-          description: doc.data()['description'],
-        );
-        if (_product.discount >= thresholdDiscount) {
-          _products['special'].putIfAbsent(doc.id, () => _product);
-        } else {
-          _products[_product.category].putIfAbsent(doc.id, () => _product);
-        }
-      });
-      return _products;
-    } catch (error) {
-      print(error);
-      return {};
-    }
+
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('products').get();
+    querySnapshot.docs.forEach((doc) {
+      Product _product = Product(
+        id: doc.id,
+        name: doc.data()['name'],
+        originalPrice: doc.data()['originalPrice'],
+        discount: doc.data()['discount'],
+        discountedPrice: doc.data()['discountedPrice'],
+        imageUrl: doc.data()['imageUrl'],
+        limit: doc.data()['limit'],
+        category: doc.data()['category'],
+        description: doc.data()['description'],
+      );
+      if (_product.discount >= thresholdDiscount) {
+        _products['special'].putIfAbsent(doc.id, () => _product);
+      } else {
+        _products[_product.category].putIfAbsent(doc.id, () => _product);
+      }
+    });
+    return _products;
   }
 
   Future<Map<String, Map<String, Product>>> getProductsByCategory(
       Map<String, Map<String, Product>> products, String category) async {
-    try {
-      Map<String, Map<String, Product>> _products = products;
-      _products[category] = {};
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('products')
-          .where("category", isEqualTo: category)
-          .get();
-      querySnapshot.docs.forEach((doc) {
-        Product _product = Product(
-          id: doc.id,
-          name: doc.data()['name'],
-          originalPrice: doc.data()['originalPrice'],
-          discount: doc.data()['discount'],
-          discountedPrice: doc.data()['discountedPrice'],
-          imageUrl: doc.data()['imageUrl'],
-          limit: doc.data()['limit'],
-          category: doc.data()['category'],
-          description: doc.data()['description'],
-        );
-        _products[category].putIfAbsent(doc.id, () => _product);
-        print("products $_products");
-      });
-      return _products;
-    } catch (error) {
-      print(error);
-      return {};
-    }
+    QuerySnapshot querySnapshot;
+    Map<String, Map<String, Product>> _products = products;
+    _products[category] = {};
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
+    querySnapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .where("category", isEqualTo: category)
+        .get();
+    if (querySnapshot.docs.length == 0) return products;
+    querySnapshot.docs.forEach((doc) {
+      Product _product = Product(
+        id: doc.id,
+        name: doc.data()['name'],
+        originalPrice: doc.data()['originalPrice'],
+        discount: doc.data()['discount'],
+        discountedPrice: doc.data()['discountedPrice'],
+        imageUrl: doc.data()['imageUrl'],
+        limit: doc.data()['limit'],
+        category: doc.data()['category'],
+        description: doc.data()['description'],
+      );
+      _products[category].putIfAbsent(doc.id, () => _product);
+      print("products $_products");
+    });
+    return _products;
   }
 
   Future<Map<String, Map<String, Product>>> getSpecialProducts(
       Map<String, Map<String, Product>> products) async {
     Map<String, Map<String, Product>> _products = products;
     _products['special'] = {};
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('products')
-        .where('discount', isGreaterThan: 25)
+        .where('discount', isGreaterThanOrEqualTo: thresholdDiscount)
         .get();
+    if (querySnapshot.docs.length == 0) return products;
     querySnapshot.docs.forEach((doc) {
       Product _product = Product(
         id: doc.id,

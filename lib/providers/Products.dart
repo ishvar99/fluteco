@@ -44,7 +44,6 @@ class Products with ChangeNotifier {
     try {
       _products =
           await helper.getProductsByCategory(Map.from(_products), category);
-      print("testing $_products");
     } catch (error) {
       print("Error: $error");
     }

@@ -23,11 +23,8 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      if (products["special"] == null) {
-        print("yes");
-        await Provider.of<Products>(context, listen: false)
-            .fetchSpecialProducts();
-      }
+      await Provider.of<Products>(context, listen: false)
+          .fetchSpecialProducts();
       setState(() {
         _loading = false;
       });
@@ -40,7 +37,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    products = Provider.of<Products>(context).products;
+    products = Provider.of<Products>(context, listen: false).products;
     // final snackBar = SnackBar(
     //   content: Text("No Internet Connection"),
     //   behavior: SnackBarBehavior.floating,

@@ -21,10 +21,8 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      if (products['special'] == null) {
-        await Provider.of<Products>(context, listen: false)
-            .fetchSpecialProducts();
-      }
+      await Provider.of<Products>(context, listen: false)
+          .fetchSpecialProducts();
       setState(() {
         _loading = false;
       });
@@ -70,7 +68,6 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
                         ),
                         itemCount: products['special'].length,
                         itemBuilder: (context, index) {
-                          print(products[index]);
                           return ChangeNotifierProvider.value(
                               value: products['special'].values.toList()[index],
                               child: SpecialCard());

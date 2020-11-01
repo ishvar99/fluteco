@@ -21,10 +21,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      if (products[widget.category] == null) {
-        await Provider.of<Products>(context, listen: false)
-            .fetchCategoryProducts(widget.category);
-      }
+      await Provider.of<Products>(context, listen: false)
+          .fetchCategoryProducts(widget.category);
+
       setState(() {
         _loading = false;
       });
@@ -35,7 +34,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     products = Provider.of<Products>(context).products;
-    print(products);
     return RefreshIndicator(
       onRefresh: () async {
         await Provider.of<Products>(context, listen: false)

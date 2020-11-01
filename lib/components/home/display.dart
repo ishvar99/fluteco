@@ -33,7 +33,9 @@ SingleChildScrollView display(
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : products['special'].length, (index) {
+                      : products['special'].length > flutecoSpecialHome
+                          ? flutecoSpecialHome
+                          : products['special'].length, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
