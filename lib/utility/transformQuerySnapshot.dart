@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../providers/Product.dart';
 
-Product transformQuerySnapshot(QueryDocumentSnapshot doc) {
+Product transformQuerySnapshot(dynamic doc) {
   return Product(
       id: doc.id,
       name: doc.data()['name'],

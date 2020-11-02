@@ -40,34 +40,40 @@ class _FlutecoSpecialState extends State<FlutecoSpecial> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  children: [
-                    // CategoriesList(),
-                    SizedBox(
-                      height: getProportionateScreenWidth(25),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              getProportionateScreenWidth(2).round(),
-                          childAspectRatio: getProportionateScreenWidth(0.63),
-                          crossAxisSpacing: 2,
-                        ),
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          return ChangeNotifierProvider.value(
-                              value: transformQuerySnapshot(
-                                  snapshot.data.docs[index]),
-                              child: SpecialCard());
-                        },
+              return snapshot.data.docs.length == 0
+                  ? Center(
+                      child: Text('No Products to display'),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          // CategoriesList(),
+                          SizedBox(
+                            height: getProportionateScreenWidth(25),
+                          ),
+                          Expanded(
+                            child: GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    getProportionateScreenWidth(2).round(),
+                                childAspectRatio:
+                                    getProportionateScreenWidth(0.63),
+                                crossAxisSpacing: 2,
+                              ),
+                              itemCount: snapshot.data.docs.length,
+                              itemBuilder: (context, index) {
+                                return ChangeNotifierProvider.value(
+                                    value: transformQuerySnapshot(
+                                        snapshot.data.docs[index]),
+                                    child: SpecialCard());
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    );
             }),
       ),
     );

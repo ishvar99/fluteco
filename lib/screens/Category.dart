@@ -43,26 +43,32 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(15),
-                    vertical: getProportionateScreenWidth(30)),
-                child: Container(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: getProportionateScreenWidth(2).round(),
-                      childAspectRatio: getProportionateScreenWidth(0.7),
-                      crossAxisSpacing: 2,
-                    ),
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) =>
-                        ChangeNotifierProvider.value(
-                            value: transformQuerySnapshot(
-                                snapshot.data.docs[index]),
-                            child: SpecialCard()),
-                  ),
-                ),
-              );
+              return snapshot.data.docs.length == 0
+                  ? Center(
+                      child: Text('No Products to display'),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(15),
+                          vertical: getProportionateScreenWidth(30)),
+                      child: Container(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                getProportionateScreenWidth(2).round(),
+                            childAspectRatio: getProportionateScreenWidth(0.7),
+                            crossAxisSpacing: 2,
+                          ),
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) =>
+                              ChangeNotifierProvider.value(
+                                  value: transformQuerySnapshot(
+                                      snapshot.data.docs[index]),
+                                  child: SpecialCard()),
+                        ),
+                      ),
+                    );
             }),
       ),
     );

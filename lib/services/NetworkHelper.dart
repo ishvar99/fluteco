@@ -1,10 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/data/categories.dart';
-import 'package:fluteco/providers/Product.dart';
-import 'package:fluteco/providers/Products.dart';
-import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../data/limit.dart';
@@ -52,6 +48,13 @@ class NetworkHelper {
         .collection('products')
         .where('discount', isGreaterThanOrEqualTo: thresholdDiscount);
     return specialProducts;
+  }
+
+  DocumentReference getProduct(String id) {
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
+    DocumentReference product =
+        FirebaseFirestore.instance.collection('products').doc(id);
+    return product;
   }
 
   Future<void> updateProduct(
