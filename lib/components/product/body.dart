@@ -30,7 +30,7 @@ Padding displayContent(BuildContext context, Product product) {
           ),
         ),
         SizedBox(
-          height: getProportionateScreenWidth(10.0),
+          height: getProportionateScreenWidth(15.0),
         ),
         Padding(
           padding: EdgeInsets.only(right: getProportionateScreenWidth(20)),
@@ -45,12 +45,12 @@ Padding displayContent(BuildContext context, Product product) {
           padding: EdgeInsets.only(right: getProportionateScreenWidth(20.0)),
           child: Text("${product.name}",
               style: TextStyle(
-                  fontSize: getProportionateScreenWidth(28),
+                  fontSize: getProportionateScreenWidth(26),
                   fontWeight: FontWeight.bold,
                   color: kOfferBannerColor)),
         ),
         SizedBox(
-          height: getProportionateScreenWidth(5.0),
+          height: getProportionateScreenWidth(10.0),
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,16 +60,16 @@ Padding displayContent(BuildContext context, Product product) {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: "${formatter.format(product.discountedPrice)}\t\t",
+                    text: "${formatter.format(product.discountedPrice)}\t",
                     style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal[600]),
                   ),
                   TextSpan(
                     text: "${formatter.format(product.originalPrice)}",
                     style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 14.0,
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.lineThrough,
                         decorationThickness: 2.0,

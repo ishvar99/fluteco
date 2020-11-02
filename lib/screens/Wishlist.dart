@@ -5,7 +5,6 @@ import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../resources/size_config.dart';
-import '../providers/Products.dart';
 import '../widgets/home/SpecialCard.dart';
 
 class Wishlist extends StatefulWidget {

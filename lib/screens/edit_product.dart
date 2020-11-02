@@ -32,6 +32,7 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _descriptionController = TextEditingController();
   String _dropDownValue;
   bool _loading = false;
+  bool _favourite;
   PlatformFile _image;
   void chooseImage() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -73,26 +74,23 @@ class _EditProductState extends State<EditProduct> {
           "name": _name,
           "description": _description,
           "imageUrl": _imageUrl,
+          "imageName": _image.name,
           "limit": _limit,
           "category": _category,
           "discount": _discount,
           "originalPrice": _originalPrice,
           "discountedPrice": _discountedPrice,
-          "favourite": false
+          "favourite": _favourite
         };
         if (id != null) {
+          await widget.helper.updateProduct(id: id, productData: _data);
           // products.updateProduct(
-          //     special: _special,
-          //     id: id,
-          //     name: _name,
-          //     description: _description,
-          //     originalPrice: _originalPrice,
-          //     discountedPrice: _discountedPrice,
-          //     category: _category,
-          //     discount: _discount,
-          //     limit: _limit,
-          //     image: _imageUrl,
-          //     platformImage: _image);
+
+          //   // productData: {
+          //   //   ..._data,
+          //   //   "id": id,
+          //   // },
+          // );
         } else {
           DocumentReference docRef;
 
@@ -101,7 +99,6 @@ class _EditProductState extends State<EditProduct> {
             productData: {
               ..._data,
               "id": docRef.id,
-              "platformImage": _image,
             },
           );
           setState(() {
@@ -131,8 +128,8 @@ class _EditProductState extends State<EditProduct> {
       _dropDownValue = product.category;
       _discountController.text =
           product.discount != 0 ? product.discount.toString() : "";
-      _imageController.text = product.platformImage.name;
-      _image = product.platformImage;
+      _imageController.text = product.imageName;
+      _favourite = product.favourite;
     }
     final products = Provider.of<Products>(context, listen: false);
     return Scaffold(

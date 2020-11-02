@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,7 @@ class Product with ChangeNotifier {
   String description;
   String category;
   bool favourite;
-  PlatformFile platformImage;
+  String imageName;
   int limit;
   NetworkHelper helper = NetworkHelper();
   Product(
@@ -24,7 +23,7 @@ class Product with ChangeNotifier {
       @required this.imageUrl,
       @required this.description,
       @required this.limit,
-      this.platformImage,
+      @required this.imageName,
       @required this.category,
       this.favourite = false});
 

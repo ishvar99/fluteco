@@ -1,5 +1,4 @@
 import 'package:fluteco/providers/Product.dart';
-import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/screens/Product.dart';
 import 'package:fluteco/screens/edit_product.dart';
 import 'package:flutter/material.dart';

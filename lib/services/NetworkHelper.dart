@@ -33,85 +33,33 @@ class NetworkHelper {
     return collectionReferece.add(productData);
   }
 
-  // Future<List<Product>> getHomeProducts() async {
-  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //       .collection('products')
-  //       .where('discount', isGreaterThan: 25)
-  //       .limit(flutecoSpecialHome)
-  //       .get();
-  //   List<Product> productList = querySnapshot.docs.map((doc) {
-  //     print(doc.data()['imageUrl']);
-  //     return Product(
-
-  //       name: doc.data()['name'],
-  //       originalPrice: doc.data()['originalPrice'],
-  //       discount: doc.data()['discount'],
-  //       discountedPrice: doc.data()['discountedPrice'],
-  //       imageUrl: doc.data()['imageUrl'],
-  //       limit: doc.data()['limit'],
-  //       category: doc.data()['category'],
-  //       description: doc.data()['description'],
-  //     );
-  //   }).toList();
-  //   return productList;
-  // }
-
-  Future<Map<String, Map<String, Product>>> getAllProducts(
-      Map<String, Map<String, Product>> products) async {
-    Map<String, Map<String, Product>> _products = products;
-    _products['special'] = {};
-    categories.forEach((e) {
-      _products[e.text] = {};
-    });
-
+  CollectionReference getAllProducts() {
     FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('products').get();
-    querySnapshot.docs.forEach((doc) {
-      Product _product = transformQuerySnapshot(doc);
-      if (_product.discount >= thresholdDiscount) {
-        _products['special'].putIfAbsent(doc.id, () => _product);
-      } else {
-        _products[_product.category].putIfAbsent(doc.id, () => _product);
-      }
-    });
-    return _products;
+    return FirebaseFirestore.instance.collection('products');
   }
 
-  Future<Map<String, Map<String, Product>>> getProductsByCategory(
-      Map<String, Map<String, Product>> products, String category) async {
-    QuerySnapshot querySnapshot;
-    Map<String, Map<String, Product>> _products = products;
-    _products[category] = {};
+  Query getProductsByCategory(String category) {
     FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
-    querySnapshot = await FirebaseFirestore.instance
+    Query categoryProducts = FirebaseFirestore.instance
         .collection('products')
-        .where("category", isEqualTo: category)
-        .get();
-    if (querySnapshot.docs.length == 0) return products;
-    querySnapshot.docs.forEach((doc) {
-      Product _product = transformQuerySnapshot(doc);
-      _products[category].putIfAbsent(doc.id, () => _product);
-      print("products $_products");
-    });
-    return _products;
+        .where("category", isEqualTo: category);
+    return categoryProducts;
   }
 
-  Future<Map<String, Map<String, Product>>> getSpecialProducts(
-      Map<String, Map<String, Product>> products) async {
-    Map<String, Map<String, Product>> _products = products;
-    _products['special'] = {};
+  Query getSpecialProducts() {
     FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    Query specialProducts = FirebaseFirestore.instance
         .collection('products')
-        .where('discount', isGreaterThanOrEqualTo: thresholdDiscount)
-        .get();
-    if (querySnapshot.docs.length == 0) return products;
-    querySnapshot.docs.forEach((doc) {
-      Product _product = transformQuerySnapshot(doc);
-      _products['special'].putIfAbsent(doc.id, () => _product);
-    });
-    return _products;
+        .where('discount', isGreaterThanOrEqualTo: thresholdDiscount);
+    return specialProducts;
+  }
+
+  Future<void> updateProduct(
+      {@required String id, @required Map<String, dynamic> productData}) async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .doc(id)
+        .update(productData);
   }
 
   Future<void> toggleFavourite(String id, bool status) async {
