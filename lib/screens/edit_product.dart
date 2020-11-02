@@ -77,7 +77,8 @@ class _EditProductState extends State<EditProduct> {
           "category": _category,
           "discount": _discount,
           "originalPrice": _originalPrice,
-          "discountedPrice": _discountedPrice
+          "discountedPrice": _discountedPrice,
+          "favourite": false
         };
         if (id != null) {
           // products.updateProduct(

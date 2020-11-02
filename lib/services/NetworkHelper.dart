@@ -68,16 +68,16 @@ class NetworkHelper {
         await FirebaseFirestore.instance.collection('products').get();
     querySnapshot.docs.forEach((doc) {
       Product _product = Product(
-        id: doc.id,
-        name: doc.data()['name'],
-        originalPrice: doc.data()['originalPrice'],
-        discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discountedPrice'],
-        imageUrl: doc.data()['imageUrl'],
-        limit: doc.data()['limit'],
-        category: doc.data()['category'],
-        description: doc.data()['description'],
-      );
+          id: doc.id,
+          name: doc.data()['name'],
+          originalPrice: doc.data()['originalPrice'],
+          discount: doc.data()['discount'],
+          discountedPrice: doc.data()['discountedPrice'],
+          imageUrl: doc.data()['imageUrl'],
+          limit: doc.data()['limit'],
+          category: doc.data()['category'],
+          description: doc.data()['description'],
+          favourite: doc.data()['favourite']);
       if (_product.discount >= thresholdDiscount) {
         _products['special'].putIfAbsent(doc.id, () => _product);
       } else {
@@ -100,16 +100,16 @@ class NetworkHelper {
     if (querySnapshot.docs.length == 0) return products;
     querySnapshot.docs.forEach((doc) {
       Product _product = Product(
-        id: doc.id,
-        name: doc.data()['name'],
-        originalPrice: doc.data()['originalPrice'],
-        discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discountedPrice'],
-        imageUrl: doc.data()['imageUrl'],
-        limit: doc.data()['limit'],
-        category: doc.data()['category'],
-        description: doc.data()['description'],
-      );
+          id: doc.id,
+          name: doc.data()['name'],
+          originalPrice: doc.data()['originalPrice'],
+          discount: doc.data()['discount'],
+          discountedPrice: doc.data()['discountedPrice'],
+          imageUrl: doc.data()['imageUrl'],
+          limit: doc.data()['limit'],
+          category: doc.data()['category'],
+          description: doc.data()['description'],
+          favourite: doc.data()['favourite']);
       _products[category].putIfAbsent(doc.id, () => _product);
       print("products $_products");
     });
@@ -128,18 +128,25 @@ class NetworkHelper {
     if (querySnapshot.docs.length == 0) return products;
     querySnapshot.docs.forEach((doc) {
       Product _product = Product(
-        id: doc.id,
-        name: doc.data()['name'],
-        originalPrice: doc.data()['originalPrice'],
-        discount: doc.data()['discount'],
-        discountedPrice: doc.data()['discountedPrice'],
-        imageUrl: doc.data()['imageUrl'],
-        limit: doc.data()['limit'],
-        category: doc.data()['category'],
-        description: doc.data()['description'],
-      );
+          id: doc.id,
+          name: doc.data()['name'],
+          originalPrice: doc.data()['originalPrice'],
+          discount: doc.data()['discount'],
+          discountedPrice: doc.data()['discountedPrice'],
+          imageUrl: doc.data()['imageUrl'],
+          limit: doc.data()['limit'],
+          category: doc.data()['category'],
+          description: doc.data()['description'],
+          favourite: doc.data()['favourite']);
       _products['special'].putIfAbsent(doc.id, () => _product);
     });
     return _products;
+  }
+
+  Future<void> toggleFavourite(String id, bool status) async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .doc(id)
+        .update({'favourite': status});
   }
 }

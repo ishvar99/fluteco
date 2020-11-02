@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
@@ -13,7 +14,7 @@ class Product with ChangeNotifier {
   bool favourite;
   PlatformFile platformImage;
   int limit;
-
+  NetworkHelper helper = NetworkHelper();
   Product(
       {@required this.id,
       @required this.name,
@@ -27,8 +28,9 @@ class Product with ChangeNotifier {
       @required this.category,
       this.favourite = false});
 
-  void toggleFavouriteStatus() {
+  void toggleFavouriteStatus() async {
     favourite = !favourite;
+    await helper.toggleFavourite(id, favourite);
     notifyListeners();
   }
 }
