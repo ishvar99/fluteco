@@ -24,8 +24,6 @@ class _SpecialCardState extends State<SpecialCard> {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     // print("Product Id: ${product.id}");
-    final products = Provider.of<Products>(context);
-
     return Padding(
       padding: EdgeInsets.only(
         left: getProportionateScreenWidth(15),

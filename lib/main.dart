@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import './resources/constants.dart';
 import './resources/routes.dart';
 import 'package:provider/provider.dart';
-import 'providers/Products.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -15,7 +14,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Products()),
         ChangeNotifierProvider(create: (_) => Cart()),
       ],
       child: Main(),

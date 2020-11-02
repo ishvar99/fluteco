@@ -1,8 +1,8 @@
-import 'package:fluteco/utility/transformProductsMap.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import '../widgets/admin/ManageProduct.dart';
-import '../providers/Products.dart';
-import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,26 +10,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool _loading = true;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () async {
-      await Provider.of<Products>(context, listen: false).fetchAllProducts();
-
-      setState(() {
-        _loading = false;
-      });
-    });
-    super.initState();
-  }
-
+  NetworkHelper _helper = new NetworkHelper();
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context).products;
-
     return RefreshIndicator(
       onRefresh: () async {
-        await Provider.of<Products>(context, listen: false).fetchAllProducts();
+        await _helper.getAllProducts().get();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -59,17 +45,22 @@ class _ProfileState extends State<Profile> {
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
-        body: _loading
-            ? Center(child: CircularProgressIndicator())
-            : products.length == 0
-                ? Center(
-                    child: Text("No products to display"),
-                  )
-                : ListView.builder(
-                    itemCount: transformProducts(products).length,
-                    itemBuilder: (context, index) => ManageProduct(
-                        product: transformProducts(products)[index]),
-                  ),
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _helper.getAllProducts().snapshots(),
+            builder: (context, snapshot) {
+              return snapshot.data.docs.length == 0
+                  ? Center(
+                      child: Text('No Products to display'),
+                    )
+                  : ListView.builder(
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) => ManageProduct(
+                        product: transformQuerySnapshot(
+                          snapshot.data.docs[index],
+                        ),
+                      ),
+                    );
+            }),
       ),
     );
   }

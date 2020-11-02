@@ -1,11 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
 import '../../resources/size_config.dart';
 import './display.dart';
-import 'package:provider/provider.dart';
-import '../../providers/Products.dart';
 import 'package:connectivity/connectivity.dart';
 // import '../../utility/connectivity.dart';
 
@@ -15,10 +14,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Map<String, Map<String, Product>> products;
   // Map _source = {ConnectivityResult.none: false};
   // MyConnectivity _connectivity = MyConnectivity.instance;
-  bool _loading = true;
+
   @override
   void initState() {
     super.initState();
@@ -59,30 +57,41 @@ class _BodyState extends State<Body> {
         Padding(
           padding:
               EdgeInsets.symmetric(vertical: getProportionateScreenWidth(5)),
-          child:
-              display(type: "categories", context: context, products: products),
+          child: display(
+            type: "categories",
+            context: context,
+          ),
         ),
         PartitionHeader(
           type: "Recommended for you",
         ),
-        display(
-            type: "recommended-genres", context: context, products: products),
+        display(type: "recommended-genres", context: context),
         PartitionHeader(
           type: "Fluteco's Special",
         ),
-        !_loading
-            ? display(
-                type: "special-products", context: context, products: products)
-            : SizedBox(
-                height: getProportionateScreenWidth(30),
-                width: getProportionateScreenWidth(30),
-                child: Center(
-                    child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.deepOrange,
-                  ),
-                )),
-              ),
+        StreamBuilder<QuerySnapshot>(
+            stream: null,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                //something went wrong
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SizedBox(
+                  height: getProportionateScreenWidth(30),
+                  width: getProportionateScreenWidth(30),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.deepOrange,
+                    ),
+                  )),
+                );
+              }
+              return display(
+                type: "special-products",
+                context: context,
+              );
+            }),
         SizedBox(
           height: 25,
         )

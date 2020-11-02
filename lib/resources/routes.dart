@@ -35,7 +35,7 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
         print(settings.arguments);
         return MaterialPageRoute(builder: (context) {
           return ChangeNotifierProvider.value(
-              value: _product, child: ProductScreen());
+              value: Product(), child: ProductScreen());
         });
       }
     default:
