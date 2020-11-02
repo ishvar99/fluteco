@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/data/limit.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
+import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:fluteco/widgets/home/RecommendedCard.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'dart:math';
@@ -15,7 +17,7 @@ import '../../models/Genre.dart';
 SingleChildScrollView display(
     {String type,
     BuildContext context,
-    Map<String, Map<String, Product>> products}) {
+    List<QueryDocumentSnapshot> documents}) {
   // int specialProductsLimit = 3;
   int recommendedGenresLimit = 3;
   List<Genre> randomGenres = [];
@@ -33,9 +35,9 @@ SingleChildScrollView display(
                   ? recommendedGenresLimit
                   : type == "categories"
                       ? categories.length
-                      : products['special'].length > flutecoSpecialHome
+                      : documents.length > flutecoSpecialHome
                           ? flutecoSpecialHome
-                          : products['special'].length, (index) {
+                          : documents.length, (index) {
             if (type == "recommended-genres") {
               genres.shuffle();
               Genre randomGenre = genres[_random.nextInt(genres.length)];
@@ -59,7 +61,9 @@ SingleChildScrollView display(
               );
             } else if (type == "special-products") {
               return ChangeNotifierProvider.value(
-                value: products['special'].values.toList()[index],
+                value: transformQuerySnapshot(
+                  documents[index],
+                ),
                 child: SpecialCard(),
               );
             } else

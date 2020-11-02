@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
@@ -14,6 +15,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  NetworkHelper _helper = NetworkHelper();
   // Map _source = {ConnectivityResult.none: false};
   // MyConnectivity _connectivity = MyConnectivity.instance;
 
@@ -70,7 +72,7 @@ class _BodyState extends State<Body> {
           type: "Fluteco's Special",
         ),
         StreamBuilder<QuerySnapshot>(
-            stream: null,
+            stream: _helper.getSpecialProducts().snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 //something went wrong
@@ -90,6 +92,7 @@ class _BodyState extends State<Body> {
               return display(
                 type: "special-products",
                 context: context,
+                documents: snapshot.data.docs,
               );
             }),
         SizedBox(
