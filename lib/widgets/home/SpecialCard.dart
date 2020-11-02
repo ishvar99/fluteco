@@ -101,8 +101,6 @@ class _SpecialCardState extends State<SpecialCard> {
                         context, (result) {
                       if (result) {
                         if (product.favourite) product.toggleFavouriteStatus();
-
-                        products.forceUpdate();
                         showSnackbar(
                             context: context,
                             product: product,

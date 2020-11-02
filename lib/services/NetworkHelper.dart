@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/data/categories.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/providers/Products.dart';
+import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../data/limit.dart';
@@ -67,17 +68,7 @@ class NetworkHelper {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('products').get();
     querySnapshot.docs.forEach((doc) {
-      Product _product = Product(
-          id: doc.id,
-          name: doc.data()['name'],
-          originalPrice: doc.data()['originalPrice'],
-          discount: doc.data()['discount'],
-          discountedPrice: doc.data()['discountedPrice'],
-          imageUrl: doc.data()['imageUrl'],
-          limit: doc.data()['limit'],
-          category: doc.data()['category'],
-          description: doc.data()['description'],
-          favourite: doc.data()['favourite']);
+      Product _product = transformQuerySnapshot(doc);
       if (_product.discount >= thresholdDiscount) {
         _products['special'].putIfAbsent(doc.id, () => _product);
       } else {
@@ -99,17 +90,7 @@ class NetworkHelper {
         .get();
     if (querySnapshot.docs.length == 0) return products;
     querySnapshot.docs.forEach((doc) {
-      Product _product = Product(
-          id: doc.id,
-          name: doc.data()['name'],
-          originalPrice: doc.data()['originalPrice'],
-          discount: doc.data()['discount'],
-          discountedPrice: doc.data()['discountedPrice'],
-          imageUrl: doc.data()['imageUrl'],
-          limit: doc.data()['limit'],
-          category: doc.data()['category'],
-          description: doc.data()['description'],
-          favourite: doc.data()['favourite']);
+      Product _product = transformQuerySnapshot(doc);
       _products[category].putIfAbsent(doc.id, () => _product);
       print("products $_products");
     });
@@ -127,17 +108,7 @@ class NetworkHelper {
         .get();
     if (querySnapshot.docs.length == 0) return products;
     querySnapshot.docs.forEach((doc) {
-      Product _product = Product(
-          id: doc.id,
-          name: doc.data()['name'],
-          originalPrice: doc.data()['originalPrice'],
-          discount: doc.data()['discount'],
-          discountedPrice: doc.data()['discountedPrice'],
-          imageUrl: doc.data()['imageUrl'],
-          limit: doc.data()['limit'],
-          category: doc.data()['category'],
-          description: doc.data()['description'],
-          favourite: doc.data()['favourite']);
+      Product _product = transformQuerySnapshot(doc);
       _products['special'].putIfAbsent(doc.id, () => _product);
     });
     return _products;
