@@ -1,5 +1,6 @@
-import 'package:fluteco/providers/Products.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../resources/size_config.dart';
@@ -16,28 +17,12 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  bool _loading = true;
-  Map<String, Map<String, Product>> products;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () async {
-      await Provider.of<Products>(context, listen: false)
-          .fetchCategoryProducts(widget.category);
-
-      setState(() {
-        _loading = false;
-      });
-    });
-    super.initState();
-  }
-
+  NetworkHelper _helper = NetworkHelper();
   @override
   Widget build(BuildContext context) {
-    products = Provider.of<Products>(context).products;
     return RefreshIndicator(
       onRefresh: () async {
-        await Provider.of<Products>(context, listen: false)
-            .fetchCategoryProducts(widget.category);
+        await _helper.getProductsByCategory(widget.category).get();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -46,11 +31,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
-        body: _loading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _helper.getProductsByCategory(widget.category).snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Something went wrong'));
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(15),
                     vertical: getProportionateScreenWidth(30)),
@@ -61,16 +54,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       childAspectRatio: getProportionateScreenWidth(0.7),
                       crossAxisSpacing: 2,
                     ),
-                    itemCount: products[widget.category].length,
+                    itemCount: snapshot.data.docs.length,
                     itemBuilder: (context, index) =>
                         ChangeNotifierProvider.value(
-                            value: products[widget.category]
-                                .values
-                                .toList()[index],
+                            value: transformQuerySnapshot(
+                                snapshot.data.docs[index]),
                             child: SpecialCard()),
                   ),
                 ),
-              ),
+              );
+            }),
       ),
     );
   }

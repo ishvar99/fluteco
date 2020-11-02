@@ -22,22 +22,14 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      await Provider.of<Products>(context, listen: false)
-          .fetchSpecialProducts();
-      setState(() {
-        _loading = false;
-      });
-      // _connectivity.initialise();
-      // _connectivity.myStream.listen((source) {
-      //   setState(() => _source = source);
-      // });
-    });
+    // _connectivity.initialise();
+    // _connectivity.myStream.listen((source) {
+    //   setState(() => _source = source);
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    products = Provider.of<Products>(context, listen: false).products;
     // final snackBar = SnackBar(
     //   content: Text("No Internet Connection"),
     //   behavior: SnackBarBehavior.floating,

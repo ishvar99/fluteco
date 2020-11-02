@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/components/admin/showSnackbar.dart';
 import 'package:fluteco/utility/computeDiscount.dart';
@@ -7,9 +6,7 @@ import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../data/categories.dart';
-import '../providers/Products.dart';
 import 'package:uuid/uuid.dart';
 import '../widgets/miscellaneous/LoadingBackdrop.dart';
 
@@ -49,10 +46,7 @@ class _EditProductState extends State<EditProduct> {
     }
   }
 
-  _editProduct(
-      {@required BuildContext context,
-      @required Products products,
-      String id}) async {
+  _editProduct({@required BuildContext context, String id}) async {
     if (_formKey.currentState.validate()) {
       setState(() {
         _loading = true;
@@ -84,27 +78,11 @@ class _EditProductState extends State<EditProduct> {
         };
         if (id != null) {
           await widget.helper.updateProduct(id: id, productData: _data);
-          // products.updateProduct(
-
-          //   // productData: {
-          //   //   ..._data,
-          //   //   "id": id,
-          //   // },
-          // );
         } else {
-          DocumentReference docRef;
-
-          docRef = await widget.helper.uploadProduct(productData: _data);
-          products.addProduct(
-            productData: {
-              ..._data,
-              "id": docRef.id,
-            },
-          );
+          await widget.helper.uploadProduct(productData: _data);
           setState(() {
             _loading = false;
           });
-
           Navigator.pop(context, true);
         }
       } catch (e) {
@@ -131,7 +109,6 @@ class _EditProductState extends State<EditProduct> {
       _imageController.text = product.imageName;
       _favourite = product.favourite;
     }
-    final products = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -337,10 +314,8 @@ class _EditProductState extends State<EditProduct> {
                         text:
                             product != null ? "Update Product" : "Add Product",
                         pressed: () => product != null
-                            ? _editProduct(
-                                context: context, products: products, id: "id")
-                            : _editProduct(
-                                context: context, products: products),
+                            ? _editProduct(context: context, id: "id")
+                            : _editProduct(context: context),
                       )),
                   SizedBox(
                     height: getProportionateScreenWidth(70),

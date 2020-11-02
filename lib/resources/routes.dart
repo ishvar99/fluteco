@@ -32,16 +32,8 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
 
     case '/products':
       {
-        // products.singleWhere((product) => product.id == arguments)
         print(settings.arguments);
         return MaterialPageRoute(builder: (context) {
-          var products = Provider.of<Products>(context).products;
-          Product _product;
-          products.forEach((_, value) {
-            value.forEach((k, v) {
-              if (k == arguments) _product = v;
-            });
-          });
           return ChangeNotifierProvider.value(
               value: _product, child: ProductScreen());
         });

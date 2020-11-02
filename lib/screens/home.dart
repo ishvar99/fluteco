@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/home/header.dart';
 import '../components/home/body.dart';
-import 'package:provider/provider.dart';
-import '../providers/Products.dart';
+import '../services/NetworkHelper.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';
@@ -12,11 +11,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final NetworkHelper _helper = NetworkHelper();
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () =>
-          Provider.of<Products>(context, listen: false).fetchSpecialProducts(),
+      onRefresh: () async {
+        await _helper.getSpecialProducts().get();
+      },
       child: Scaffold(
         drawer: Drawer(),
         appBar: header(context),
