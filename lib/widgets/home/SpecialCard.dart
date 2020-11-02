@@ -102,10 +102,9 @@ class _SpecialCardState extends State<SpecialCard> {
                       if (result) {
                         if (product.favourite) product.toggleFavouriteStatus();
                         showSnackbar(
-                            context: context,
-                            product: product,
-                            products: products,
-                            wishListItem: widget.wishListItem);
+                          context: context,
+                          product: product,
+                        );
                       }
                     });
                   } else {

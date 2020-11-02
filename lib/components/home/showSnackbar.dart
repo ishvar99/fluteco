@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-void showSnackbar(
-    {BuildContext context, product, products, bool wishListItem = false}) {
+void showSnackbar({BuildContext context, product}) {
   final snackBar = SnackBar(
     behavior: SnackBarBehavior.floating,
     duration: Duration(milliseconds: 1000),
@@ -12,7 +11,6 @@ void showSnackbar(
       label: 'Undo',
       textColor: Colors.amber,
       onPressed: () {
-        if (wishListItem) products.forceUpdate();
         product.toggleFavouriteStatus();
       },
     ),

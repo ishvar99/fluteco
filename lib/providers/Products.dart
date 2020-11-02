@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/data/limit.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
@@ -103,8 +102,4 @@ class Products with ChangeNotifier {
   //   // Cart().removeItem(id);
   //   notifyListeners();
   // }
-
-  void forceUpdate() {
-    notifyListeners();
-  }
 }
