@@ -7,6 +7,7 @@ import '../data/limit.dart';
 
 class NetworkHelper {
   Future<String> uploadProductImage(PlatformFile image) async {
+    print(image);
     final StorageReference storageReference =
         FirebaseStorage().ref().child("images/${image.name}");
     final StorageUploadTask uploadTask =
@@ -59,6 +60,7 @@ class NetworkHelper {
 
   Future<void> updateProduct(
       {@required String id, @required Map<String, dynamic> productData}) async {
+    print('update triggered');
     await FirebaseFirestore.instance
         .collection('products')
         .doc(id)

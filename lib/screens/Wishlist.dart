@@ -18,52 +18,58 @@ class _WishlistState extends State<Wishlist> {
     Query products = FirebaseFirestore.instance
         .collection('products')
         .where('favourite', isEqualTo: true);
-    return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-          stream: products.snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(child: Text('Something went wrong'));
-            }
+    return RefreshIndicator(
+      onRefresh: () async {
+        await products.get();
+      },
+      child: Scaffold(
+        body: StreamBuilder<QuerySnapshot>(
+            stream: products.snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Something went wrong'));
+              }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Padding(
+                padding: EdgeInsets.only(
+                    left: getProportionateScreenWidth(15),
+                    right: getProportionateScreenWidth(15),
+                    top: getProportionateScreenWidth(30)),
+                child: snapshot.data.docs.length == 0
+                    ? Center(
+                        child: Text(
+                          "You haven't added any products yet",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              getProportionateScreenWidth(2).round(),
+                          childAspectRatio: getProportionateScreenWidth(0.7),
+                          crossAxisSpacing: 2,
+                        ),
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) =>
+                            ChangeNotifierProvider.value(
+                              value: transformQuerySnapshot(
+                                  snapshot.data.docs[index]),
+                              child: SpecialCard(
+                                wishListItem: true,
+                              ),
+                            )),
               );
-            }
-            return Padding(
-              padding: EdgeInsets.only(
-                  left: getProportionateScreenWidth(15),
-                  right: getProportionateScreenWidth(15),
-                  top: getProportionateScreenWidth(30)),
-              child: snapshot.data.docs.length == 0
-                  ? Center(
-                      child: Text(
-                        "You haven't added any products yet",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    )
-                  : GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: getProportionateScreenWidth(2).round(),
-                        childAspectRatio: getProportionateScreenWidth(0.7),
-                        crossAxisSpacing: 2,
-                      ),
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) =>
-                          ChangeNotifierProvider.value(
-                            value: transformQuerySnapshot(
-                                snapshot.data.docs[index]),
-                            child: SpecialCard(
-                              wishListItem: true,
-                            ),
-                          )),
-            );
-          }),
-      appBar: AppBar(
-        title: Text(
-          "Wishlist",
-          style: TextStyle(fontWeight: FontWeight.w900),
+            }),
+        appBar: AppBar(
+          title: Text(
+            "Wishlist",
+            style: TextStyle(fontWeight: FontWeight.w900),
+          ),
         ),
       ),
     );

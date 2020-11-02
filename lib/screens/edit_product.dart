@@ -19,6 +19,7 @@ class EditProduct extends StatefulWidget {
 
 class _EditProductState extends State<EditProduct> {
   final _formKey = GlobalKey<FormState>();
+  Product product;
   final ScrollController _scrollController = ScrollController();
   var uuid = Uuid();
   TextEditingController _nameController = TextEditingController();
@@ -29,8 +30,10 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _descriptionController = TextEditingController();
   String _dropDownValue;
   bool _loading = false;
-  bool _favourite;
+  bool _favourite = false;
   PlatformFile _image;
+  String _imageUrl;
+  String _imageName;
   void chooseImage() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -47,6 +50,7 @@ class _EditProductState extends State<EditProduct> {
   }
 
   _editProduct({@required BuildContext context, String id}) async {
+    print("id is $id");
     if (_formKey.currentState.validate()) {
       setState(() {
         _loading = true;
@@ -58,17 +62,25 @@ class _EditProductState extends State<EditProduct> {
       int _discountedPrice = computeDiscount(_originalPrice, _discount);
       print(_discountedPrice);
       String _name = _nameController.text;
+      print(_name);
       String _description = _descriptionController.text;
+      print(_description);
       String _category = _dropDownValue;
+      print(_category);
       int _limit = int.parse(_quantityController.text);
+      print(_limit);
+      print(_image);
       try {
-        String _imageUrl = await widget.helper.uploadProductImage(_image);
-        print(_imageUrl);
+        if (_image != null) {
+          print(_image);
+          _imageUrl = await widget.helper.uploadProductImage(_image);
+          _imageName = _image.name;
+        }
         Map<String, dynamic> _data = {
           "name": _name,
           "description": _description,
           "imageUrl": _imageUrl,
-          "imageName": _image.name,
+          "imageName": _imageName,
           "limit": _limit,
           "category": _category,
           "discount": _discount,
@@ -76,8 +88,14 @@ class _EditProductState extends State<EditProduct> {
           "discountedPrice": _discountedPrice,
           "favourite": _favourite
         };
+        print(_data);
         if (id != null) {
           await widget.helper.updateProduct(id: id, productData: _data);
+
+          setState(() {
+            _loading = false;
+          });
+          Navigator.pop(context, true);
         } else {
           await widget.helper.uploadProduct(productData: _data);
           setState(() {
@@ -87,6 +105,9 @@ class _EditProductState extends State<EditProduct> {
         }
       } catch (e) {
         showSnackbar(context: context, text: "Something went wrong!");
+        setState(() {
+          _loading = false;
+        });
         print(e);
       }
     } else {
@@ -96,19 +117,30 @@ class _EditProductState extends State<EditProduct> {
   }
 
   @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      product = ModalRoute.of(context).settings.arguments;
+      if (product != null) {
+        _nameController.text = product.name;
+        _descriptionController.text = product.description;
+        _priceController.text = product.originalPrice.toString();
+        _quantityController.text = product.limit.toString();
+        setState(() {
+          _dropDownValue = product.category;
+        });
+        _discountController.text =
+            product.discount != 0 ? product.discount.toString() : "";
+        _imageController.text = product.imageName;
+        _favourite = product.favourite;
+        _imageUrl = product.imageUrl;
+        _imageName = product.imageName;
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Product product = ModalRoute.of(context).settings.arguments;
-    if (product != null) {
-      _nameController.text = product.name;
-      _descriptionController.text = product.description;
-      _priceController.text = product.originalPrice.toString();
-      _quantityController.text = product.limit.toString();
-      _dropDownValue = product.category;
-      _discountController.text =
-          product.discount != 0 ? product.discount.toString() : "";
-      _imageController.text = product.imageName;
-      _favourite = product.favourite;
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -314,7 +346,7 @@ class _EditProductState extends State<EditProduct> {
                         text:
                             product != null ? "Update Product" : "Add Product",
                         pressed: () => product != null
-                            ? _editProduct(context: context, id: "id")
+                            ? _editProduct(context: context, id: product.id)
                             : _editProduct(context: context),
                       )),
                   SizedBox(
