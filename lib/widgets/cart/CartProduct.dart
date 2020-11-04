@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 
 import '../../providers/Cart.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class CartProduct extends StatefulWidget {
 class _CartProductState extends State<CartProduct> {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
-
+  NetworkHelper _helper = NetworkHelper();
   @override
   Widget build(BuildContext context) {
     print('Ishan ${widget.cartProduct.data()}');
@@ -93,7 +94,24 @@ class _CartProductState extends State<CartProduct> {
                   children: [
                     InkWell(
                       splashColor: Colors.deepOrange[100],
-                      onTap: () {
+                      onTap: () async {
+                        bool res = await _helper.incrementProductQuantity(
+                            widget.cartProduct.data()['productId']);
+
+                        if (!res) {
+                          final snackBar = SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(milliseconds: 1000),
+                            content: Text(
+                              'Quantity limit exceeded!',
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                          Scaffold.of(context).removeCurrentSnackBar(
+                            reason: SnackBarClosedReason.remove,
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        }
                         // cart.updateQuantity(
                         //     productId: widget.productId,
                         //     type: "ADD",

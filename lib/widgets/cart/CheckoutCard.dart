@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/splash/RoundedButton.dart';
 import '../../resources/size_config.dart';
@@ -8,6 +10,7 @@ import '../../providers/Cart.dart';
 class CheckoutCard extends StatelessWidget {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+  final NetworkHelper helper = NetworkHelper();
   //  final formatter =
   // new NumberFormat.simpleCurrency(name="INR" decimalDigits: 0);
   CheckoutCard({
@@ -60,21 +63,39 @@ class CheckoutCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: "Total:\n",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    children: [
-                      TextSpan(
-                        // text: "${formatter.format(cart.totalPrice())}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.teal[600]),
-                      ),
-                    ],
-                  ),
-                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: helper.getCartProducts().snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Something went wrong'));
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      int totalPrice = 0;
+                      snapshot.data.docs.forEach((doc) {
+                        totalPrice +=
+                            doc.data()['price'] * doc.data()['quantity'];
+                      });
+                      return Text.rich(
+                        TextSpan(
+                          text: "Total:\n",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          children: [
+                            TextSpan(
+                              text: "${formatter.format(totalPrice)}",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.teal[600]),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                 SizedBox(
                   height: getProportionateScreenWidth(40),
                   width: getProportionateScreenWidth(190),

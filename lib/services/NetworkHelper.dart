@@ -92,6 +92,26 @@ class NetworkHelper {
       return true;
   }
 
+  Future<bool> incrementProductQuantity(String id) async {
+    var snapshot = await FirebaseFirestore.instance
+        .collection('cart')
+        .where('productId', isEqualTo: id)
+        .get();
+    var flag = 0;
+    for (var doc in snapshot.docs) {
+      if (doc.data()['quantity'] < doc.data()['limit'])
+        doc.reference.update({'quantity': doc.data()['quantity'] + 1});
+      else {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag == 1) {
+      return false;
+    }
+    return true;
+  }
+
   CollectionReference getCartProducts() {
     return FirebaseFirestore.instance.collection('cart');
   }
