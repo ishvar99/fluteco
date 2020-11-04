@@ -1,2 +1,2 @@
-int flutecoSpecialHome = 2;
+int flutecoSpecialHome = 4;
 int thresholdDiscount = 25;

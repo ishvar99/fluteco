@@ -1,3 +1,4 @@
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import '../components/product/showBottomNavigationBar.dart';
 import '../components/product/body.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/Product.dart';
 
 class ProductScreen extends StatelessWidget {
+  NetworkHelper helper = NetworkHelper();
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
@@ -14,10 +16,23 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Colors.deepOrange,
         elevation: 0,
       ),
-      bottomNavigationBar: displayBottomNavigationBar(context, product),
       body: SingleChildScrollView(
         child: displayContent(context, product),
       ),
+      bottomNavigationBar: FutureBuilder<bool>(
+          future: helper.isProductInCart(product.id),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Something went wrong'));
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return displayBottomNavigationBar(context, product, snapshot.data);
+          }),
     );
   }
 }

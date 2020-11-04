@@ -43,6 +43,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
+              snapshot.data.docs.forEach((element) {
+                print("${element.id} from ${element.metadata.isFromCache}");
+              });
               return snapshot.data.docs.length == 0
                   ? Center(
                       child: Text('No Products to display'),
