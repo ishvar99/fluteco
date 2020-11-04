@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../resources/size_config.dart';
@@ -6,6 +8,7 @@ import '../../widgets/home/SearchBar.dart';
 import '../../providers/Cart.dart';
 
 AppBar header(BuildContext context) {
+  final NetworkHelper helper = NetworkHelper();
   return AppBar(
     titleSpacing: getProportionateScreenWidth(10),
     toolbarHeight: getProportionateScreenWidth(130),
@@ -18,10 +21,23 @@ AppBar header(BuildContext context) {
       SizedBox(
         width: getProportionateScreenWidth(15),
       ),
-      IconWithCounter(
-          count: 2,
-          press: () {
-            Navigator.pushNamed(context, '/cart');
+      StreamBuilder<QuerySnapshot>(
+          stream: helper.getCartProducts().snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Something went wrong'));
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return IconWithCounter(
+                count: snapshot.data.docs.length,
+                press: () {
+                  Navigator.pushNamed(context, '/cart');
+                });
           }),
       SizedBox(
         width: getProportionateScreenWidth(20),

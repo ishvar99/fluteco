@@ -81,6 +81,16 @@ class NetworkHelper {
     return collectionReferece.add(productData);
   }
 
+  Future<void> removeFromCart(String id) async {
+    var snapshot = await FirebaseFirestore.instance
+        .collection('cart')
+        .where('productId', isEqualTo: id)
+        .get();
+    snapshot.docs.forEach((element) {
+      element.reference.delete();
+    });
+  }
+
   Future<bool> isProductInCart(String id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('cart')
@@ -101,6 +111,26 @@ class NetworkHelper {
     for (var doc in snapshot.docs) {
       if (doc.data()['quantity'] < doc.data()['limit'])
         doc.reference.update({'quantity': doc.data()['quantity'] + 1});
+      else {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag == 1) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> decrementProductQuantity(String id) async {
+    var snapshot = await FirebaseFirestore.instance
+        .collection('cart')
+        .where('productId', isEqualTo: id)
+        .get();
+    var flag = 0;
+    for (var doc in snapshot.docs) {
+      if (doc.data()['quantity'] > 1)
+        doc.reference.update({'quantity': doc.data()['quantity'] - 1});
       else {
         flag = 1;
         break;

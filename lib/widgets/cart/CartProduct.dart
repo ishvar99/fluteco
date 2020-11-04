@@ -33,7 +33,7 @@ class _CartProductState extends State<CartProduct> {
           if (result) {
             setState(() {
               //delete from cart
-              // cart.removeItem(widget.cartProduct.id);
+              _helper.removeFromCart(widget.cartProduct.data()['productId']);
               final snackBar = SnackBar(
                 behavior: SnackBarBehavior.floating,
                 duration: Duration(milliseconds: 500),
@@ -112,10 +112,6 @@ class _CartProductState extends State<CartProduct> {
                           );
                           Scaffold.of(context).showSnackBar(snackBar);
                         }
-                        // cart.updateQuantity(
-                        //     productId: widget.productId,
-                        //     type: "ADD",
-                        //     context: context);
                       },
                       child: Container(
                         width: getProportionateScreenWidth(28),
@@ -148,11 +144,28 @@ class _CartProductState extends State<CartProduct> {
                     ),
                     InkWell(
                       splashColor: Colors.deepOrange[100],
-                      onTap: () {
-                        // cart.updateQuantity(
-                        //     productId: widget.productId,
-                        //     type: "SUBTRACT",
-                        //     context: context);
+                      onTap: () async {
+                        bool res = await _helper.decrementProductQuantity(
+                            widget.cartProduct.data()['productId']);
+                        if (!res) {
+                          showConfirmationDialog(
+                              'Do you want to remove this product from the cart?',
+                              context, (result) async {
+                            if (result) {
+                              await _helper.removeFromCart(
+                                  widget.cartProduct.data()['productId']);
+                              final snackBar = SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                duration: Duration(milliseconds: 500),
+                                content: Text(
+                                  'Product removed from the cart!',
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            }
+                          });
+                        }
                       },
                       child: Container(
                         width: getProportionateScreenWidth(28),
