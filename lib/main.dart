@@ -17,12 +17,7 @@ void main() async {
   //     ConnectionStatusSingleton.getInstance();
   // connectionStatus.initialize();
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Cart()),
-      ],
-      child: Main(),
-    ),
+    Main(),
   );
 }
 

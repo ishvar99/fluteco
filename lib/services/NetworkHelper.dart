@@ -91,4 +91,8 @@ class NetworkHelper {
     else
       return true;
   }
+
+  CollectionReference getCartProducts() {
+    return FirebaseFirestore.instance.collection('cart');
+  }
 }

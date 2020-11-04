@@ -5,8 +5,19 @@ import '../components/product/body.dart';
 import 'package:provider/provider.dart';
 import '../providers/Product.dart';
 
-class ProductScreen extends StatelessWidget {
-  NetworkHelper helper = NetworkHelper();
+class ProductScreen extends StatefulWidget {
+  @override
+  _ProductScreenState createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  final NetworkHelper helper = NetworkHelper();
+  void rebuild(val) {
+    if (val) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
@@ -31,7 +42,8 @@ class ProductScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-            return displayBottomNavigationBar(context, product, snapshot.data);
+            return displayBottomNavigationBar(
+                context, product, snapshot.data, rebuild);
           }),
     );
   }

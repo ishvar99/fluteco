@@ -6,7 +6,6 @@ import '../../widgets/home/SearchBar.dart';
 import '../../providers/Cart.dart';
 
 AppBar header(BuildContext context) {
-  final cart = Provider.of<Cart>(context);
   return AppBar(
     titleSpacing: getProportionateScreenWidth(10),
     toolbarHeight: getProportionateScreenWidth(130),
@@ -20,7 +19,7 @@ AppBar header(BuildContext context) {
         width: getProportionateScreenWidth(15),
       ),
       IconWithCounter(
-          count: cart.items.length,
+          count: 2,
           press: () {
             Navigator.pushNamed(context, '/cart');
           }),

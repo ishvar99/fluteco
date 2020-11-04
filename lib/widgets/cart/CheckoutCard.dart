@@ -60,21 +60,19 @@ class CheckoutCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Consumer<Cart>(
-                  builder: (context, cart, _) => Text.rich(
-                    TextSpan(
-                      text: "Total:\n",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      children: [
-                        TextSpan(
-                          text: "${formatter.format(cart.totalPrice())}",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.teal[600]),
-                        ),
-                      ],
-                    ),
+                Text.rich(
+                  TextSpan(
+                    text: "Total:\n",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                        // text: "${formatter.format(cart.totalPrice())}",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.teal[600]),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

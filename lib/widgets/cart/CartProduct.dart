@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../providers/Cart.dart';
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
@@ -7,10 +9,8 @@ import 'package:provider/provider.dart';
 import '../../components/wishlist/showDialog.dart';
 
 class CartProduct extends StatefulWidget {
-  final CartItem cartProduct;
-  final String productId;
-  const CartProduct({Key key, this.cartProduct, this.productId})
-      : super(key: key);
+  final QueryDocumentSnapshot cartProduct;
+  const CartProduct({Key key, this.cartProduct}) : super(key: key);
 
   @override
   _CartProductState createState() => _CartProductState();
@@ -22,7 +22,7 @@ class _CartProductState extends State<CartProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context, listen: false);
+    print('Ishan ${widget.cartProduct.data()}');
     return Dismissible(
       // ignore: missing_return
       confirmDismiss: (index) {
@@ -32,7 +32,7 @@ class _CartProductState extends State<CartProduct> {
           if (result) {
             setState(() {
               //delete from cart
-              cart.removeItem(widget.cartProduct.id);
+              // cart.removeItem(widget.cartProduct.id);
               final snackBar = SnackBar(
                 behavior: SnackBarBehavior.floating,
                 duration: Duration(milliseconds: 500),
@@ -80,82 +80,80 @@ class _CartProductState extends State<CartProduct> {
                         Navigator.pushNamed(
                           context,
                           "/products",
-                          arguments: widget.productId,
+                          arguments: widget.cartProduct.data()['productId'],
                         );
                       },
-                      image: widget.cartProduct.image),
+                      image: widget.cartProduct.data()['image']),
                 ),
                 SizedBox(
                   height: getProportionateScreenWidth(12),
                 ),
-                Consumer<Cart>(
-                  builder: (context, cart, _) => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        splashColor: Colors.deepOrange[100],
-                        onTap: () {
-                          cart.updateQuantity(
-                              productId: widget.productId,
-                              type: "ADD",
-                              context: context);
-                        },
-                        child: Container(
-                          width: getProportionateScreenWidth(28),
-                          height: getProportionateScreenWidth(28),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.09,
-                              color: Colors.deepOrange[800],
-                            ),
-                            // color: Colors.teal,
-                            color: Colors.deepOrange.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(Icons.add,
-                              size: 18, color: Colors.deepOrange[800]),
-                        ),
-                      ),
-                      Container(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      splashColor: Colors.deepOrange[100],
+                      onTap: () {
+                        // cart.updateQuantity(
+                        //     productId: widget.productId,
+                        //     type: "ADD",
+                        //     context: context);
+                      },
+                      child: Container(
+                        width: getProportionateScreenWidth(28),
                         height: getProportionateScreenWidth(28),
-                        width: getProportionateScreenWidth(40),
-                        child: Text(
-                          "${widget.cartProduct.quantity}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                              color: Theme.of(context).accentColor),
-                        ),
-                        color: Colors.white,
-                      ),
-                      InkWell(
-                        splashColor: Colors.deepOrange[100],
-                        onTap: () {
-                          cart.updateQuantity(
-                              productId: widget.productId,
-                              type: "SUBTRACT",
-                              context: context);
-                        },
-                        child: Container(
-                          width: getProportionateScreenWidth(28),
-                          height: getProportionateScreenWidth(28),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 0.09, color: Colors.deepOrange),
-                              // color: Colors.teal,
-                              color: Colors.deepOrange.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Icon(
-                            Icons.remove,
-                            size: 18,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0.09,
                             color: Colors.deepOrange[800],
                           ),
+                          // color: Colors.teal,
+                          color: Colors.deepOrange.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Icon(Icons.add,
+                            size: 18, color: Colors.deepOrange[800]),
+                      ),
+                    ),
+                    Container(
+                      height: getProportionateScreenWidth(28),
+                      width: getProportionateScreenWidth(40),
+                      child: Text(
+                        "${widget.cartProduct.data()['quantity']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                            color: Theme.of(context).accentColor),
+                      ),
+                      color: Colors.white,
+                    ),
+                    InkWell(
+                      splashColor: Colors.deepOrange[100],
+                      onTap: () {
+                        // cart.updateQuantity(
+                        //     productId: widget.productId,
+                        //     type: "SUBTRACT",
+                        //     context: context);
+                      },
+                      child: Container(
+                        width: getProportionateScreenWidth(28),
+                        height: getProportionateScreenWidth(28),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 0.09, color: Colors.deepOrange),
+                            // color: Colors.teal,
+                            color: Colors.deepOrange.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Icon(
+                          Icons.remove,
+                          size: 18,
+                          color: Colors.deepOrange[800],
                         ),
                       ),
-                    ],
-                  ),
-                )
+                    ),
+                  ],
+                ),
               ],
             ),
             SizedBox(
@@ -169,7 +167,7 @@ class _CartProductState extends State<CartProduct> {
                     height: getProportionateScreenWidth(20),
                   ),
                   Text(
-                    "${widget.cartProduct.title}",
+                    "${widget.cartProduct.data()['title']}",
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -180,14 +178,15 @@ class _CartProductState extends State<CartProduct> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: "${formatter.format(widget.cartProduct.price)} ",
+                      text:
+                          "${formatter.format(widget.cartProduct.data()['price'])} ",
                       style: TextStyle(
                           fontSize: getProportionateScreenWidth(18),
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor),
                     ),
                     TextSpan(
-                      text: "x${widget.cartProduct.quantity}",
+                      text: "x${widget.cartProduct['quantity']}",
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: getProportionateScreenWidth(18),
