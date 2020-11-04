@@ -8,7 +8,6 @@ import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
 import '../../resources/size_config.dart';
 import './display.dart';
-import '../../utility/connectivity.dart';
 
 class Body extends StatefulWidget {
   @override

@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:fluteco/utility/connectivity.dart';
 import 'package:flutter/material.dart';
 import '../components/home/header.dart';
 import '../components/home/body.dart';
@@ -20,63 +18,37 @@ class _HomeState extends State<Home> {
 
   var listener;
   var subscription;
-  // StreamSubscription _connectionChangeStream;
-
-  // bool isOffline = false;
-
-  // @override
-  // initState() {
-  //   super.initState();
-
-  //   ConnectionStatusSingleton connectionStatus =
-  //       ConnectionStatusSingleton.getInstance();
-  //   _connectionChangeStream =
-  //       connectionStatus.connectionChange.listen(connectionChanged);
-  // }
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   void connectionChanged(dynamic hasConnection) {
     if (hasConnection == ConnectivityResult.none) {
       setState(() {});
     }
   }
 
-  @override
-  void initState() {
-    subscription =
-        Connectivity().onConnectivityChanged.listen(connectionChanged);
+  // @override
+  // void initState() {
+  //   subscription =
+  //       Connectivity().onConnectivityChanged.listen(connectionChanged);
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
-  @override
-  void dispose() {
-    subscription.cancle();
-    print('dispose called');
-    listener.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   subscription.cancle();
+  //   print('dispose called');
+  //   listener.cancel();
+  //   super.dispose();
+  // }
 
-  checkInternet() async {
-    print('check internet');
-    print(await DataConnectionChecker().hasConnection);
-    print("Current status: ${await DataConnectionChecker().connectionStatus}");
-    print("Last results: ${DataConnectionChecker().lastTryResults}");
-    listener = DataConnectionChecker().onStatusChange.listen((status) {
-      switch (status) {
-        case DataConnectionStatus.connected:
-          print('Data connection is available.');
-          break;
-        case DataConnectionStatus.disconnected:
-          print('You are disconnected from the internet.');
-          break;
-      }
-    });
-    return await DataConnectionChecker().hasConnection;
-  }
+  // checkInternet() async {
+  //   listener = DataConnectionChecker().onStatusChange.listen((_) {});
+  //   return await DataConnectionChecker().hasConnection;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // print(isOffline);
+    DataConnectionChecker().checkInterval = const Duration(seconds: 1);
     final SnackBar snackBar = SnackBar(
       content: Text('No Internet Connection'),
       behavior: SnackBarBehavior.floating,
@@ -85,26 +57,35 @@ class _HomeState extends State<Home> {
           textColor: Colors.amber,
           label: "Retry",
           onPressed: () {
+            //rebuild the widget
             setState(() {});
           }),
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var status = await checkInternet();
-      print("status $status");
-      if (!status) {
-        Scaffold.of(context).showSnackBar(snackBar);
-      } else {
-        Scaffold.of(context).removeCurrentSnackBar();
-      }
-    });
+
     return RefreshIndicator(
       onRefresh: () async {
         await _helper.getSpecialProducts().get();
       },
       child: Scaffold(
+        key: _scaffoldKey,
         drawer: Drawer(),
         appBar: header(context),
-        body: SingleChildScrollView(child: Body()),
+        body: SingleChildScrollView(
+            child: StreamBuilder<DataConnectionStatus>(
+                stream: DataConnectionChecker().onStatusChange,
+                builder: (context, snapshot) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (snapshot.hasData) {
+                      print("Snapshot ${snapshot.data}");
+                      if (snapshot.data == DataConnectionStatus.disconnected) {
+                        _scaffoldKey.currentState.showSnackBar(snackBar);
+                      } else if (snapshot.data ==
+                          DataConnectionStatus.connected)
+                        _scaffoldKey.currentState.removeCurrentSnackBar();
+                    }
+                  });
+                  return Body();
+                })),
       ),
     );
   }
