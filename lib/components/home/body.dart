@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
@@ -6,8 +8,7 @@ import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
 import '../../resources/size_config.dart';
 import './display.dart';
-import 'package:connectivity/connectivity.dart';
-// import '../../utility/connectivity.dart';
+import '../../utility/connectivity.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -16,43 +17,9 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   NetworkHelper _helper = NetworkHelper();
-  // Map _source = {ConnectivityResult.none: false};
-  // MyConnectivity _connectivity = MyConnectivity.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    // _connectivity.initialise();
-    // _connectivity.myStream.listen((source) {
-    //   setState(() => _source = source);
-    // });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // final snackBar = SnackBar(
-    //   content: Text("No Internet Connection"),
-    //   behavior: SnackBarBehavior.floating,
-    //   duration: Duration(
-    //     days: 365,
-    //   ),
-    // );
-    // switch (_source.keys.toList()[0]) {
-    //   case ConnectivityResult.none:
-    //     {
-    //       print('disconnected');
-    //       Scaffold.of(context).showSnackBar(snackBar);
-    //       break;
-    //     }
-    //   case ConnectivityResult.mobile:
-    //   case ConnectivityResult.wifi:
-    //     {
-    //       print('connected');
-    //       Scaffold.of(context).removeCurrentSnackBar();
-    //       break;
-    //     }
-    // }
-
     return Column(
       children: [
         BannerCarousel(),

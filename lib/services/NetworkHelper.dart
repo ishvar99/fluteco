@@ -73,4 +73,8 @@ class NetworkHelper {
         .doc(id)
         .update({'favourite': status});
   }
+
+  Future<void> deleteProduct(String id) async {
+    await FirebaseFirestore.instance.collection('products').doc(id).delete();
+  }
 }

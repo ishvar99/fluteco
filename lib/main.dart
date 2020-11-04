@@ -1,3 +1,5 @@
+// import 'package:fluteco/utility/connectivity.dart';
+
 import './providers/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +13,9 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // ConnectionStatusSingleton connectionStatus =
+  //     ConnectionStatusSingleton.getInstance();
+  // connectionStatus.initialize();
   runApp(
     MultiProvider(
       providers: [
