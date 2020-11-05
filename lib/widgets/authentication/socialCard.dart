@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../resources/size_config.dart';
 
-class SocalCard extends StatelessWidget {
-  const SocalCard({
+class SocialCard extends StatelessWidget {
+  const SocialCard({
     Key key,
     this.icon,
     this.press,

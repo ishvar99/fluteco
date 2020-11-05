@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/authentication/noAccountText.dart';
-import '../../widgets/authentication/socalCard.dart';
+import '../../widgets/authentication/socialCard.dart';
 import '../../resources/size_config.dart';
 import './form.dart';
 
@@ -35,15 +35,15 @@ class Body extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/google-icon.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/facebook-2.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/twitter.svg",
                       press: () {},
                     ),

@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/providers/Products.dart';
+import 'package:fluteco/screens/CompleteProfile.dart';
+import 'package:fluteco/screens/ForgotPassword.dart';
+import 'package:fluteco/screens/Login.dart';
+import 'package:fluteco/screens/OTP.dart';
 import 'package:fluteco/screens/Product.dart';
+import 'package:fluteco/screens/Register.dart';
 import 'package:fluteco/screens/edit_product.dart';
 import 'package:fluteco/screens/order.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
@@ -24,7 +29,12 @@ final Map<String, WidgetBuilder> routes = {
   FlutecoSpecial.routeName: (_) => FlutecoSpecial(),
   Genres.routeName: (_) => Genres(),
   EditProduct.routeName: (_) => EditProduct(),
-  Order.routeName: (_) => Order()
+  Order.routeName: (_) => Order(),
+  RegisterScreen.routeName: (_) => RegisterScreen(),
+  LoginScreen.routeName: (_) => LoginScreen(),
+  ForgotPasswordScreen.routeName: (_) => ForgotPasswordScreen(),
+  CompleteProfileScreen.routeName: (_) => CompleteProfileScreen(),
+  OtpScreen.routeName: (_) => OtpScreen()
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
