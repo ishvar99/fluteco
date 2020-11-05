@@ -6,16 +6,13 @@ Widget drawerBodyItem({IconData icon, String text, GestureTapCallback onTap}) {
   return ListTile(
     title: Row(
       children: <Widget>[
-        Icon(
-          icon,
-          color: Colors.teal[700],
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(24)),
-          child: Text(
-            text,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+        // Icon(
+        //   icon,
+        //   color: Colors.teal[700],
+        // ),
+        Text(
+          text,
+          style: TextStyle(fontWeight: FontWeight.bold),
         )
       ],
     ),

@@ -1,3 +1,4 @@
+import 'package:fluteco/screens/Register.dart';
 import "package:flutter/material.dart";
 import "../resources/size_config.dart";
 import '../widgets/home/BoardingImage.dart';
@@ -75,8 +76,8 @@ class _SplashState extends State<Splash> {
               height: 50,
               child: RoundedButton(
                   text: "Continue",
-                  pressed: () =>
-                      Navigator.of(context).pushNamed(Home.routeName)),
+                  pressed: () => Navigator.of(context)
+                      .pushNamed(RegisterScreen.routeName)),
             )
           ],
         ),
