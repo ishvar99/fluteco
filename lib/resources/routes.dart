@@ -3,6 +3,7 @@ import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/providers/Products.dart';
 import 'package:fluteco/screens/Product.dart';
 import 'package:fluteco/screens/edit_product.dart';
+import 'package:fluteco/screens/order.dart';
 import 'package:fluteco/services/NetworkHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,8 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (_) => CartScreen(),
   FlutecoSpecial.routeName: (_) => FlutecoSpecial(),
   Genres.routeName: (_) => Genres(),
-  EditProduct.routeName: (_) => EditProduct()
+  EditProduct.routeName: (_) => EditProduct(),
+  Order.routeName: (_) => Order()
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {

@@ -21,30 +21,35 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Fluteco", style: TextStyle(fontWeight: FontWeight.w900)),
-        backgroundColor: Colors.deepOrange,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: displayContent(context, product),
-      ),
-      bottomNavigationBar: FutureBuilder<bool>(
-          future: helper.isProductInCart(product.id),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(child: Text('Something went wrong'));
-            }
+    return RefreshIndicator(
+      onRefresh: () async {
+        rebuild(true);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Fluteco", style: TextStyle(fontWeight: FontWeight.w900)),
+          backgroundColor: Colors.deepOrange,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: displayContent(context, product),
+        ),
+        bottomNavigationBar: FutureBuilder<bool>(
+            future: helper.isProductInCart(product.id),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Something went wrong'));
+              }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return displayBottomNavigationBar(
-                context, product, snapshot.data, rebuild);
-          }),
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return displayBottomNavigationBar(
+                  context, product, snapshot.data, rebuild);
+            }),
+      ),
     );
   }
 }

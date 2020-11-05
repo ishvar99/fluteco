@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../components/home/header.dart';
 import '../components/home/body.dart';
 import '../services/NetworkHelper.dart';
+import '../widgets/home/FlutecoDrawer.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: Drawer(),
+        drawer: FlutecoDrawer(),
         appBar: header(context),
         body: SingleChildScrollView(
             child: StreamBuilder<DataConnectionStatus>(

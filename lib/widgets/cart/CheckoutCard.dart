@@ -101,7 +101,9 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: RoundedButton(
                     text: "Check Out",
-                    pressed: () {},
+                    pressed: () {
+                      Navigator.of(context).pushNamed('/checkout');
+                    },
                   ),
                 ),
               ],
