@@ -9,7 +9,14 @@ class BoardingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Center(child: Text(text)),
+        Center(
+            child: Text(
+          text,
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.bold,
+          ),
+        )),
         SizedBox(
           height: 60,
         ),

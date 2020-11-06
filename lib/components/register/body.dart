@@ -1,3 +1,4 @@
+import 'package:fluteco/screens/Login.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/authentication/socialCard.dart';
 import '../../resources/constants.dart';
@@ -8,47 +9,83 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
-                Text("Register Account", style: headingStyle),
-                Text(
-                  "Complete your details or continue \nwith social media",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SignUpForm(),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialCard(
-                      icon: "assets/icons/google-icon.svg",
-                      press: () {},
+      child: Center(
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  Text(
+                    "FLUTECO",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: getProportionateScreenWidth(28),
+                      fontWeight: FontWeight.w900,
                     ),
-                    SocialCard(
-                      icon: "assets/icons/facebook.svg",
-                      press: () {},
-                    ),
-                    SocialCard(
-                      icon: "assets/icons/twitter.svg",
-                      press: () {},
-                    ),
-                  ],
-                ),
-                SizedBox(height: getProportionateScreenHeight(20)),
-                Text(
-                  'By continuing your confirm that you agree \nwith our Term and Condition',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.caption,
-                )
-              ],
+                  ),
+                  Text(
+                    'The smarter way to shop',
+                    style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  // Text(
+                  //   "Complete your details or continue \nwith social media",
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.04),
+                  SignUpForm(),
+                  // SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  // Text(
+                  //   'OR',
+                  //   style: TextStyle(fontWeight: FontWeight.w900),
+                  // ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, LoginScreen.routeName);
+                    },
+                    child: Text.rich(TextSpan(children: [
+                      TextSpan(text: "I have an account? "),
+                      TextSpan(
+                        text: "Login",
+                        style: TextStyle(
+                            color: Colors.teal, fontWeight: FontWeight.w900),
+                      )
+                    ])),
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     SocialCard(
+                  //       icon: "assets/icons/google-icon.svg",
+                  //       press: () {},
+                  //     ),
+                  //     SocialCard(
+                  //       icon: "assets/icons/facebook.svg",
+                  //       press: () {},
+                  //     ),
+                  //     SocialCard(
+                  //       icon: "assets/icons/twitter.svg",
+                  //       press: () {},
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(height: getProportionateScreenHeight(20)),
+                  // Text(
+                  //   'By continuing you confirm that you agree \nwith our Terms and Conditions',
+                  //   textAlign: TextAlign.center,
+                  //   style: Theme.of(context).textTheme.caption,
+                  // ),
+                  // SizedBox(height: getProportionateScreenWidth(10)),
+                ],
+              ),
             ),
           ),
         ),

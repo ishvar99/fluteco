@@ -1,7 +1,5 @@
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/authentication/customSurfixIcon.dart';
-import '../../widgets/authentication/formError.dart';
 import '../../screens/CompleteProfile.dart';
 import '../../resources/size_config.dart';
 import '../../resources/constants.dart';
@@ -13,83 +11,67 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  String confirm_password;
-  bool remember = false;
-  final List<String> errors = [];
-
-  void addError({String error}) {
-    if (!errors.contains(error))
-      setState(() {
-        errors.add(error);
-      });
-  }
-
-  void removeError({String error}) {
-    if (errors.contains(error))
-      setState(() {
-        errors.remove(error);
-      });
-  }
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildConformPassFormField(),
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
-          RoundedButton(
-            text: "Continue",
-            pressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
-            },
-          ),
-        ],
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(5),
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            buildEmailFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildPasswordFormField(),
+            SizedBox(height: getProportionateScreenHeight(30)),
+            buildConfirmPasswordFormField(),
+            SizedBox(height: getProportionateScreenHeight(40)),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(35)),
+              width: double.infinity,
+              height: 50,
+              child: RoundedButton(
+                text: "Register",
+                pressed: () {
+                  if (_formKey.currentState.validate()) {
+                    Navigator.pushNamed(
+                        context, CompleteProfileScreen.routeName);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  TextFormField buildConformPassFormField() {
+  TextFormField buildConfirmPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => confirm_password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == confirm_password) {
-          removeError(error: kMatchPassError);
-        }
-        confirm_password = value;
-      },
+      controller: _confirmPasswordController,
       validator: (value) {
         if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
+          return kPassNullError;
+        } else if ((_passwordController.text != value)) {
+          return kMatchPassError;
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        // labelText: "Confirm Password",
+        hintText: "Confirm Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: Icon(
+          Icons.lock_outline,
+          color: Colors.teal[600],
+        ),
       ),
     );
   }
@@ -97,32 +79,20 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        password = value;
-      },
+      controller: _passwordController,
       validator: (value) {
         if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
+          return kPassNullError;
         } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
+          return kShortPassError;
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        // labelText: "Password",
+        hintText: "Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: Icon(Icons.lock_outlined, color: Colors.teal[600]),
       ),
     );
   }
@@ -130,32 +100,20 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
-        }
-        return null;
-      },
+      controller: _emailController,
       validator: (value) {
         if (value.isEmpty) {
-          addError(error: kEmailNullError);
-          return "";
+          return kEmailNullError;
         } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return "";
+          return kInvalidEmailError;
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        // labelText: "Email",
+        hintText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: Icon(Icons.email_outlined, color: Colors.teal[600]),
       ),
     );
   }

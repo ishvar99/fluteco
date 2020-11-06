@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "../resources/size_config.dart";
 import '../widgets/home/BoardingImage.dart';
 import "../resources/constants.dart";
-import '../screens/Home.dart';
 import '../widgets/splash/RoundedButton.dart';
 
 class Splash extends StatefulWidget {
@@ -46,7 +45,7 @@ class _SplashState extends State<Splash> {
                       style: TextStyle(
                         fontSize: getProportionateScreenWidth(36),
                         fontWeight: FontWeight.w900,
-                        color: kPrimaryColor,
+                        color: Theme.of(context).primaryColor,
                       )),
                   Expanded(
                     child: PageView.builder(
