@@ -1,4 +1,4 @@
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import '../components/product/showBottomNavigationBar.dart';
 import '../components/product/body.dart';
@@ -11,7 +11,7 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  final NetworkHelper helper = NetworkHelper();
+  final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   void rebuild(val) {
     if (val) {
       setState(() {});

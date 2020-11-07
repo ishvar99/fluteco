@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:fluteco/models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../components/home/header.dart';
 import '../components/home/body.dart';
-import '../services/NetworkHelper.dart';
+import '../services/FirebaseFirestoreHelper.dart';
 import '../widgets/home/FlutecoDrawer.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final NetworkHelper _helper = NetworkHelper();
+  final FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
 
   var listener;
   var subscription;
@@ -49,6 +51,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    AppUser user = Provider.of<AppUser>(context);
     DataConnectionChecker().checkInterval = const Duration(seconds: 1);
     final SnackBar snackBar = SnackBar(
       content: Text('No Internet Connection'),

@@ -1,7 +1,6 @@
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/authentication/formError.dart';
-import '../../widgets/authentication/customSurfixIcon.dart';
 import '../../widgets/authentication/noAccountText.dart';
 
 import '../../resources/size_config.dart';
@@ -58,53 +57,40 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
-            onChanged: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.remove(kEmailNullError);
-                });
-              } else if (emailValidatorRegExp.hasMatch(value) &&
-                  errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.remove(kInvalidEmailError);
-                });
-              }
-              return null;
-            },
             validator: (value) {
-              if (value.isEmpty && !errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.add(kEmailNullError);
-                });
-              } else if (!emailValidatorRegExp.hasMatch(value) &&
-                  !errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.add(kInvalidEmailError);
-                });
+              if (value.isEmpty) {
+                return kEmailNullError;
+              } else if (!emailValidatorRegExp.hasMatch(value)) {
+                return kInvalidEmailError;
               }
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              // labelText: "Email",
+              hintText: "Email",
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+              suffixIcon: Icon(
+                Icons.email,
+                color: Colors.teal[600],
+              ),
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
-          RoundedButton(
-            text: "Continue",
-            pressed: () {
-              if (_formKey.currentState.validate()) {
-                // Do what you want to do
-              }
-            },
-          ),
+          Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(35)),
+              width: double.infinity,
+              height: 50,
+              child: RoundedButton(
+                text: "Continue",
+                pressed: () {
+                  if (_formKey.currentState.validate()) {
+                    // Do what you want to do
+                  }
+                },
+              )),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           NoAccountText(),
         ],

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/resources/size_config.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:fluteco/widgets/home/SpecialCard.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class FlutecoSpecial extends StatefulWidget {
 }
 
 class _FlutecoSpecialState extends State<FlutecoSpecial> {
-  final NetworkHelper _helper = NetworkHelper();
+  final FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(

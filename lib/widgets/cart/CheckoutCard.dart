@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/splash/RoundedButton.dart';
 import '../../resources/size_config.dart';
@@ -10,7 +10,7 @@ import '../../providers/Cart.dart';
 class CheckoutCard extends StatelessWidget {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
-  final NetworkHelper helper = NetworkHelper();
+  final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   //  final formatter =
   // new NumberFormat.simpleCurrency(name="INR" decimalDigits: 0);
   CheckoutCard({

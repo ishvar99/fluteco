@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../resources/size_config.dart';
@@ -8,7 +8,7 @@ import '../../widgets/home/SearchBar.dart';
 import '../../providers/Cart.dart';
 
 AppBar header(BuildContext context) {
-  final NetworkHelper helper = NetworkHelper();
+  final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   return AppBar(
     titleSpacing: getProportionateScreenWidth(10),
     toolbarHeight: getProportionateScreenWidth(130),

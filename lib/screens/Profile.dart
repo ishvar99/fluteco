@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import '../widgets/admin/ManageProduct.dart';
@@ -10,7 +10,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  NetworkHelper _helper = new NetworkHelper();
+  FirebaseFirestoreHelper _helper = new FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(

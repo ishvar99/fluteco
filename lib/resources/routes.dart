@@ -9,7 +9,7 @@ import 'package:fluteco/screens/Product.dart';
 import 'package:fluteco/screens/Register.dart';
 import 'package:fluteco/screens/edit_product.dart';
 import 'package:fluteco/screens/order.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import '../screens/Splash.dart';
@@ -39,7 +39,7 @@ final Map<String, WidgetBuilder> routes = {
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
   final arguments = settings.arguments;
-  NetworkHelper helper = NetworkHelper();
+  FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   switch (settings.name) {
     case '/categories':
       {

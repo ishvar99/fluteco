@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/resources/size_config.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 
 import '../providers/Cart.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import '../components/cart/body.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
-  final NetworkHelper helper = NetworkHelper();
+  final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(

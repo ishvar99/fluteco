@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 
 import '../../providers/Cart.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class CartProduct extends StatefulWidget {
 class _CartProductState extends State<CartProduct> {
   final formatter =
       new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
-  NetworkHelper _helper = NetworkHelper();
+  FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     print('Ishan ${widget.cartProduct.data()}');

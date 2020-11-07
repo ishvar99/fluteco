@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  NetworkHelper _helper = NetworkHelper();
+  FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(

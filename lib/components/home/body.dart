@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/home/PartitionHeader.dart';
 import '../../widgets/home/BannerCarousel.dart';
@@ -15,7 +15,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  NetworkHelper _helper = NetworkHelper();
+  FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
 
   @override
   Widget build(BuildContext context) {

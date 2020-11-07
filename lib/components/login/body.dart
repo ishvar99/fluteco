@@ -18,12 +18,11 @@ class Body extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // SizedBox(height: SizeConfig.screenHeight * 0.02),
                   Text(
                     "FLUTECO",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
-                      fontSize: getProportionateScreenWidth(28),
+                      fontSize: getProportionateScreenWidth(30),
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -31,9 +30,10 @@ class Body extends StatelessWidget {
                     'The smarter way to shop',
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
+                        fontSize: getProportionateScreenWidth(16),
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
+                  SizedBox(height: SizeConfig.screenHeight * 0.05),
                   SignForm(),
                   SizedBox(height: SizeConfig.screenHeight * 0.02),
                   // Row(

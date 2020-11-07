@@ -1,6 +1,6 @@
 import 'package:fluteco/components/wishlist/showDialog.dart';
 import 'package:fluteco/resources/size_config.dart';
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/widgets/home/ImageCard.dart';
 import 'package:flutter/material.dart';
 import '../../providers/Product.dart';
@@ -17,7 +17,7 @@ class ManageProduct extends StatefulWidget {
 class _ManageProductState extends State<ManageProduct> {
   @override
   Widget build(BuildContext context) {
-    NetworkHelper _helper = NetworkHelper();
+    FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
     final formatter =
         new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
     return Container(

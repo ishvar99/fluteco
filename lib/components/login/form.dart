@@ -1,8 +1,6 @@
 import 'package:fluteco/screens/Home.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/authentication/customSurfixIcon.dart';
-import '../../widgets/authentication/formError.dart';
 import '../../screens/ForgotPassword.dart';
 import '../../resources/constants.dart';
 import '../../resources/size_config.dart';
@@ -28,9 +26,9 @@ class _SignFormState extends State<SignForm> {
         child: Column(
           children: [
             buildEmailFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
+            SizedBox(height: getProportionateScreenHeight(35)),
             buildPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
+            SizedBox(height: getProportionateScreenHeight(35)),
             Row(
               children: [
                 Checkbox(
@@ -94,7 +92,8 @@ class _SignFormState extends State<SignForm> {
           hintText: "Password",
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(
-            Icons.lock_outline,
+            Icons.lock,
+            size: getProportionateScreenWidth(18),
             color: Colors.teal[600],
           )),
     );
@@ -115,7 +114,11 @@ class _SignFormState extends State<SignForm> {
       decoration: InputDecoration(
         hintText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.email_outlined, color: Colors.teal[600]),
+        suffixIcon: Icon(
+          Icons.email,
+          color: Colors.teal[600],
+          size: getProportionateScreenWidth(18),
+        ),
       ),
     );
   }

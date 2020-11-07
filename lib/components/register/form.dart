@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluteco/screens/Home.dart';
+import 'package:fluteco/services/FirebaseAuthHelper.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
 import '../../screens/CompleteProfile.dart';
@@ -11,6 +14,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  final FireBaseAuthHelper _helper = new FireBaseAuthHelper();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
@@ -26,11 +30,11 @@ class _SignUpFormState extends State<SignUpForm> {
         child: Column(
           children: [
             buildEmailFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
+            SizedBox(height: getProportionateScreenHeight(35)),
             buildPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
+            SizedBox(height: getProportionateScreenHeight(35)),
             buildConfirmPasswordFormField(),
-            SizedBox(height: getProportionateScreenHeight(40)),
+            SizedBox(height: getProportionateScreenHeight(45)),
             Container(
               margin: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(35)),
@@ -38,10 +42,15 @@ class _SignUpFormState extends State<SignUpForm> {
               height: 50,
               child: RoundedButton(
                 text: "Register",
-                pressed: () {
+                pressed: () async {
                   if (_formKey.currentState.validate()) {
+                    UserCredential user = await _helper.registerUser(
+                        _emailController.text, _passwordController.text);
+                    print(user);
                     Navigator.pushNamed(
-                        context, CompleteProfileScreen.routeName);
+                      context,
+                      CompleteProfileScreen.routeName,
+                    );
                   }
                 },
               ),
@@ -69,7 +78,8 @@ class _SignUpFormState extends State<SignUpForm> {
         hintText: "Confirm Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
-          Icons.lock_outline,
+          Icons.security,
+          size: getProportionateScreenWidth(18),
           color: Colors.teal[600],
         ),
       ),
@@ -92,7 +102,11 @@ class _SignUpFormState extends State<SignUpForm> {
         // labelText: "Password",
         hintText: "Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.lock_outlined, color: Colors.teal[600]),
+        suffixIcon: Icon(
+          Icons.lock,
+          size: getProportionateScreenWidth(18),
+          color: Colors.teal[600],
+        ),
       ),
     );
   }
@@ -113,7 +127,11 @@ class _SignUpFormState extends State<SignUpForm> {
         // labelText: "Email",
         hintText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.email_outlined, color: Colors.teal[600]),
+        suffixIcon: Icon(
+          Icons.email,
+          color: Colors.teal[600],
+          size: getProportionateScreenWidth(18),
+        ),
       ),
     );
   }

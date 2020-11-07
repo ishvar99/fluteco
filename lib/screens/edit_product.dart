@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fluteco/components/admin/showSnackbar.dart';
 import 'package:fluteco/utility/computeDiscount.dart';
-import '../services/NetworkHelper.dart';
+import '../services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
@@ -12,7 +12,7 @@ import '../widgets/miscellaneous/LoadingBackdrop.dart';
 
 class EditProduct extends StatefulWidget {
   static const routeName = "/edit-product";
-  final helper = NetworkHelper();
+  final helper = FirebaseFirestoreHelper();
   @override
   _EditProductState createState() => _EditProductState();
 }

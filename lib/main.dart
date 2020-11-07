@@ -1,5 +1,8 @@
 // import 'package:fluteco/utility/connectivity.dart';
 
+import 'package:fluteco/models/User.dart';
+import 'package:fluteco/services/FirebaseAuthHelper.dart';
+
 import './providers/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +20,10 @@ void main() async {
   //     ConnectionStatusSingleton.getInstance();
   // connectionStatus.initialize();
   runApp(
-    Main(),
+    StreamProvider<AppUser>.value(
+      value: FireBaseAuthHelper().isAuthenticated(),
+      child: Main(),
+    ),
   );
 }
 

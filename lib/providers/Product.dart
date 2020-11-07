@@ -1,4 +1,4 @@
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
@@ -13,7 +13,7 @@ class Product with ChangeNotifier {
   bool favourite;
   String imageName;
   int limit;
-  NetworkHelper helper = NetworkHelper();
+  FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   Product(
       {@required this.id,
       @required this.name,

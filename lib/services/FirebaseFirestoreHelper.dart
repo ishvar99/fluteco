@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../data/limit.dart';
 
-class NetworkHelper {
+class FirebaseFirestoreHelper {
   Future<String> uploadProductImage(PlatformFile image) async {
     print(image);
     final StorageReference storageReference =

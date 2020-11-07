@@ -1,4 +1,4 @@
-import 'package:fluteco/services/NetworkHelper.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../resources/size_config.dart';
@@ -8,7 +8,7 @@ import '../../providers/Cart.dart';
 
 Container displayBottomNavigationBar(
     BuildContext context, Product product, bool inCart, Function rebuild) {
-  final NetworkHelper helper = NetworkHelper();
+  final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   return Container(
     height: getProportionateScreenWidth(60),
     child: Row(

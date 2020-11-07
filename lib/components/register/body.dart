@@ -14,7 +14,8 @@ class Body extends StatelessWidget {
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
+              horizontal: getProportionateScreenWidth(20),
+            ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -23,21 +24,23 @@ class Body extends StatelessWidget {
                     "FLUTECO",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
-                      fontSize: getProportionateScreenWidth(28),
+                      fontSize: getProportionateScreenWidth(30),
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   Text(
                     'The smarter way to shop',
                     style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold),
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: getProportionateScreenWidth(16),
+                    ),
                   ),
                   // Text(
                   //   "Complete your details or continue \nwith social media",
                   //   textAlign: TextAlign.center,
                   // ),
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
+                  SizedBox(height: SizeConfig.screenHeight * 0.05),
                   SignUpForm(),
                   // SizedBox(height: SizeConfig.screenHeight * 0.02),
                   // Text(
