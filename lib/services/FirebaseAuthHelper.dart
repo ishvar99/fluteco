@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluteco/models/User.dart';
 import 'package:fluteco/utility/transformUser.dart';
@@ -7,11 +8,17 @@ class FireBaseAuthHelper {
     return FirebaseAuth.instance.authStateChanges().map(transformUser);
   }
 
-  Future<void> updateProfile(String firstName, String lastName, int phoneNumber,
-      String deliveryAddress) async {
-    await FirebaseAuth.instance.currentUser
-        .updateProfile(displayName: "$firstName $lastName");
-    await FirebaseAuth.instance.currentUser.reload();
+  Future<void> updateProfile(
+      String firstName, String lastName, String profile) async {
+    var user = FirebaseAuth.instance.currentUser;
+    await user.updateProfile(
+        displayName: "$firstName $lastName", photoURL: profile);
+
+    await user.reload();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .set({'profilePhotoUrl': user.photoURL, 'name': user.displayName});
   }
 
   Future<UserCredential> registerUser(String email, String password) async {

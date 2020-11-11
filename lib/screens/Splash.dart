@@ -4,6 +4,7 @@ import "../resources/size_config.dart";
 import '../widgets/home/BoardingImage.dart';
 import "../resources/constants.dart";
 import '../widgets/splash/RoundedButton.dart';
+import 'CompleteProfile.dart';
 
 class Splash extends StatefulWidget {
   static const routeName = '/';

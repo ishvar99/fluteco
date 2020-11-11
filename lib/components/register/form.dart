@@ -47,7 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     UserCredential user = await _helper.registerUser(
                         _emailController.text, _passwordController.text);
                     print(user);
-                    Navigator.pushNamed(
+                    Navigator.pushReplacementNamed(
                       context,
                       CompleteProfileScreen.routeName,
                     );
