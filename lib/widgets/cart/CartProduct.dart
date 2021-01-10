@@ -19,7 +19,7 @@ class CartProduct extends StatefulWidget {
 
 class _CartProductState extends State<CartProduct> {
   final formatter =
-      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "Բ ", decimalDigits: 0);
   FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {

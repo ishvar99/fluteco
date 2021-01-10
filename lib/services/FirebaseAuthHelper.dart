@@ -20,6 +20,7 @@ class FireBaseAuthHelper {
       {
         'uid': user.uid,
         'profilePhotoUrl': profile,
+        'email': user.email,
         'name': '$firstName $lastName',
         'address': address,
         'pinCode': pinCode,

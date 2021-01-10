@@ -5,6 +5,11 @@ import 'package:fluteco/resources/size_config.dart';
 import 'package:fluteco/widgets/home/FlutecoDrawerHeader.dart';
 import 'package:flutter/material.dart';
 import './FlutecoDrawerItem.dart';
+import '../../screens/Home.dart';
+import '../../screens/Profile.dart';
+import '../../screens/Wishlist.dart';
+import '../../screens/order.dart';
+import '../../screens/Cart.dart';
 
 class FlutecoDrawer extends StatelessWidget {
   final AppUser user;
@@ -59,34 +64,34 @@ class FlutecoDrawer extends StatelessWidget {
             drawerBodyItem(
               icon: Icons.store,
               text: 'Home',
-              onTap: () => Navigator.pushReplacementNamed(context, '/home'),
+              onTap: () => Navigator.pushNamed(context, Home.routeName),
             ),
             drawerBodyItem(
               icon: Icons.account_box,
               text: 'My Account',
-              onTap: () => Navigator.pushReplacementNamed(context, '/profile'),
+              onTap: () => Navigator.pushNamed(context, Profile.routeName),
             ),
             drawerBodyItem(
               icon: Icons.card_giftcard,
               text: 'My Orders',
-              onTap: () => Navigator.pushReplacementNamed(context, '/orders'),
+              onTap: () => Navigator.pushNamed(context, Order.routeName),
             ),
             Divider(),
             drawerBodyItem(
               icon: Icons.shopping_basket,
               text: 'Cart',
-              onTap: () => Navigator.pushReplacementNamed(context, '/cart'),
+              onTap: () => Navigator.pushNamed(context, CartScreen.routeName),
             ),
             drawerBodyItem(
               icon: Icons.favorite,
               text: 'Wishlist',
-              onTap: () => Navigator.pushReplacementNamed(context, '/whislist'),
+              onTap: () => Navigator.pushNamed(context, Wishlist.routeName),
             ),
             Divider(),
             drawerBodyItem(
               icon: Icons.help,
               text: 'Help',
-              onTap: () => Navigator.pushReplacementNamed(context, '/help'),
+              onTap: () => null,
             ),
             drawerBodyItem(
               icon: Icons.logout,

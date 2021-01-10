@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cart/CheckoutCard.dart';
 import '../components/cart/body.dart';
+import 'Home.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -58,7 +59,8 @@ class CartScreen extends StatelessWidget {
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              Navigator.popAndPushNamed(context, '/home');
+                              Navigator.popAndPushNamed(
+                                  context, Home.routeName);
                             },
                           )
                         ],

@@ -1,3 +1,4 @@
+import 'package:fluteco/screens/order.dart';
 import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,13 @@ Container displayBottomNavigationBar(
         Expanded(
           child: Button(
             text: "BUY NOW",
-            tapped: () {},
+            tapped: () {
+              return Navigator.pushNamed(
+                context,
+                Order.routeName,
+                arguments: product.discountedPrice,
+              );
+            },
           ),
         ),
       ],

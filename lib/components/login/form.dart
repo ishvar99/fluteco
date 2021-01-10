@@ -15,6 +15,7 @@ class SignForm extends StatefulWidget {
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   bool remember = false;
+  bool _loading = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   @override
@@ -64,10 +65,14 @@ class _SignFormState extends State<SignForm> {
               width: double.infinity,
               height: 50,
               child: RoundedButton(
+                loading: _loading,
                 text: "Login",
                 pressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
+                    setState(() {
+                      _loading = true;
+                    });
                     FirebaseAuth.instance
                         .signInWithEmailAndPassword(
                             email: _emailController.text,
@@ -77,18 +82,25 @@ class _SignFormState extends State<SignForm> {
                               .collection("users")
                               .doc(currentUser.user.uid)
                               .get()
-                              .then(
-                                (DocumentSnapshot result) =>
-                                    Navigator.pushReplacementNamed(
-                                        context, Home.routeName),
-                              )
-                              .catchError(
-                                (err) => print(err),
-                              ),
+                              .then((DocumentSnapshot result) {
+                            setState(() {
+                              _loading = false;
+                            });
+                            return Navigator.pushReplacementNamed(
+                                context, Home.routeName);
+                          }).catchError((err) {
+                            setState(() {
+                              _loading = false;
+                            });
+                            print(err);
+                          }),
                         )
-                        .catchError(
-                          (err) => print(err),
-                        );
+                        .catchError((err) {
+                      setState(() {
+                        _loading = false;
+                      });
+                      print(err);
+                    });
                   }
                 },
               ),

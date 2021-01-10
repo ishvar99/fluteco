@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/screens/order.dart';
 import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/splash/RoundedButton.dart';
@@ -9,7 +10,7 @@ import '../../providers/Cart.dart';
 
 class CheckoutCard extends StatelessWidget {
   final formatter =
-      new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "Բ ", decimalDigits: 0);
   final FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   //  final formatter =
   // new NumberFormat.simpleCurrency(name="INR" decimalDigits: 0);
@@ -19,6 +20,7 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int totalPrice = 0;
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenWidth(15),
@@ -75,7 +77,7 @@ class CheckoutCard extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      int totalPrice = 0;
+
                       snapshot.data.docs.forEach((doc) {
                         totalPrice +=
                             doc.data()['price'] * doc.data()['quantity'];
@@ -102,7 +104,8 @@ class CheckoutCard extends StatelessWidget {
                   child: RoundedButton(
                     text: "Check Out",
                     pressed: () {
-                      Navigator.of(context).pushNamed('/checkout');
+                      Navigator.of(context)
+                          .pushNamed(Order.routeName, arguments: totalPrice);
                     },
                   ),
                 ),

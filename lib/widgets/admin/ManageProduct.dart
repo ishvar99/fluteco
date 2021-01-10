@@ -19,7 +19,7 @@ class _ManageProductState extends State<ManageProduct> {
   Widget build(BuildContext context) {
     FirebaseFirestoreHelper _helper = FirebaseFirestoreHelper();
     final formatter =
-        new NumberFormat.simpleCurrency(locale: "en_IN", decimalDigits: 0);
+        new NumberFormat.simpleCurrency(name: "Բ ", decimalDigits: 0);
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(

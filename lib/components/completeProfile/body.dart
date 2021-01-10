@@ -101,8 +101,10 @@ class _BodyState extends State<Body> {
                           _loading = true;
                         });
                         try {
-                          String _imageUrl =
-                              await _firestoreHelper.uploadProductImage(_image);
+                          String _imageUrl = "";
+                          if (_image != null)
+                            _imageUrl = await _firestoreHelper
+                                .uploadProductImage(_image);
                           await _authHelper.updateProfile(
                               firstName: _firstNameController.text,
                               lastName: _lastNameController.text,
@@ -156,12 +158,6 @@ class _BodyState extends State<Body> {
     return TextFormField(
       readOnly: true,
       controller: _imageController,
-      validator: (value) {
-        if (value == "") {
-          return 'Please provide your profile photo';
-        }
-        return null;
-      },
       decoration: InputDecoration(
         suffixIcon: GestureDetector(
           onTap: chooseImage,

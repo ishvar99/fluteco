@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User account) {
       if (account == null) {
-        Navigator.popUntil(context, ModalRoute.withName('/login'));
+        Navigator.pushReplacementNamed(context, "/login");
       }
     });
     super.initState();

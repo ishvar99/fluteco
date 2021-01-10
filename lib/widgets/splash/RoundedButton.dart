@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
       child: loading
           ? Padding(
               padding: EdgeInsets.symmetric(
-                vertical: getProportionateScreenWidth(2),
+                vertical: getProportionateScreenWidth(4),
               ),
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),

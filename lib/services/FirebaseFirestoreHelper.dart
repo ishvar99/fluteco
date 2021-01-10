@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../data/limit.dart';
 
 class FirebaseFirestoreHelper {
+  User currentUser = FirebaseAuth.instance.currentUser;
   Future<String> uploadProductImage(PlatformFile image) async {
     print(image);
     final StorageReference storageReference =
@@ -76,14 +78,18 @@ class FirebaseFirestoreHelper {
 
   Future<DocumentReference> addToCart(
       {@required Map<String, dynamic> productData}) async {
-    CollectionReference collectionReferece =
-        FirebaseFirestore.instance.collection('cart');
-    return collectionReferece.add(productData);
+    return FirebaseFirestore.instance
+        .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart')
+        .add(productData);
   }
 
   Future<void> removeFromCart(String id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart')
         .where('productId', isEqualTo: id)
         .get();
     snapshot.docs.forEach((element) {
@@ -94,6 +100,8 @@ class FirebaseFirestoreHelper {
   Future<bool> isProductInCart(String id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart')
         .where('productId', isEqualTo: id)
         .get();
     if (snapshot.docs.length == 0)
@@ -105,6 +113,8 @@ class FirebaseFirestoreHelper {
   Future<bool> incrementProductQuantity(String id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart')
         .where('productId', isEqualTo: id)
         .get();
     var flag = 0;
@@ -125,6 +135,8 @@ class FirebaseFirestoreHelper {
   Future<bool> decrementProductQuantity(String id) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart')
         .where('productId', isEqualTo: id)
         .get();
     var flag = 0;
@@ -143,6 +155,9 @@ class FirebaseFirestoreHelper {
   }
 
   CollectionReference getCartProducts() {
-    return FirebaseFirestore.instance.collection('cart');
+    return FirebaseFirestore.instance
+        .collection('cart')
+        .doc(currentUser.uid)
+        .collection('userCart');
   }
 }

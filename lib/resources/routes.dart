@@ -6,7 +6,9 @@ import 'package:fluteco/screens/ForgotPassword.dart';
 import 'package:fluteco/screens/Login.dart';
 import 'package:fluteco/screens/OTP.dart';
 import 'package:fluteco/screens/Product.dart';
+import 'package:fluteco/screens/Profile.dart';
 import 'package:fluteco/screens/Register.dart';
+import 'package:fluteco/screens/Wishlist.dart';
 import 'package:fluteco/screens/edit_product.dart';
 import 'package:fluteco/screens/order.dart';
 import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
@@ -34,7 +36,9 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (_) => LoginScreen(),
   ForgotPasswordScreen.routeName: (_) => ForgotPasswordScreen(),
   CompleteProfileScreen.routeName: (_) => CompleteProfileScreen(),
-  OtpScreen.routeName: (_) => OtpScreen()
+  OtpScreen.routeName: (_) => OtpScreen(),
+  Wishlist.routeName: (_) => Wishlist(),
+  Profile.routeName: (_) => Profile(),
 };
 
 Route<dynamic> generateRoutes(RouteSettings settings) {

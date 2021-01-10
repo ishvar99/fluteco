@@ -50,7 +50,7 @@ class _TabsState extends State<Tabs> {
         body: WillPopScope(
           onWillPop: () {
             if (_selectedIndex != 0)
-              Navigator.popAndPushNamed(context, '/home');
+              Navigator.popAndPushNamed(context, Home.routeName);
             else
               Navigator.pop(context, false);
             return Future.value(false);

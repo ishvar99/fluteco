@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 Padding displayContent(BuildContext context, Product product) {
   final formatter =
-      new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "Բ ", decimalDigits: 0);
 
   return Padding(
     padding: EdgeInsets.only(left: getProportionateScreenWidth(20.0)),

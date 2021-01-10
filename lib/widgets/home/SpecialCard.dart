@@ -18,7 +18,7 @@ class SpecialCard extends StatefulWidget {
 
 class _SpecialCardState extends State<SpecialCard> {
   final formatter =
-      new NumberFormat.simpleCurrency(name: "INR", decimalDigits: 0);
+      new NumberFormat.simpleCurrency(name: "Բ ", decimalDigits: 0);
 
   @override
   Widget build(BuildContext context) {

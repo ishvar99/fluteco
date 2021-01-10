@@ -8,6 +8,7 @@ import '../resources/size_config.dart';
 import '../widgets/home/SpecialCard.dart';
 
 class Wishlist extends StatefulWidget {
+  static const routeName = '/wishlist';
   @override
   _WishlistState createState() => _WishlistState();
 }
