@@ -7,6 +7,7 @@ import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
 import '../../resources/size_config.dart';
+import 'dart:math';
 
 class Body extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _BodyState extends State<Body> {
   FireBaseAuthHelper _authHelper = FireBaseAuthHelper();
   FirebaseFirestoreHelper _firestoreHelper = FirebaseFirestoreHelper();
   PlatformFile _image;
+  bool _loading = false;
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
@@ -91,16 +93,35 @@ class _BodyState extends State<Body> {
                   width: double.infinity,
                   height: getProportionateScreenWidth(50),
                   child: RoundedButton(
+                    loading: _loading,
                     text: "Continue",
                     pressed: () async {
                       if (_formKey.currentState.validate()) {
-                        String _imageUrl =
-                            await _firestoreHelper.uploadProductImage(_image);
-                        await _authHelper.updateProfile(
-                            _firstNameController.text,
-                            _lastNameController.text,
-                            _imageUrl);
-                        Navigator.pushReplacementNamed(context, Home.routeName);
+                        setState(() {
+                          _loading = true;
+                        });
+                        try {
+                          String _imageUrl =
+                              await _firestoreHelper.uploadProductImage(_image);
+                          await _authHelper.updateProfile(
+                              firstName: _firstNameController.text,
+                              lastName: _lastNameController.text,
+                              profile: _imageUrl,
+                              address: _addressController.text,
+                              pinCode: _pinCodeController.text,
+                              phoneNumber:
+                                  int.parse(_phoneNumberController.text));
+                          setState(() {
+                            _loading = false;
+                          });
+                          Navigator.pushReplacementNamed(
+                              context, Home.routeName);
+                        } catch (e) {
+                          print(e);
+                          setState(() {
+                            _loading = false;
+                          });
+                        }
                       }
                     },
                   ),

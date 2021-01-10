@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluteco/screens/Home.dart';
 import 'package:fluteco/screens/Register.dart';
 import "package:flutter/material.dart";
 import "../resources/size_config.dart";
@@ -14,6 +16,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   int currentPage = 0;
+
   List<Map<String, String>> data = [
     {
       "text": "Welcome to Fluteco, Let's shop!",
@@ -31,6 +34,7 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
+    User user = FirebaseAuth.instance.currentUser;
     SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
@@ -76,8 +80,12 @@ class _SplashState extends State<Splash> {
               height: 50,
               child: RoundedButton(
                   text: "Continue",
-                  pressed: () => Navigator.of(context)
-                      .pushNamed(RegisterScreen.routeName)),
+                  pressed: () {
+                    return user != null
+                        ? Navigator.of(context).pushNamed(Home.routeName)
+                        : Navigator.of(context)
+                            .pushNamed(RegisterScreen.routeName);
+                  }),
             )
           ],
         ),

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluteco/screens/Home.dart';
 import 'package:fluteco/widgets/splash/RoundedButton.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +68,27 @@ class _SignFormState extends State<SignForm> {
                 pressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    // if all are valid then go to success screen
-                    Navigator.pushReplacementNamed(context, Home.routeName);
+                    FirebaseAuth.instance
+                        .signInWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text)
+                        .then(
+                          (currentUser) => FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(currentUser.user.uid)
+                              .get()
+                              .then(
+                                (DocumentSnapshot result) =>
+                                    Navigator.pushReplacementNamed(
+                                        context, Home.routeName),
+                              )
+                              .catchError(
+                                (err) => print(err),
+                              ),
+                        )
+                        .catchError(
+                          (err) => print(err),
+                        );
                   }
                 },
               ),
@@ -105,7 +126,7 @@ class _SignFormState extends State<SignForm> {
       validator: (value) {
         if (value.isEmpty) {
           return kEmailNullError;
-        } else if (emailValidatorRegExp.hasMatch(value)) {
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
           return kInvalidEmailError;
         }
         return null;

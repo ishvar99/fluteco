@@ -20,10 +20,7 @@ void main() async {
   //     ConnectionStatusSingleton.getInstance();
   // connectionStatus.initialize();
   runApp(
-    StreamProvider<AppUser>.value(
-      value: FireBaseAuthHelper().isAuthenticated(),
-      child: Main(),
-    ),
+    Main(),
   );
 }
 

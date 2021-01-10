@@ -1,24 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluteco/models/User.dart';
-import 'package:fluteco/utility/transformUser.dart';
+import '../models/User.dart';
 
 class FireBaseAuthHelper {
-  Stream<AppUser> isAuthenticated() {
-    return FirebaseAuth.instance.authStateChanges().map(transformUser);
-  }
+  // Stream<AppUser> isAuthenticated() {
+  //   return FirebaseAuth.instance.authStateChanges().map(transformUser);
+  // }
 
   Future<void> updateProfile(
-      String firstName, String lastName, String profile) async {
+      {String firstName,
+      String lastName,
+      String profile,
+      String address,
+      String pinCode,
+      int phoneNumber}) async {
     var user = FirebaseAuth.instance.currentUser;
-    await user.updateProfile(
-        displayName: "$firstName $lastName", photoURL: profile);
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
+      {
+        'uid': user.uid,
+        'profilePhotoUrl': profile,
+        'name': '$firstName $lastName',
+        'address': address,
+        'pinCode': pinCode,
+        'phoneNumber': phoneNumber
+      },
+    );
+  }
 
-    await user.reload();
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .set({'profilePhotoUrl': user.photoURL, 'name': user.displayName});
+  Future<AppUser> getCurrentUser() async {
+    String userId = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    return AppUser.fromDocument(userDoc);
   }
 
   Future<UserCredential> registerUser(String email, String password) async {

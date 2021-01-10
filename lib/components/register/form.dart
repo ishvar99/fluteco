@@ -18,7 +18,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-
+  bool _loading = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,16 +41,28 @@ class _SignUpFormState extends State<SignUpForm> {
               width: double.infinity,
               height: 50,
               child: RoundedButton(
+                loading: _loading,
                 text: "Register",
                 pressed: () async {
                   if (_formKey.currentState.validate()) {
-                    UserCredential user = await _helper.registerUser(
-                        _emailController.text, _passwordController.text);
-                    print(user);
-                    Navigator.pushReplacementNamed(
-                      context,
-                      CompleteProfileScreen.routeName,
-                    );
+                    setState(() {
+                      _loading = true;
+                    });
+                    try {
+                      UserCredential user = await _helper.registerUser(
+                          _emailController.text, _passwordController.text);
+                      setState(() {
+                        _loading = false;
+                      });
+                      Navigator.pushReplacementNamed(
+                        context,
+                        CompleteProfileScreen.routeName,
+                      );
+                    } catch (error) {
+                      setState(() {
+                        _loading = false;
+                      });
+                    }
                   }
                 },
               ),
