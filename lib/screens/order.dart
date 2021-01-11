@@ -59,7 +59,7 @@ class Order extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60),
               child: RoundedButton(
-                text: "Proceed to pay Բ $arg",
+                text: "Proceed to pay Բ ${formatter.format(arg)}",
                 pressed: () {
                   Navigator.of(context).pushNamed('/checkout');
                 },
