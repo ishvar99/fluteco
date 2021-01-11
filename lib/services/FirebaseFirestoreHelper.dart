@@ -65,11 +65,29 @@ class FirebaseFirestoreHelper {
         .update(productData);
   }
 
-  Future<void> toggleFavourite(String id, bool status) async {
+  Future<void> fetchWishlist() async {
     await FirebaseFirestore.instance
-        .collection('products')
-        .doc(id)
-        .update({'favourite': status});
+        .collection('wishlist')
+        .doc(currentUser.uid)
+        .get();
+  }
+
+  Future<void> addToWishlist(String id) async {
+    await FirebaseFirestore.instance
+        .collection('wishlist')
+        .doc(currentUser.uid)
+        .update({
+      "products": FieldValue.arrayUnion([id])
+    });
+  }
+
+  Future<void> removeFromWishlist(String id) async {
+    await FirebaseFirestore.instance
+        .collection('wishlist')
+        .doc(currentUser.uid)
+        .update({
+      "products": FieldValue.arrayRemove([id])
+    });
   }
 
   Future<void> deleteProduct(String id) async {

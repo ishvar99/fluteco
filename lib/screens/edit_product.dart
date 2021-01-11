@@ -30,7 +30,6 @@ class _EditProductState extends State<EditProduct> {
   TextEditingController _descriptionController = TextEditingController();
   String _dropDownValue;
   bool _loading = false;
-  bool _favourite = false;
   PlatformFile _image;
   String _imageUrl;
   String _imageName;
@@ -86,7 +85,6 @@ class _EditProductState extends State<EditProduct> {
           "discount": _discount,
           "originalPrice": _originalPrice,
           "discountedPrice": _discountedPrice,
-          "favourite": _favourite
         };
         print(_data);
         if (id != null) {
@@ -131,7 +129,6 @@ class _EditProductState extends State<EditProduct> {
         _discountController.text =
             product.discount != 0 ? product.discount.toString() : "";
         _imageController.text = product.imageName;
-        _favourite = product.favourite;
         _imageUrl = product.imageUrl;
         _imageName = product.imageName;
       }

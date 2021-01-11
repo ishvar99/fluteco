@@ -93,12 +93,12 @@ class _SpecialCardState extends State<SpecialCard> {
                 borderRadius: BorderRadius.circular(20),
                 splashColor: Colors.pink.withOpacity(0.05),
                 onTap: () {
-                  if (widget.wishListItem) {
+                  if (true) {
                     showConfirmationDialog(
                         'Do you want to remove this product from Wishlist?',
                         context, (result) {
                       if (result) {
-                        if (product.favourite) product.toggleFavouriteStatus();
+                        //todo: remove from wishlist
                         showSnackbar(
                           context: context,
                           product: product,
@@ -106,7 +106,7 @@ class _SpecialCardState extends State<SpecialCard> {
                       }
                     });
                   } else {
-                    product.toggleFavouriteStatus();
+                    //todo
                     showSnackbar(context: context, product: product);
                   }
                 },
