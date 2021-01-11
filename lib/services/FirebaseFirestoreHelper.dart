@@ -78,12 +78,19 @@ class FirebaseFirestoreHelper {
   }
 
   Future<void> addToWishlist(String id) async {
-    await FirebaseFirestore.instance
-        .collection('wishlist')
-        .doc(currentUser.uid)
-        .update({
-      "products": FieldValue.arrayUnion([id])
-    });
+    DocumentReference docRef =
+        FirebaseFirestore.instance.collection('wishlist').doc(currentUser.uid);
+    DocumentSnapshot docData = await docRef.get();
+    if (docData.exists)
+      docRef.update(
+        {
+          "products": FieldValue.arrayUnion([id]),
+        },
+      );
+    else
+      docRef.set({
+        "products": [id]
+      });
   }
 
   Future<void> removeFromWishlist(String id) async {

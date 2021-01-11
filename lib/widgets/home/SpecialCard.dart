@@ -159,9 +159,10 @@ class _SpecialCardState extends State<SpecialCard> {
                                       size: getProportionateScreenWidth(16),
                                     )
                                   : Icon(
-                                      snapshot.data
-                                              .data()['products']
-                                              .contains(product.id)
+                                      snapshot.data.data() != null &&
+                                              snapshot.data
+                                                  .data()['products']
+                                                  .contains(product.id)
                                           ? Icons.favorite
                                           : Icons.favorite_border,
                                       size: getProportionateScreenWidth(16),
