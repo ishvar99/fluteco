@@ -65,11 +65,16 @@ class FirebaseFirestoreHelper {
         .update(productData);
   }
 
-  Future<void> fetchWishlist() async {
-    await FirebaseFirestore.instance
+  DocumentReference fetchWishlist() {
+    return FirebaseFirestore.instance
         .collection('wishlist')
-        .doc(currentUser.uid)
-        .get();
+        .doc(currentUser.uid);
+  }
+
+  DocumentReference isProductInWishlist() {
+    return FirebaseFirestore.instance
+        .collection('wishlist')
+        .doc(currentUser.uid);
   }
 
   Future<void> addToWishlist(String id) async {

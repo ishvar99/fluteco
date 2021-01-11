@@ -12,7 +12,7 @@ class Product with ChangeNotifier {
   String category;
   String imageName;
   int limit;
-  FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
+  // FirebaseFirestoreHelper helper = FirebaseFirestoreHelper();
   Product({
     @required this.id,
     @required this.name,

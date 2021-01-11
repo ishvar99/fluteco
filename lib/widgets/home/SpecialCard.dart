@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
+
 import '../../providers/Products.dart';
 import '../../providers/Product.dart';
 import '../../resources/constants.dart';
@@ -23,6 +26,7 @@ class _SpecialCardState extends State<SpecialCard> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+
     // print("Product Id: ${product.id}");
     return Padding(
       padding: EdgeInsets.only(
@@ -89,53 +93,72 @@ class _SpecialCardState extends State<SpecialCard> {
                 ),
               ),
               Spacer(),
-              InkWell(
-                borderRadius: BorderRadius.circular(20),
-                splashColor: Colors.pink.withOpacity(0.05),
-                onTap: () {
-                  if (true) {
-                    showConfirmationDialog(
-                        'Do you want to remove this product from Wishlist?',
-                        context, (result) {
-                      if (result) {
-                        //todo: remove from wishlist
-                        showSnackbar(
-                          context: context,
-                          product: product,
-                        );
-                      }
-                    });
-                  } else {
-                    //todo
-                    showSnackbar(context: context, product: product);
+              StreamBuilder<DocumentSnapshot>(
+                stream:
+                    FirebaseFirestoreHelper().isProductInWishlist().snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return null;
                   }
-                },
-                child: Consumer<Product>(builder: (context, product, _) {
-                  return Container(
-                    width: getProportionateScreenWidth(25),
-                    height: getProportionateScreenWidth(25),
-                    decoration: BoxDecoration(
-                        color: widget.wishListItem
-                            ? Colors.red[50]
-                            : Colors.pink[50],
-                        shape: BoxShape.circle),
-                    child: Center(
-                      child: widget.wishListItem
-                          ? Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: getProportionateScreenWidth(16),
-                            )
-                          : Icon(
-                              product.favourite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              size: getProportionateScreenWidth(16),
-                              color: Colors.pink[500],
-                            ),
-                    ),
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    splashColor: Colors.pink.withOpacity(0.05),
+                    onTap: () async {
+                      if (widget.wishListItem) {
+                        showConfirmationDialog(
+                            'Do you want to remove this product from Wishlist?',
+                            context, (result) {
+                          if (result) {
+                            //todo: remove from wishlist
+                            showSnackbar(
+                              context: context,
+                              product: product,
+                            );
+                          }
+                        });
+                      } else {
+                        if (snapshot.data.data() != null &&
+                            snapshot.data
+                                .data()['products']
+                                .contains(product.id)) {
+                          await FirebaseFirestoreHelper()
+                              .removeFromWishlist(product.id);
+                        } else {
+                          await FirebaseFirestoreHelper()
+                              .addToWishlist(product.id);
+                        }
+                        showSnackbar(context: context, product: product);
+                      }
+                    },
+                    child: Consumer<Product>(builder: (context, product, _) {
+                      return Container(
+                        width: getProportionateScreenWidth(25),
+                        height: getProportionateScreenWidth(25),
+                        decoration: BoxDecoration(
+                            color: widget.wishListItem
+                                ? Colors.red[50]
+                                : Colors.pink[50],
+                            shape: BoxShape.circle),
+                        child: Center(
+                            child: widget.wishListItem
+                                ? Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: getProportionateScreenWidth(16),
+                                  )
+                                : Icon(
+                                    snapshot.data
+                                            .data()['products']
+                                            .contains(product.id)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: getProportionateScreenWidth(16),
+                                    color: Colors.pink[500],
+                                  )),
+                      );
+                    }),
                   );
-                }),
+                },
               ),
               SizedBox(
                 width: getProportionateScreenWidth(12),

@@ -76,6 +76,7 @@ class _EditProductState extends State<EditProduct> {
           _imageName = _image.name;
         }
         Map<String, dynamic> _data = {
+          "productId": Uuid().v4(),
           "name": _name,
           "description": _description,
           "imageUrl": _imageUrl,

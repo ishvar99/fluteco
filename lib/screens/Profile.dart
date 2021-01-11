@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluteco/screens/edit_product.dart';
 import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class _ProfileState extends State<Profile> {
                     padding: const EdgeInsets.all(10.0),
                     child: GestureDetector(
                       onTap: () async {
-                        var result =
-                            await Navigator.pushNamed(context, '/edit-product');
+                        var result = await Navigator.pushNamed(
+                            context, EditProduct.routeName);
                         print(result);
                         if (result) {
                           final snackBar = SnackBar(
