@@ -16,9 +16,11 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
+  var _key = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestoreHelper().fetchWishlist().snapshots(),
           builder: (context, snapshot) {

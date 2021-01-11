@@ -13,7 +13,7 @@ void showSnackbar({BuildContext context, bool favourite, String productId}) {
       label: 'Undo',
       textColor: Colors.amber,
       onPressed: () {
-        favourite
+        !favourite
             ? FirebaseFirestoreHelper().addToWishlist(productId)
             : FirebaseFirestoreHelper().removeFromWishlist(productId);
       },

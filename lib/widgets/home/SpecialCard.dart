@@ -110,14 +110,15 @@ class _SpecialCardState extends State<SpecialCard> {
                         if (widget.wishListItem) {
                           showConfirmationDialog(
                               'Do you want to remove this product from Wishlist?',
-                              context, (result) async {
+                              context, (result) {
                             if (result) {
-                              await FirebaseFirestoreHelper()
+                              FirebaseFirestoreHelper()
                                   .removeFromWishlist(product.id);
                               showSnackbar(
-                                  context: context,
-                                  favourite: false,
-                                  productId: product.id);
+                                context: context,
+                                favourite: false,
+                                productId: product.id,
+                              );
                             }
                           });
                         } else {
