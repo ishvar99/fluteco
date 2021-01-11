@@ -19,7 +19,7 @@ class _FavouriteButtonState extends State<FavouriteButton> {
     return InkWell(
       onTap: () {
         FirebaseFirestoreHelper().addToWishlist(product.id);
-        showSnackbar(context: context, product: product);
+        showSnackbar(context: context, favourite: true, productId: product.id);
       },
       splashColor: Colors.pink,
       borderRadius: BorderRadius.only(

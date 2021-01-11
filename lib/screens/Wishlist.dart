@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluteco/providers/Product.dart';
 import 'package:fluteco/services/FirebaseFirestoreHelper.dart';
+import 'package:fluteco/utility/populateProductById.dart';
 import 'package:fluteco/utility/transformProductsMap.dart';
 import 'package:fluteco/utility/transformQuerySnapshot.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,9 @@ class _WishlistState extends State<Wishlist> {
                       ),
                       itemCount: snapshot.data.data()['products'].length,
                       itemBuilder: (context, index) =>
-                          ChangeNotifierProvider.value(
-                            value: transformQuerySnapshot(
+                          FutureProvider<Product>.value(
+                            initialData: null,
+                            value: populateProductById(
                                 snapshot.data.data()['products'][index]),
                             child: SpecialCard(
                               wishListItem: true,

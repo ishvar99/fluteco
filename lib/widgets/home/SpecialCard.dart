@@ -25,175 +25,187 @@ class _SpecialCardState extends State<SpecialCard> {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
-
-    // print("Product Id: ${product.id}");
     return Padding(
       padding: EdgeInsets.only(
         left: getProportionateScreenWidth(15),
         // right: getProportionateScreenWidth(5),
       ),
-      child: Container(
-        // color: Colors.red,
-        width: getProportionateScreenWidth(160),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImageCard(
-                tapped: () {
-                  print('Tapped');
-                  Navigator.pushNamed(
-                    context,
-                    '/products',
-                    arguments: product.id,
-                  );
-                },
-                image: product.imageUrl),
-            const SizedBox(height: 5),
-            Text(
-              product.name,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: getProportionateScreenWidth(16),
-                  fontWeight: FontWeight.bold),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 5),
-            Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-              Padding(
-                padding: EdgeInsets.only(right: getProportionateScreenWidth(5)),
-                child: SizedBox(
-                  // width: getProportionateScreenWidth(50),
-                  child: FittedBox(
-                    child: Text(
-                      "${formatter.format(product.discountedPrice)}",
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(15.5),
-                          fontWeight: FontWeight.w600,
-                          color: kOfferBannerColor),
+      child: Consumer<Product>(builder: (context, product, _) {
+        if (product == null) {
+          return Container();
+        }
+        return Container(
+          // color: Colors.red,
+          width: getProportionateScreenWidth(160),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ImageCard(
+                  tapped: () {
+                    print('Tapped');
+                    Navigator.pushNamed(
+                      context,
+                      '/products',
+                      arguments: product.id,
+                    );
+                  },
+                  image: product.imageUrl),
+              const SizedBox(height: 5),
+              Text(
+                product.name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(16),
+                    fontWeight: FontWeight.bold),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 5),
+              Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(right: getProportionateScreenWidth(5)),
+                  child: SizedBox(
+                    // width: getProportionateScreenWidth(50),
+                    child: FittedBox(
+                      child: Text(
+                        "${formatter.format(product.discountedPrice)}",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(15.5),
+                            fontWeight: FontWeight.w600,
+                            color: kOfferBannerColor),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                // width: getProportionateScreenWidth(35),
-                // height: getProportionateScreenWidth(20),
-                child: FittedBox(
-                  // fit: BoxFit.cover,
-                  child: Text(
-                    "${formatter.format(product.originalPrice)}",
-                    style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        decorationThickness: 2.0,
-                        fontWeight: FontWeight.w600,
-                        fontSize: getProportionateScreenWidth(10),
-                        color: kPrimaryColor),
+                SizedBox(
+                  // width: getProportionateScreenWidth(35),
+                  // height: getProportionateScreenWidth(20),
+                  child: FittedBox(
+                    // fit: BoxFit.cover,
+                    child: Text(
+                      "${formatter.format(product.originalPrice)}",
+                      style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 2.0,
+                          fontWeight: FontWeight.w600,
+                          fontSize: getProportionateScreenWidth(10),
+                          color: kPrimaryColor),
+                    ),
                   ),
                 ),
-              ),
-              Spacer(),
-              StreamBuilder<DocumentSnapshot>(
-                stream:
-                    FirebaseFirestoreHelper().isProductInWishlist().snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return null;
-                  }
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(20),
-                    splashColor: Colors.pink.withOpacity(0.05),
-                    onTap: () async {
-                      if (widget.wishListItem) {
-                        showConfirmationDialog(
-                            'Do you want to remove this product from Wishlist?',
-                            context, (result) {
-                          if (result) {
-                            //todo: remove from wishlist
-                            showSnackbar(
-                              context: context,
-                              product: product,
-                            );
-                          }
-                        });
-                      } else {
-                        if (snapshot.data.data() != null &&
-                            snapshot.data
-                                .data()['products']
-                                .contains(product.id)) {
-                          await FirebaseFirestoreHelper()
-                              .removeFromWishlist(product.id);
+                Spacer(),
+                StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestoreHelper()
+                      .isProductInWishlist()
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    }
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      splashColor: Colors.pink.withOpacity(0.05),
+                      onTap: () async {
+                        if (widget.wishListItem) {
+                          showConfirmationDialog(
+                              'Do you want to remove this product from Wishlist?',
+                              context, (result) async {
+                            if (result) {
+                              await FirebaseFirestoreHelper()
+                                  .removeFromWishlist(product.id);
+                              showSnackbar(
+                                  context: context,
+                                  favourite: false,
+                                  productId: product.id);
+                            }
+                          });
                         } else {
-                          await FirebaseFirestoreHelper()
-                              .addToWishlist(product.id);
+                          if (snapshot.data.data() != null &&
+                              snapshot.data
+                                  .data()['products']
+                                  .contains(product.id)) {
+                            await FirebaseFirestoreHelper()
+                                .removeFromWishlist(product.id);
+                            showSnackbar(
+                                context: context,
+                                favourite: false,
+                                productId: product.id);
+                          } else {
+                            await FirebaseFirestoreHelper()
+                                .addToWishlist(product.id);
+                            showSnackbar(
+                                context: context,
+                                favourite: true,
+                                productId: product.id);
+                          }
                         }
-                        showSnackbar(context: context, product: product);
-                      }
-                    },
-                    child: Consumer<Product>(builder: (context, product, _) {
-                      return Container(
-                        width: getProportionateScreenWidth(25),
-                        height: getProportionateScreenWidth(25),
-                        decoration: BoxDecoration(
-                            color: widget.wishListItem
-                                ? Colors.red[50]
-                                : Colors.pink[50],
-                            shape: BoxShape.circle),
-                        child: Center(
-                            child: widget.wishListItem
-                                ? Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                    size: getProportionateScreenWidth(16),
-                                  )
-                                : Icon(
-                                    snapshot.data
-                                            .data()['products']
-                                            .contains(product.id)
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    size: getProportionateScreenWidth(16),
-                                    color: Colors.pink[500],
-                                  )),
-                      );
-                    }),
-                  );
-                },
-              ),
+                      },
+                      child: Consumer<Product>(builder: (context, product, _) {
+                        return Container(
+                          width: getProportionateScreenWidth(25),
+                          height: getProportionateScreenWidth(25),
+                          decoration: BoxDecoration(
+                              color: widget.wishListItem
+                                  ? Colors.red[50]
+                                  : Colors.pink[50],
+                              shape: BoxShape.circle),
+                          child: Center(
+                              child: widget.wishListItem
+                                  ? Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: getProportionateScreenWidth(16),
+                                    )
+                                  : Icon(
+                                      snapshot.data
+                                              .data()['products']
+                                              .contains(product.id)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: getProportionateScreenWidth(16),
+                                      color: Colors.pink[500],
+                                    )),
+                        );
+                      }),
+                    );
+                  },
+                ),
+                SizedBox(
+                  width: getProportionateScreenWidth(12),
+                ),
+              ]),
               SizedBox(
-                width: getProportionateScreenWidth(12),
+                height: getProportionateScreenWidth(7),
               ),
-            ]),
-            SizedBox(
-              height: getProportionateScreenWidth(7),
-            ),
-            (product.discount != 0)
-                ? Row(
-                    children: [
-                      Container(
-                        width: getProportionateScreenWidth(70),
-                        height: getProportionateScreenWidth(25),
-                        color: Colors.teal[50],
-                        child: Center(
-                            child: Text(
-                          "${product.discount}% Off",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              color: Colors.teal[500]),
-                        )),
-                      ),
-                      // SizedBox(width: getProportionateScreenWidth(10)),
-                      // Icon(
-                      //   Icons.offline_bolt,
-                      //   color: Colors.teal[600],
-                      //   size: 20,
-                      // )
-                    ],
-                  )
-                : Container(),
-          ],
-        ),
-      ),
+              (product.discount != 0)
+                  ? Row(
+                      children: [
+                        Container(
+                          width: getProportionateScreenWidth(70),
+                          height: getProportionateScreenWidth(25),
+                          color: Colors.teal[50],
+                          child: Center(
+                              child: Text(
+                            "${product.discount}% Off",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                color: Colors.teal[500]),
+                          )),
+                        ),
+                        // SizedBox(width: getProportionateScreenWidth(10)),
+                        // Icon(
+                        //   Icons.offline_bolt,
+                        //   color: Colors.teal[600],
+                        //   size: 20,
+                        // )
+                      ],
+                    )
+                  : Container(),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
