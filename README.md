@@ -8,5 +8,5 @@ The application is designed using Flutter & Dart for the mobile app and MERN Sta
 ## Payments & Transactions: 
 The payments executed on top of the Blockchain Network namely Rinkeby test network and are carried out in the applications native currency i.e. an ERC20 standards complaint token called Fluteco.
 
-## Recommendation & Personalization: 
+## Recommendation & Personalization (Coming Soon): 
 The application comes with enormous capabilities like adding products to Wishlist and recommending the best products to users based on the behavior of usage and following appropriate algorithmic approach to sort relevant products for the users out of several listed in the application
